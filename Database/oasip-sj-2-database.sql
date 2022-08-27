@@ -36,19 +36,19 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 -- Table `oasip`.`users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `oasip`.`users` (
-  `userId` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NOT NULL,
-  `email` VARCHAR(50) NOT NULL,
-  `role` ENUM('admin', 'lecturer', 'student') NOT NULL,
-  `createOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updateOn` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+CREATE TABLE `users` (
+  `userId` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(90) NOT NULL,
+  `role` enum('admin','lecturer','student') NOT NULL DEFAULT 'student',
+  `createOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updateOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`userId`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
+  UNIQUE KEY `name_UNIQUE` (`name`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB 
+AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 
 -- -----------------------------------------------------
 -- Table `oasip`.`events`

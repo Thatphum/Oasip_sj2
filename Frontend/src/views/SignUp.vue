@@ -1,48 +1,60 @@
 <script setup>
-import { onBeforeMount, ref } from 'vue';
-import UserDataService from '../services/UserDataService';
+import { onBeforeMount, ref } from 'vue'
+import UserDataService from '../services/UserDataService'
 onBeforeMount(async () => {
   // await getAllUser();
   // console.log(users.value);
-});
+})
 
-const users = ref();
+const users = ref()
 // const getAllUser = async () => {
 //   const res = await UserDataService.retrieveAllUser();
 //   users.value = await res.json();
 // };
 
-const userName = ref('');
-const userEmail = ref('');
-const userRole = ref('');
+const userName = ref('')
+const userEmail = ref('')
+const userPassword = ref('')
+const userRole = ref('')
 
-const errorName = ref();
-const errorEmail = ref();
+const errorName = ref()
+const errorEmail = ref()
 
 const submitUser = async () => {
   var newUser = {
     name: userName.value.trim(),
     email: userEmail.value.trim(),
+    password: userPassword.value,
     role: userRole.value,
-  };
-  console.log(newUser);
-  const res = await UserDataService.createUser(newUser);
-  if (res.status == 400) {
-    alert('This name or email are already used.');
-  } else {
-    reset();
   }
-};
+  console.log(newUser)
+  const res = await UserDataService.createUser(newUser)
+  if (res.status == 400) {
+    alert('This name or email are already used.')
+  } else {
+    reset()
+  }
+}
 
 const EmailTrim = () => {
-  userEmail.value = userEmail.value.trim();
-};
+  userEmail.value = userEmail.value.trim()
+}
 
 const reset = () => {
-  userName.value = '';
-  userEmail.value = '';
-  userRole.value = '';
-};
+  userName.value = ''
+  userEmail.value = ''
+  userRole.value = ''
+}
+
+const checkPassword = () => {
+  var pass = document.getElementsByName('password').values
+  var confirm_pass = document.getElementsByName('confirm_password').values
+  if (pass != confirm_pass) {
+    alert('Passwords are not the same.')
+  } else {
+
+  }
+}
 </script>
 
 <template>
@@ -80,15 +92,24 @@ const reset = () => {
           type="password"
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="password"
+<<<<<<< HEAD
           pattern=".{8,14}"
           placeholder="password"
         />
         <!-- <input
+=======
+          placeholder="Password"
+          pattern=".{8,14}"
+        />
+        <input
+>>>>>>> 1a4b769bb40c236ea99195669dac96b9ea0c1e67
           type="password"
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="confirm_password"
           placeholder="Confirm Password"
-        /> -->
+          pattern=".{8,14}"
+          
+        />
         <div class="mb-6">
           <label
             for="category"
