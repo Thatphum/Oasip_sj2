@@ -61,7 +61,7 @@ const reset = () => {
           name="name"
           maxlength="100"
           v-model="userName"
-          placeholder="Username"
+          placeholder="E.g. John Washington"
         />
         <span class="text-red-500 mt-2">{{ errorName }}</span>
         <input
@@ -73,15 +73,16 @@ const reset = () => {
           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
           maxlength="50"
           v-model="userEmail"
-          placeholder="Email"
+          placeholder="john@example.com"
         />
         <span class="text-red-500 mt-2">{{ errorEmail }}</span>
-        <!-- <input
+        <input
           type="password"
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="password"
-          placeholder="Password"
-        /> -->
+          pattern=".{8,14}"
+          placeholder="password"
+        />
         <!-- <input
           type="password"
           class="block border border-grey-light w-full p-3 rounded mb-4"
