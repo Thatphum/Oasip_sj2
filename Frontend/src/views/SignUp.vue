@@ -91,18 +91,12 @@ const checkPassword = () => {
           type="password"
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="password"
-<<<<<<< HEAD
           pattern=".{8,14}"
           placeholder="password"
-        />
-        <!-- <input
-=======
-          placeholder="Password"
-          pattern=".{8,14}"
           v-model="password"
         />
+
         <input
->>>>>>> 1a4b769bb40c236ea99195669dac96b9ea0c1e67
           type="password"
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="confirm_password"
