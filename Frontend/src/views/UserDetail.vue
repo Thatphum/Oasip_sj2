@@ -46,11 +46,11 @@ const updateUser = async () => {
     role: editRole.value,
   }
 
-  if (newData.value == detail.value) {
-    detail.value = await res.json()
-  } else {
-    newData.value = await res.jason()
-  }
+  // if (newData.value == detail.value) {
+    
+  // } else {
+    
+  // }
 
   console.log(newData)
   console.log(detail.value.id)

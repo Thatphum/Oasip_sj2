@@ -46,13 +46,12 @@ const reset = () => {
   userRole.value = ''
 }
 
-const checkPassword = () => {
-  var pass = document.getElementsByName('password').values
-  var confirm_pass = document.getElementsByName('confirm_password').values
-  if (pass != confirm_pass) {
-    alert('Passwords are not the same.')
-  } else {
+const password = ref()
+const confirm_pass = ref()
 
+const checkPassword = () => {
+  if (password.value != confirm_pass) {
+    alert('Password not match.')
   }
 }
 </script>
@@ -94,6 +93,7 @@ const checkPassword = () => {
           name="password"
           placeholder="Password"
           pattern=".{8,14}"
+          v-model="password"
         />
         <input
           type="password"
@@ -101,7 +101,8 @@ const checkPassword = () => {
           name="confirm_password"
           placeholder="Confirm Password"
           pattern=".{8,14}"
-          
+          v-model="confirm_pass"
+          @change="checkPassword()"
         />
         <div class="mb-6">
           <label
