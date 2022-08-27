@@ -72,7 +72,7 @@ const checkPassword = () => {
           name="name"
           maxlength="100"
           v-model="userName"
-          placeholder="Username"
+          placeholder="E.g. John Washington"
         />
         <span class="text-red-500 mt-2">{{ errorName }}</span>
         <input
@@ -84,18 +84,25 @@ const checkPassword = () => {
           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
           maxlength="50"
           v-model="userEmail"
-          placeholder="Email"
+          placeholder="john@example.com"
         />
         <span class="text-red-500 mt-2">{{ errorEmail }}</span>
         <input
           type="password"
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="password"
+<<<<<<< HEAD
+          pattern=".{8,14}"
+          placeholder="password"
+        />
+        <!-- <input
+=======
           placeholder="Password"
           pattern=".{8,14}"
           v-model="password"
         />
         <input
+>>>>>>> 1a4b769bb40c236ea99195669dac96b9ea0c1e67
           type="password"
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="confirm_password"
