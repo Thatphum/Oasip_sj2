@@ -19,6 +19,7 @@ const userRole = ref('')
 
 const errorName = ref()
 const errorEmail = ref()
+const errorPassword = ref()
 
 const submitUser = async () => {
   var newUser = {
@@ -57,32 +58,32 @@ const checkPassword = () => {
 </script>
 
 <template>
-  <div class="bg-grey-lighter mt-52 flex flex-col">
+  <div class="bg-grey-lighter mt-20 flex flex-col">
     <form
       class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2"
       @submit="submitUser()"
       onsubmit="return false;"
     >
-      <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+      <div class="bg-white px-5 py-6 rounded shadow-md text-black w-full">
         <h1 class="mb-8 text-3xl text-center">Sign up</h1>
-        <label for="nameform">Name</label>
+        <label for="nameform">Name :</label>
         <input
           required
           id="nameform"
           type="text"
-          class="block border border-grey-light w-full p-3 rounded mb-4"
+          class="block border border-grey-light w-full p-3 rounded mb-2"
           name="name"
           maxlength="100"
           v-model="userName"
           placeholder="E.g. John Washington"
         />
         <span class="text-red-500 mt-2">{{ errorName }}</span>
-        <label for="emailform">Email</label>
+        <label for="emailform">Email :</label>
         <input
           required
           id="emailform"
           type="text"
-          class="block border border-grey-light w-full p-3 rounded mb-4"
+          class="block border border-grey-light w-full p-3 rounded mb-2"
           name="email"
           @change="EmailTrim()"
           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
@@ -91,28 +92,27 @@ const checkPassword = () => {
           placeholder="john@example.com"
         />
         <span class="text-red-500 mt-2">{{ errorEmail }}</span>
-        <label for="pwdform">Password</label>
+        <label for="pwdform">Password : </label>
         <input
           id="pwdform"
           type="password"
-          class="block border border-grey-light w-full p-3 rounded mb-4"
+          class="block border border-grey-light w-full p-3 rounded mb-2"
           name="password"
           pattern=".{8,14}"
           placeholder="password"
           v-model="password"
         />
-        <label for="checkpwd">Confirm Password</label>
+        <label for="checkpwd">Confirm Password :</label>
         <input
           id="checkpwd"
           type="password"
-          class="block border border-grey-light w-full p-3 rounded mb-4"
+          class="block border border-grey-light w-full p-3 rounded mb-2"
           name="confirm_password"
           placeholder="Confirm Password"
           pattern=".{8,14}"
           v-model="confirm_pass"
           @change="checkPassword()"          
         />
-        <span>between 8 - 14 charaters</span>
         <div class="mb-6">
           <label
             for="category"
@@ -147,14 +147,14 @@ const checkPassword = () => {
         </router-link>
       </div>
 
-      <!-- <div class="text-grey-dark mt-6">
+      <div class="text-grey-dark mt-6">
         Already have an account?        
         <router-link
-            class="no-underline border-b border-blue text-blue"
+            class="no-underline border-b border-blue text-black hover:text-white hover:border-black transition ease-in delay-15" 
             :to="{ path: '/signIn', name: 'SignIn' }"
             > Log in </router-link
           >.
-      </div> -->
+      </div>
     </form>
   </div>
 </template>
