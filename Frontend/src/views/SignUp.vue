@@ -20,7 +20,6 @@ const userRole = ref('')
 const errorName = ref()
 const errorEmail = ref()
 
-
 const submitUser = async () => {
   var newUser = {
     name: userName.value.trim(),
@@ -67,8 +66,10 @@ const checkPassword = () => {
     >
       <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
         <h1 class="mb-8 text-3xl text-center">Sign up</h1>
+        <label for="nameform">Name</label>
         <input
           required
+          id="nameform"
           type="text"
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="name"
@@ -77,8 +78,10 @@ const checkPassword = () => {
           placeholder="E.g. John Washington"
         />
         <span class="text-red-500 mt-2">{{ errorName }}</span>
+        <label for="emailform">Email</label>
         <input
           required
+          id="emailform"
           type="text"
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="email"
@@ -89,7 +92,9 @@ const checkPassword = () => {
           placeholder="john@example.com"
         />
         <span class="text-red-500 mt-2">{{ errorEmail }}</span>
+        <label for="pwdform">Password</label>
         <input
+          id="pwdform"
           type="password"
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="password"
@@ -97,8 +102,9 @@ const checkPassword = () => {
           placeholder="password"
           v-model="password"
         />
-
+        <label for="checkpwd">Confirm Password</label>
         <input
+          id="checkpwd"
           type="password"
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="confirm_password"
@@ -107,7 +113,9 @@ const checkPassword = () => {
           v-model="confirm_pass"
           @change="checkPassword()"
         />
-        
+
+        <span>between 8 - 14 charaters</span>
+
         <div class="mb-6">
           <label
             for="category"
