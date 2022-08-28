@@ -105,6 +105,7 @@ CREATE TABLE `users` (
   `userId` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `role` ENUM('admin', 'lecturer', 'student') NOT NULL,
   `createOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updateOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -120,7 +121,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (userId,name,email,role) VALUES (1,'OASIP ADMIN','oasip.admin@kmutt.ac.th','admin'),(2,'Somchai Jaidee','somchai.jai@kmutt.ac.th','lecturer'),(3,'Komkrid Rakdee','komkrid.rak@mail.kmutt.ac.th','student'),(4,'สมเกียรติ ขยันเรียน','somkiat.kay@kmutt.ac.th','student');
+-- INSERT INTO `users` (userId,name,email,role) VALUES (1,'OASIP ADMIN','oasip.admin@kmutt.ac.th','admin'),(2,'Somchai Jaidee','somchai.jai@kmutt.ac.th','lecturer'),(3,'Komkrid Rakdee','komkrid.rak@mail.kmutt.ac.th','student'),(4,'สมเกียรติ ขยันเรียน','somkiat.kay@kmutt.ac.th','student');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
