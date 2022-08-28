@@ -20,6 +20,7 @@ const userRole = ref('')
 const errorName = ref()
 const errorEmail = ref()
 
+
 const submitUser = async () => {
   var newUser = {
     name: userName.value.trim(),
@@ -44,13 +45,14 @@ const reset = () => {
   userName.value = ''
   userEmail.value = ''
   userRole.value = ''
+  userPassword.value = ''
 }
 
 const password = ref()
 const confirm_pass = ref()
 
 const checkPassword = () => {
-  if (password.value != confirm_pass) {
+  if (password.value != confirm_pass.value) {
     alert('Password not match.')
   }
 }
@@ -105,6 +107,7 @@ const checkPassword = () => {
           v-model="confirm_pass"
           @change="checkPassword()"
         />
+        
         <div class="mb-6">
           <label
             for="category"
