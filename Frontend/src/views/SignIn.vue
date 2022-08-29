@@ -11,7 +11,7 @@ const submitLogin = async () => {
   };
   console.log(requiredUser);
   const res = await LoginService.logInUser(requiredUser);
-  if (res.status == 400) {
+  if (res.status == 404) {
     alert('A user with the specified email DOES NOT exist');
   } else if (res.status == 401) {
     alert('Password NOT Matched');

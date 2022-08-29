@@ -1,69 +1,71 @@
 <script setup>
-import { onBeforeMount, ref } from 'vue';
-import UserDataService from '../services/UserDataService';
+import { onBeforeMount, ref } from 'vue'
+import UserDataService from '../services/UserDataService'
 onBeforeMount(async () => {
   // await getAllUser();
   // console.log(users.value);
-});
+})
 
 // const getAllUser = async () => {
 //   const res = await UserDataService.retrieveAllUser();
 //   users.value = await res.json();
 // };
 
-const userName = ref('');
-const userEmail = ref('');
-const userPassword = ref('');
-const userRole = ref('');
+const userName = ref('')
+const userEmail = ref('')
+const userPassword = ref('')
+const userRole = ref('')
 
-const errorName = ref();
-const errorEmail = ref();
+const errorName = ref()
+const errorEmail = ref()
 
 // const checkEmail =
 
 const submitUser = async () => {
-  var newUser = {
-    name: userName.value.trim(),
-    email: userEmail.value.trim(),
-    password: password.value,
-    role: userRole.value,
-  };
-  console.log(newUser);
-  const res = await UserDataService.createUser(newUser);
-  if (res.status == 400) {
-    alert('This name or email are already used.');
-  } else {
-    reset();
+  if (password.value == confirm_pass.value) {
+    var newUser = {
+      name: userName.value.trim(),
+      email: userEmail.value.trim(),
+      password: password.value,
+      role: userRole.value,
+    }
+    console.log(newUser)
+    const res = await UserDataService.createUser(newUser)
+    if (res.status == 400) {
+      alert('This name or email are already used.')
+    } else {
+      reset()
+    }
   }
-};
+}
 
 const reset = () => {
-  userName.value = '';
-  userEmail.value = '';
-  userRole.value = '';
-  userPassword.value = '';
-  password.value = '';
-  confirm_pass.value = '';
-  error_message.value = false;
-};
+  userName.value = ''
+  userEmail.value = ''
+  userRole.value = ''
+  userPassword.value = ''
+  password.value = ''
+  confirm_pass.value = ''
+  error_message.value = false
+}
 
-const password = ref('');
-const confirm_pass = ref('');
-const error_message = ref(false);
+const password = ref('')
+const confirm_pass = ref('')
+const error_message = ref(false)
 
 const EmailTrim = () => {
-  userEmail.value = userEmail.value.trim();
-};
+  userEmail.value = userEmail.value.trim()
+}
 
 const checkPassword = () => {
   if (password.value != '' && confirm_pass.value != '') {
     if (password.value != confirm_pass.value) {
-      error_message.value = true;
+      error_message.value = true
     } else {
-      error_message.value = false;
+      error_message.value = false
     }
   }
-};
+}
 </script>
 
 <template>
@@ -168,15 +170,6 @@ const checkPassword = () => {
           </button>
         </router-link>
       </div>
-
-      <!-- <div class="text-grey-dark mt-6">
-        Already have an account?        
-        <router-link
-            class="no-underline border-b border-blue text-blue"
-            :to="{ path: '/signIn', name: 'SignIn' }"
-            > Log in </router-link
-          >.
-      </div> -->
     </form>
   </div>
 </template>
