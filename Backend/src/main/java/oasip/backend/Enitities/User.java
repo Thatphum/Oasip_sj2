@@ -5,7 +5,6 @@ import oasip.backend.Enum.UserRole;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -27,6 +26,8 @@ public class User {
 
     @Column(name = "email", nullable = false, length = 50)
     private String email;
+    @Column(name = "password", nullable = false, length = 90)
+    private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)

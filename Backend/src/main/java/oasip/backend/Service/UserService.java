@@ -16,11 +16,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -28,15 +25,18 @@ import java.util.List;
 @Service
 public class UserService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
     private ListMapper listMapper;
 
+//    private Argon2PasswordEncoder passwordEncoder = new Argon2PasswordEncoder(16, 26, 1, 65536, 10);
+    private Argon2PasswordEncoder passwordEncoder = new Argon2PasswordEncoder();
+
     public List<UserListAllDto> getAllUser() {
         List<User> userList = userRepository.findAll(Sort.by("name").ascending());
-        System.out.println(userList);
+//        System.out.println(userList);
         return listMapper.maplist(userList, UserListAllDto.class, modelMapper);
     }
 
@@ -47,10 +47,12 @@ public class UserService {
     }
 
     public UserCreateDto createUser(UserCreateDto newUser) {
+
         if(newUser.getRole().length()==0){
             newUser.setRole("student");
         }
         User user = modelMapper.map(newUser, User.class);
+        user.setPassword(passwordEncoder.encode(newUser.getPassword()));
 //        System.out.println(newUser);
 //        System.out.println(user);
 
@@ -69,7 +71,7 @@ public class UserService {
     }
 
     public UserUpdateDto updateUser(UserUpdateDto updateUser, Integer userId) {
-        System.out.println(updateUser.getRole());
+//        System.out.println(updateUser.getRole());
         if(updateUser.getRole().length() == 0){
             updateUser.setRole("student");
         }

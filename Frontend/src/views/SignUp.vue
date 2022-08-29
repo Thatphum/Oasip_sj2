@@ -1,64 +1,73 @@
 <script setup>
-import { onBeforeMount, ref } from 'vue'
-import UserDataService from '../services/UserDataService'
+import { onBeforeMount, ref } from 'vue';
+import UserDataService from '../services/UserDataService';
 onBeforeMount(async () => {
   // await getAllUser();
   // console.log(users.value);
-})
+});
 
-const users = ref()
 // const getAllUser = async () => {
 //   const res = await UserDataService.retrieveAllUser();
 //   users.value = await res.json();
 // };
 
-const userName = ref('')
-const userEmail = ref('')
-const userPassword = ref('')
-const userRole = ref('')
+const userName = ref('');
+const userEmail = ref('');
+const userPassword = ref('');
+const userRole = ref('');
 
-const errorName = ref()
-const errorEmail = ref()
+const errorName = ref();
+const errorEmail = ref();
+
+// const checkEmail =
 
 const submitUser = async () => {
   var newUser = {
     name: userName.value.trim(),
     email: userEmail.value.trim(),
-    password: userPassword.value,
+    password: password.value,
     role: userRole.value,
-  }
-  console.log(newUser)
-  const res = await UserDataService.createUser(newUser)
+  };
+  console.log(newUser);
+  const res = await UserDataService.createUser(newUser);
   if (res.status == 400) {
-    alert('This name or email are already used.')
+    alert('This name or email are already used.');
   } else {
-    reset()
+    reset();
   }
-}
-
-const EmailTrim = () => {
-  userEmail.value = userEmail.value.trim()
-}
+};
 
 const reset = () => {
-  userName.value = ''
-  userEmail.value = ''
-  userRole.value = ''
-  userPassword.value = ''
-}
+  userName.value = '';
+  userEmail.value = '';
+  userRole.value = '';
+  userPassword.value = '';
+  password.value = '';
+  confirm_pass.value = '';
+  error_message.value = false;
+};
 
-const password = ref()
-const confirm_pass = ref()
+const password = ref('');
+const confirm_pass = ref('');
+const error_message = ref(false);
+
+const EmailTrim = () => {
+  userEmail.value = userEmail.value.trim();
+};
 
 const checkPassword = () => {
-  if (password.value != confirm_pass.value) {
-    alert('Password not match.')
+  if (password.value != '' && confirm_pass.value != '') {
+    if (password.value != confirm_pass.value) {
+      error_message.value = true;
+    } else {
+      error_message.value = false;
+    }
   }
-}
+};
 </script>
 
 <template>
-  <div class="bg-grey-lighter mt-52 flex flex-col">
+  <div class="bg-grey-lighter mt-24 flex flex-col">
     <form
       class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2"
       @submit="submitUser()"
@@ -98,9 +107,10 @@ const checkPassword = () => {
           type="password"
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="password"
-          pattern=".{8,14}"
+          pattern=".{8,15}"
           placeholder="password"
           v-model="password"
+          @change="checkPassword()"
         />
         <label for="checkpwd">Confirm Password</label>
         <input
@@ -109,12 +119,21 @@ const checkPassword = () => {
           class="block border border-grey-light w-full p-3 rounded mb-4"
           name="confirm_password"
           placeholder="Confirm Password"
-          pattern=".{8,14}"
+          pattern=".{8,15}"
           v-model="confirm_pass"
           @change="checkPassword()"
         />
 
-        <span>between 8 - 14 charaters</span>
+        <span v-show="error_message" class="text-red-600"
+          >The password DOES NOT match</span
+        >
+        <span
+          v-show="
+            (password.length < 8 || password.length > 14) && password != ''
+          "
+          class="text-red-600"
+          >between 8 - 14 charaters</span
+        >
 
         <div class="mb-6">
           <label
