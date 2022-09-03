@@ -14,9 +14,9 @@ const submitLogin = async () => {
   if (res.status == 404) {
     alert('A user with the specified email DOES NOT exist');
   } else if (res.status == 401) {
-    alert('Password NOT Matched');
+    alert('Password Incorrect');
   } else {
-    alert('Password Matched');
+    alert('Login Successful');
   }
 };
 

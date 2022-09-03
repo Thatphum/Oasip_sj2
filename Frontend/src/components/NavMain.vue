@@ -77,8 +77,8 @@ const goHome = () => {
         <li>
           <router-link
             class="md:p-4 py-2 block hover:text-purple-400 text-white"
-            :to="{ path: '/signIn', name: 'SignIn' }"
-            >SignIn</router-link
+            :to="{ path: '/login', name: 'LogIn' }"
+            >LogIn</router-link
           >
         </li>
         <li>

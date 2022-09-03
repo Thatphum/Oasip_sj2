@@ -10,7 +10,7 @@ import ListUsers from "../views/UserList.vue"
 import UserDetail from "../views/UserDetail.vue"
 import User from "../components/User.vue"
 import SignUp from "../views/SignUp.vue"
-import SignIn from "../views/SignIn.vue"
+import LogIn from "../views/LogIn.vue"
 
 const history = createWebHistory('/sj2/');
 const routes = [
@@ -25,7 +25,7 @@ const routes = [
   {path: "/userdetail/:id", name: "UserDetail", component: UserDetail },
   {path: "/users", name: "Users", component: User},
   {path: "/signup", name: "SignUp", component: SignUp},
-  {path: "/signin", name: "SignIn", component: SignIn},
+  {path: "/login", name: "LogIn", component: LogIn}
   
   
 ];
