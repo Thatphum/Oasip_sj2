@@ -2,12 +2,14 @@ package oasip.backend.Controller;
 
 import oasip.backend.Config.JwtTokenUtil;
 import oasip.backend.DTOs.Authentication.LoginDTO;
+import oasip.backend.DTOs.Authentication.TokenDto;
 import oasip.backend.DTOs.Category.CategoryListAllDto;
 import oasip.backend.DTOs.User.UserCreateDto;
 import oasip.backend.Service.AuthenticationService;
 import oasip.backend.Service.EventCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +27,7 @@ public class AuthenticationController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public String getAllCategory(@Valid @RequestBody LoginDTO oldUser){
+    public TokenDto getAllCategory(@Valid @RequestBody LoginDTO oldUser){
         return service.match(oldUser);
     }
 }
