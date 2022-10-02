@@ -1,4 +1,4 @@
-package oasip.backend.Validation.Event;
+package oasip.backend.Validation.Category.Event;
 
 import oasip.backend.DTOs.Category.CategoryCreateDto;
 import oasip.backend.DTOs.Event.EventCreateDto;

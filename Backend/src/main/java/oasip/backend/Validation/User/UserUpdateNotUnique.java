@@ -1,8 +1,6 @@
 package oasip.backend.Validation.User;
 
 
-import oasip.backend.Validation.Event.EventNonOverlabValidator;
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.ElementType;

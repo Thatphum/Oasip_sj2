@@ -1,4 +1,4 @@
-package oasip.backend.Validation.Event;
+package oasip.backend.Validation.Category.Event;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

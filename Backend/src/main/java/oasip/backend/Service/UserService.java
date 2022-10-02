@@ -11,6 +11,7 @@ import oasip.backend.Enitities.Event;
 import oasip.backend.Enitities.User;
 import oasip.backend.Enum.UserRole;
 import oasip.backend.ListMapper;
+import oasip.backend.repositories.EventRepository;
 import oasip.backend.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EventRepository eventRepository;
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
@@ -65,8 +68,9 @@ public class UserService {
     }
 
     public void deleteUser(Integer userId) {
-        userRepository.findById(userId).orElseThrow(
+        User user = userRepository.findById(userId).orElseThrow(
                 () -> new ResponseStatusException( HttpStatus.NOT_FOUND , userId + " Does not Exist !!!"));
+        eventRepository.deleteAllByUser(user);
         userRepository.deleteById(userId);
     }
 
