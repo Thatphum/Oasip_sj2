@@ -1,12 +1,8 @@
 package oasip.backend.Validation.User;
 
-import oasip.backend.DTOs.Category.CategoryCreateDto;
-import oasip.backend.DTOs.Event.EventCreateDto;
 import oasip.backend.DTOs.User.UserUpdateDto;
 import oasip.backend.Enitities.User;
-import oasip.backend.Validation.Event.EventNonOverlab;
 import oasip.backend.repositories.UserRepository;
-import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,7 +10,6 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class UserUpdateNotUniqueValidator implements ConstraintValidator<UserUpdateNotUnique, UserUpdateDto> {
