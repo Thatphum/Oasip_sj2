@@ -1,13 +1,18 @@
 package oasip.backend.repositories;
 
 import oasip.backend.Enitities.Event;
+import oasip.backend.Enitities.User;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event, Integer> {
     List<Event> findByEventCategory_Id(Integer categoryId, Sort sort);
+
+    @Transactional
+    void deleteAllByUser(User user);
 }

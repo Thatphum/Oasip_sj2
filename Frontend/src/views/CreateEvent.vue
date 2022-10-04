@@ -10,7 +10,7 @@ onBeforeMount(async () => {
 });
 
 const categories = ref();
-const getAllCategory = async () => {
+const getAllCategory = async () => { 
   const res = await EventCategoryDataService.retrieveAllCategoryForCreate();
   categories.value = await res.json();
 };
