@@ -4,13 +4,20 @@ class UserDataService {
   retrieveAllUser() {
     //Get Token
     var token = localStorage.getItem('my_tkn')
-    
-    return fetch(`${API_URL}/users` , {
+    console.log(token);
+    if (localStorage.getItem('my_tkn')!= null) {
+      return fetch(`${API_URL}/users` , {
       method : 'GET',
       headers: {
         'Authorization' : `Bearer ${token}`
       }
     })
+    }else{
+      return fetch(`${API_URL}/users` , {
+        method : 'GET'
+      })
+    }
+    
   }
   retrieveUser(id) {
     return fetch(`${API_URL}/users/${id}`)

@@ -8,6 +8,7 @@ import oasip.backend.Service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,6 +23,7 @@ public class EventController {
     private EventService service;
 
     @GetMapping("")
+//    @PreAuthorize("hasRole('admin')")
     public List<EventListAllDto> getAllEvents() { return service.getAllEvent(); }
 
     @GetMapping("/{eventId}")

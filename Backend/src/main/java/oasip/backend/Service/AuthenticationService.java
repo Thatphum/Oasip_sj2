@@ -68,9 +68,11 @@ public class AuthenticationService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (BadCredentialsException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        }catch (Exception ex){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
         }
+//        catch (Exception ex){
+//            System.out.println("dskal;dkkasl;d");
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
+//        }
     }
 
     public ResponseEntity<?> getRefreshToken(String jwtRefreshToken){

@@ -73,6 +73,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         } catch (BadCredentialsException ex) {
             request.setAttribute("exception", ex);
         } catch (Exception ex) {
+            request.setAttribute("exception", ex);
             System.out.println(ex);
         }
         chain.doFilter(request, response);
