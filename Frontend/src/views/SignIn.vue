@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import router from '../router';
 import LoginService from '../services/AuthenticationService';
 const email = ref('');
 const password = ref('');
@@ -11,12 +12,17 @@ const submitLogin = async () => {
   };
   console.log(requiredUser);
   const res = await LoginService.logInUser(requiredUser);
+  var jwt = await res.json();
+  console.log(jwt);
   if (res.status == 404) {
     alert('A user with the specified email DOES NOT exist');
   } else if (res.status == 401) {
     alert('Password NOT Matched');
   } else {
+    localStorage.setItem('my_tkn', jwt.accessToken);
     alert('Password Matched');
+    router.push({ path: '/listusers', name: 'ListUsers' });
+    window.location.reload();
   }
 };
 

@@ -25,7 +25,7 @@ const routes = [
   {path: "/userdetail/:id", name: "UserDetail", component: UserDetail },
   {path: "/users", name: "Users", component: User},
   {path: "/signup", name: "SignUp", component: SignUp},
-  {path: "/login", name: "LogIn", component: LogIn}
+  {path: "/signin", name: "SignIn", component: SignIn},
   
   
 ];
