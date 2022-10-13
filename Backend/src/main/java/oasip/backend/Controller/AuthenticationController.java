@@ -1,23 +1,16 @@
 package oasip.backend.Controller;
 
-<<<<<<< HEAD
-import oasip.backend.DTOs.Authentication.LoginDTO;
-=======
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.impl.DefaultClaims;
 import oasip.backend.Config.JwtTokenUtil;
-import oasip.backend.Config.Jwts.AuthenticationUser;
-import oasip.backend.Config.Jwts.JwtUserDetailsService;
 import oasip.backend.DTOs.Authentication.LoginDTO;
 import oasip.backend.DTOs.Authentication.TokenDto;
->>>>>>> 0a746d519c05a7f45ccf7b9d2d4ebaa75bbee663
 import oasip.backend.DTOs.Category.CategoryListAllDto;
 import oasip.backend.DTOs.User.UserCreateDto;
 import oasip.backend.Service.AuthenticationService;
 import oasip.backend.Service.EventCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-<<<<<<< HEAD
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,69 +20,16 @@ import java.util.List;
 @RequestMapping("/api/match")
 public class AuthenticationController {
 
+
+
     @Autowired
     private AuthenticationService service;
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public boolean getAllCategory(@Valid @RequestBody LoginDTO oldUser){
+    public TokenDto getAllCategory(@Valid @RequestBody LoginDTO oldUser){
         return service.match(oldUser);
     }
-}
-=======
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-@RestController
-@RequestMapping("/api/auth")
-public class AuthenticationController {
-
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
-    private AuthenticationService service;
-
-    @Autowired
-    JwtUserDetailsService jwtUserDetailService;
-
-    @PostMapping("/match")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> login(@Valid @RequestBody LoginDTO oldUser){
-        return service.match(oldUser);
-    }
-
-//    @RequestMapping(value = "/refreshtoken", method = RequestMethod.GET)
-    @GetMapping("/refreshtoken")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> refreshtoken(HttpServletRequest request) throws Exception {
-        String jwtRefreshToken = extractJwtFromRequest(request);
-        return service.getRefreshToken(jwtRefreshToken);
-    }
-
-    private String extractJwtFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7, bearerToken.length());
-        }
-        return null;
-    }
-
-//    @RequestMapping("/logout")
-//    public String logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-//        jwtTokenUtil.invalidateRelatedTokens(httpServletRequest);
-////        CookieUtil.clear(httpServletResponse, jwtTokenCookieName);
-//        return "redirect:/";
-//    }
 }
 
 
@@ -150,4 +90,3 @@ public class AuthenticationController {
 //        }
 //    }
 //}
->>>>>>> 0a746d519c05a7f45ccf7b9d2d4ebaa75bbee663

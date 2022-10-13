@@ -70,13 +70,6 @@
             <artifactId>argon2-jvm</artifactId>
             <version>2.7</version>
         </dependency>
-<<<<<<< HEAD
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--        </dependency>-->
-=======
->>>>>>> 0a746d519c05a7f45ccf7b9d2d4ebaa75bbee663
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-crypto</artifactId>
@@ -87,8 +80,6 @@
             <artifactId>bcprov-jdk15on</artifactId>
             <version>1.64</version>
         </dependency>
-<<<<<<< HEAD
-=======
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -98,7 +89,6 @@
             <artifactId>jjwt</artifactId>
             <version>0.9.1</version>
         </dependency>
->>>>>>> 0a746d519c05a7f45ccf7b9d2d4ebaa75bbee663
     </dependencies>
 
     <build>
