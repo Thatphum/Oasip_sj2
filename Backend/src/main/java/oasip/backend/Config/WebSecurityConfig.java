@@ -1,11 +1,11 @@
 package oasip.backend.Config;
 
+import oasip.backend.Exception.CustomAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,10 +13,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -41,26 +40,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new CustomAccessDeniedHandler();
+    }
 
-        http.cors().and().csrf().disable();
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
 
-        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/users").permitAll();
-//        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/users/refreshtoken").permitAll();
-
-        http.authorizeRequests().antMatchers("/api/users", "/api/users/**").authenticated().and().
-                exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+        httpSecurity.cors().and().csrf().disable()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST , "/api/auth/match").permitAll()
+                .antMatchers(HttpMethod.POST , "/api/users/**").permitAll()
+                .antMatchers("/api/users/**").hasAnyAuthority("admin")
+                .antMatchers(HttpMethod.GET , "/api/events").hasAnyAuthority("student","admin" , "lecturer")
+                .antMatchers(HttpMethod.GET , "/api/events/filter/**").permitAll()
+                .antMatchers(HttpMethod.POST , "/api/events/**").permitAll()
+                .antMatchers(HttpMethod.PATCH , "/api/events/**").hasAnyAuthority("student","admin")
+                .antMatchers(HttpMethod.DELETE , "/api/events/**").hasAnyAuthority("student","admin")
+                .antMatchers(HttpMethod.GET , "/api/categories/**").permitAll()
+                .antMatchers(HttpMethod.PATCH , "/api/categories/**").permitAll()
+                .anyRequest().authenticated().and()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler()).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        http.authorizeRequests().antMatchers( "/api/users/refreshtoken").authenticated().and().
-                exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class).exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        http.cors();
-
+        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

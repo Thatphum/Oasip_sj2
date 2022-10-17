@@ -1,4 +1,4 @@
-package oasip.backend.Validation.User;
+package oasip.backend.Exception.User;
 
 import oasip.backend.Enitities.User;
 import oasip.backend.repositories.UserRepository;

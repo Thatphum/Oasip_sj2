@@ -21,7 +21,7 @@ public class AuthenticationUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 //        for (Role c : this.authorities)
-//            System.out.println(c);
+//            System.out.println(c.getAuthority());
         return this.authorities;
     }
 

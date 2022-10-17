@@ -1,10 +1,10 @@
 package oasip.backend.Service;
 
+import oasip.backend.Exception.ErrorResponse;
 import oasip.backend.Config.JwtTokenUtil;
 import oasip.backend.Config.Jwts.AuthenticationUser;
 import oasip.backend.Config.Jwts.JwtUserDetailsService;
 import oasip.backend.DTOs.Authentication.LoginDTO;
-import oasip.backend.DTOs.Authentication.TokenDto;
 import oasip.backend.DTOs.Jwt.JwtResponse;
 import oasip.backend.Enitities.User;
 import oasip.backend.repositories.UserRepository;
@@ -47,12 +47,14 @@ public class AuthenticationService {
     private Argon2PasswordEncoder passwordEncoder = new Argon2PasswordEncoder();
 
     public ResponseEntity<?> match(LoginDTO oldUser) {
+        Authentication authentications = SecurityContextHolder.getContext().getAuthentication();
+        if(authentications.getName().contains("anonymousUser"))
         try {
             User user = userRepository.findByEmail(oldUser.getEmail());
             if(user != null){
                 //check Password is match
                 if(!(passwordEncoder.matches(oldUser.getPassword(),user.getPassword()))){
-                    throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Password NOT Matched");
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(HttpStatus.UNAUTHORIZED,"Password NOT Matched"));
                 }
                 Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -63,16 +65,15 @@ public class AuthenticationService {
                 String jwtRefreshToken = jwtTokenUtil.generateRefreshToken(authenticationUser);
                 return ResponseEntity.ok(new JwtResponse(jwt, jwtRefreshToken, authenticationUser.getUsername(), roles));
             }else
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "A user with the specified email DOES NOT exist");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(HttpStatus.NOT_FOUND,"A user with the specified email DOES NOT exist"));
         }catch (DisabledException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (BadCredentialsException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        } catch (Exception ex){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
         }
-//        catch (Exception ex){
-//            System.out.println("dskal;dkkasl;d");
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
-//        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse(HttpStatus.FORBIDDEN,"Access denied"));
     }
 
     public ResponseEntity<?> getRefreshToken(String jwtRefreshToken){
@@ -86,9 +87,6 @@ public class AuthenticationService {
         }catch (Exception ex){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"JWT Refresh Token has expired",ex);
         }
-
-
-
     }
 
 }

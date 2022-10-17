@@ -1,4 +1,4 @@
-package oasip.backend.Validation.User;
+package oasip.backend.Exception.User;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

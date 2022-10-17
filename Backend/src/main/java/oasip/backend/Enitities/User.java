@@ -12,7 +12,7 @@ import java.util.Set;
 @Table(name = "users")
 @Getter
 @Setter
-@ToString
+//@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -39,8 +39,8 @@ public class User {
     @Column(name = "updateOn", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Timestamp updateOn;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Event> events = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "lecturer")
+    private Set<EventCategoriesOwner> eventCategoriesOwners = new LinkedHashSet<>();
 
 }

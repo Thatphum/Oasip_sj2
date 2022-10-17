@@ -3,12 +3,14 @@ package oasip.backend.Enitities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "eventcategories")
 @Getter
 @Setter
-@ToString
+//@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Eventcategory {
@@ -26,5 +28,12 @@ public class Eventcategory {
 
     @Column(name = "eventCategoryDuration", nullable = false)
     private Integer eventCategoryDuration;
+
+
+    @OneToMany(mappedBy = "eventCategory")
+    private Set<Event> events = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "eventCategory")
+    private Set<EventCategoriesOwner> eventCategoriesOwners = new LinkedHashSet<>();
 
 }

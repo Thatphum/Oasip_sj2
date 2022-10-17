@@ -1,4 +1,4 @@
-package oasip.backend.Validation.User;
+package oasip.backend.Exception.User;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -10,10 +10,12 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(
-        validatedBy = UserUniqueNameValidator.class
+        validatedBy = UserUniqueEmailValidator.class
 )
-public @interface UserUniqueName {
-    String message() default "The Name is not unique.";
+public @interface UserUniqueEmail {
+    String message() default "The Email is not unique.";
+
+    String fieldId();
 
     Class<?>[] groups() default {};
 

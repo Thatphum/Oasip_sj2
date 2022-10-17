@@ -1,5 +1,4 @@
-package oasip.backend.Validation.User;
-
+package oasip.backend.Exception.Event;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -8,17 +7,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.TYPE , ElementType.TYPE_USE})
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(
-        validatedBy = UserUpdateNotUniqueValidator.class
+        validatedBy = EventNonOverlabValidator.class
 )
-public @interface UserUpdateNotUnique {
-    String message() default "fdkfjkskjfljlkdjskfl";
-
-    String field();
-
-    String fieldMatch();
+public @interface EventNonOverlab {
+    String message() default "Requested event overlapped with existing events;";
 
     Class<?>[] groups() default {};
 

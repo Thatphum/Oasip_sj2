@@ -1,16 +1,11 @@
-package oasip.backend.Validation.User;
+package oasip.backend.Exception.User;
 
-import oasip.backend.DTOs.User.UserUpdateDto;
 import oasip.backend.Enitities.User;
 import oasip.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserUniqueEmailValidator implements ConstraintValidator<UserUniqueEmail, String> {
     @Autowired

@@ -1,15 +1,13 @@
 package oasip.backend.Service;
 
 import oasip.backend.DTOs.Event.EventDetailDto;
-import oasip.backend.DTOs.Event.EventEditDto;
-import oasip.backend.DTOs.Event.EventListAllDto;
 import oasip.backend.DTOs.User.UserCreateDto;
 import oasip.backend.DTOs.User.UserDetailDto;
 import oasip.backend.DTOs.User.UserListAllDto;
 import oasip.backend.DTOs.User.UserUpdateDto;
-import oasip.backend.Enitities.Event;
 import oasip.backend.Enitities.User;
 import oasip.backend.Enum.UserRole;
+import oasip.backend.Exception.ErrorResponse;
 import oasip.backend.ListMapper;
 import oasip.backend.repositories.EventRepository;
 import oasip.backend.repositories.UserRepository;
@@ -17,6 +15,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -49,28 +50,29 @@ public class UserService {
         return modelMapper.map(user, UserDetailDto.class);
     }
 
-    public UserCreateDto createUser(UserCreateDto newUser) {
+    public ResponseEntity<?> createUser(UserCreateDto newUser) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication.getName().contains("anonymousUser")){
+            if(newUser.getRole().length()==0){
+                newUser.setRole("student");
+            }
+            User user = modelMapper.map(newUser, User.class);
+            user.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
-        if(newUser.getRole().length()==0){
-            newUser.setRole("student");
+            for(UserRole r : UserRole.values()){
+                if(newUser.getRole().equals(r.toString()))
+                    user.setRole(r);;
+            }
+            userRepository.saveAndFlush(user);
+            return ResponseEntity.ok(newUser);
         }
-        User user = modelMapper.map(newUser, User.class);
-        user.setPassword(passwordEncoder.encode(newUser.getPassword()));
-//        System.out.println(newUser);
-//        System.out.println(user);
-
-        for(UserRole r : UserRole.values()){
-            if(newUser.getRole().equals(r.toString()))
-                user.setRole(r);;
-        }
-        userRepository.saveAndFlush(user);
-        return newUser;
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse(HttpStatus.FORBIDDEN,"Access denied"));
     }
 
     public void deleteUser(Integer userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new ResponseStatusException( HttpStatus.NOT_FOUND , userId + " Does not Exist !!!"));
-        eventRepository.deleteAllByUser(user);
+//        eventRepository.deleteAllByUser(user);
         userRepository.deleteById(userId);
     }
 

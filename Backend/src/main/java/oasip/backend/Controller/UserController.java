@@ -9,6 +9,7 @@ import oasip.backend.DTOs.User.UserUpdateDto;
 import oasip.backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,7 +29,7 @@ public class UserController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public UserCreateDto createUser(@Valid @RequestBody UserCreateDto newUser) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserCreateDto newUser) {
         return userService.createUser(newUser);
     }
 

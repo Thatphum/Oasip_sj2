@@ -1,15 +1,15 @@
-package oasip.backend.Validation.Category;
+package oasip.backend.Exception.Category;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
-@Target({ElementType.FIELD})
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(
-        validatedBy = CategoryUniqueNameValidator.class
+        validatedBy = CategoryUniqueNameEditValidator.class
 )
-public @interface CategoryUniqueName {
+public @interface CategoryUniqueNameEdit {
     String message() default "The eventCategoryName is NOT unique.";
 
     Class<?>[] groups() default {};

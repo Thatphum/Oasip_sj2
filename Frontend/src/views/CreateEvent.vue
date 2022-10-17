@@ -26,7 +26,9 @@ const eventTime = ref();
 const overlaps = ref();
 // ดึง Event Category ทั้งหมด
 const listOverlap = async (id) => {
+  console.log(id);
   const res = await EventDataService.retreiveCategory(id);
+  console.log(res.status);
   const data = await res.json();
   overlaps.value = data;
 };

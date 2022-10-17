@@ -1,9 +1,8 @@
 package oasip.backend.DTOs.User;
 
 import lombok.Data;
-import oasip.backend.Validation.User.UserCheckRole;
-import oasip.backend.Validation.User.UserUniqueEmail;
-import oasip.backend.Validation.User.UserUpdateNotUnique;
+import oasip.backend.Exception.User.UserCheckRole;
+import oasip.backend.Exception.User.UserUpdateNotUnique;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;

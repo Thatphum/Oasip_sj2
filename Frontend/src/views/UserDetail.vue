@@ -46,7 +46,6 @@ const updateUser = async () => {
     newData.email != detail.value.email ||
     newData.role != detail.value.role
   ) {
-    console.log('dsalkda');
     const res = await UserDataService.updateUser(detail.value.id, newData);
     if (res.status == 400) {
       alert('This name or email are already used.');
