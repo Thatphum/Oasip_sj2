@@ -6,6 +6,7 @@ import oasip.backend.DTOs.User.UserDetailDto;
 import oasip.backend.DTOs.User.UserListAllDto;
 import oasip.backend.DTOs.User.UserUpdateDto;
 import oasip.backend.Enitities.User;
+import oasip.backend.Enum.Role;
 import oasip.backend.Enum.UserRole;
 import oasip.backend.Exception.ErrorResponse;
 import oasip.backend.ListMapper;
@@ -52,7 +53,11 @@ public class UserService {
 
     public ResponseEntity<?> createUser(UserCreateDto newUser) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication.getName().contains("anonymousUser")){
+        Role role = null;
+        if(!authentication.getName().contains("anonymousUser")){
+            role = (Role) SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0];
+        }
+        if(authentication.getName().contains("anonymousUser")|| role.getAuthority().contains("admin")){
             if(newUser.getRole().length()==0){
                 newUser.setRole("student");
             }

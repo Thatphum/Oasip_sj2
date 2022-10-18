@@ -20,7 +20,7 @@ const getDetailUser = async (id) => {
   if (res.status == 200) {
     detail.value = await res.json();
   } else if(res.status == 401){
-
+    
   } else {
     alert('ขออภัยเกิดข้อผิดพลาดกรุณาลองอีกครั้ง');
     router.go(-1);
