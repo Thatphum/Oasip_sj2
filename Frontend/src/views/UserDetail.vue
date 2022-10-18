@@ -16,11 +16,14 @@ onBeforeMount(async () => {
 const detail = ref({});
 const getDetailUser = async (id) => {
   const res = await UserDataService.retrieveUser(id);
+  console.log(res.status);
   if (res.status == 200) {
     detail.value = await res.json();
+  } else if(res.status == 401){
+
   } else {
     alert('ขออภัยเกิดข้อผิดพลาดกรุณาลองอีกครั้ง');
-    router.push({ name: 'Users' });
+    router.go(-1);
   }
 };
 
