@@ -20,6 +20,7 @@ const submitLogin = async () => {
     alert('Password NOT Matched');
   } else {
     localStorage.setItem('my_tkn', jwt.accessToken);
+    console.log()
     alert('Password Matched');
     router.go(-1);
     // window.location.reload();
