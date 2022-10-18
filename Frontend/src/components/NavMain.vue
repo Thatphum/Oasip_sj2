@@ -10,7 +10,7 @@ const goHome = () => {
   router.push({ path: '/', name: 'Home' });
 };
 
-// const swtbtn = ref(false);
+
 const switchbtn = () => {
   if (localStorage.getItem('my_tkn')) {
     return true;
