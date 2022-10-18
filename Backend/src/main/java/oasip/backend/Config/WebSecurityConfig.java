@@ -29,6 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtRequestFilter jwtRequestFilter;
 
 
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new Argon2PasswordEncoder();
