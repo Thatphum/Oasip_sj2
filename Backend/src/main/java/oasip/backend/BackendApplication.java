@@ -19,12 +19,4 @@ public class BackendApplication {
         SpringApplication.run(BackendApplication.class, args);
 
     }
-
-
-    @Bean
-    public HttpFirewall allowUrlSemicolonHttpFirewall() {
-        StrictHttpFirewall firewall = new StrictHttpFirewall();
-        firewall.setAllowSemicolon(true);
-        return firewall;
-    }
 }
