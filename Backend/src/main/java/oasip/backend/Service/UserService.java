@@ -76,6 +76,7 @@ public class UserService {
 
     public UserUpdateDto updateUser(UserUpdateDto updateUser, Integer userId) {
 //        System.out.println(updateUser.getRole());
+        
         if(updateUser.getRole().length() == 0){
             updateUser.setRole("student");
         }
