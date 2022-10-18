@@ -17,10 +17,7 @@ import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.firewall.HttpFirewall;
-import org.springframework.security.web.firewall.HttpStatusRequestRejectedHandler;
-import org.springframework.security.web.firewall.RequestRejectedHandler;
-import org.springframework.security.web.firewall.StrictHttpFirewall;
+import org.springframework.security.web.firewall.*;
 
 import java.util.Arrays;
 
@@ -49,10 +46,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
-        StrictHttpFirewall firewall = new StrictHttpFirewall();
-        firewall.setAllowUrlEncodedSlash(true);
-        firewall.setAllowSemicolon(true);
-        return firewall;
+//        DefaultHttpFirewall firewall = new DefaultHttpFirewall();
+//        firewall.setAllowUrlEncodedSlash(true);
+//        return firewall;
+        return new DefaultHttpFirewall();
     }
 
     @Bean
@@ -62,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        super.configure(web);
+//        super.configure(web);
         web.httpFirewall(allowUrlEncodedSlashHttpFirewall());
     }
 
