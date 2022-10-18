@@ -173,7 +173,7 @@ public class EventService {
                     "Event Notes: " + ((event.getEventNotes() != null) ? event.getEventNotes():" ");
 //            System.out.println(subject);
 //            System.out.println(body);
-            String status = emailService.sendSimpleMail(event.getBookingEmail() , body , subject);
+//            String status = emailService.sendSimpleMail(event.getBookingEmail() , body , subject);
         }else{
             if (role.getAuthority().contains("lecturer"))
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse(HttpStatus.FORBIDDEN,"Access denied"));

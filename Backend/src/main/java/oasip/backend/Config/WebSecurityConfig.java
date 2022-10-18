@@ -45,21 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
-    @Bean
-    public HttpFirewall configureFirewall() {
-        StrictHttpFirewall strictHttpFirewall = new StrictHttpFirewall();
-        strictHttpFirewall.setAllowedHttpMethods(Arrays.asList("GET", "POST", "DELETE", "OPTIONS")); // Allow only HTTP GET, POST, DELETE and OPTIONS methods
-        return strictHttpFirewall;
-    }
-
-    /*
-     Use this bean if you are using Spring Security 5.4 and above
-     */
-    @Bean
-    public RequestRejectedHandler requestRejectedHandler() {
-        return new HttpStatusRequestRejectedHandler(); // Default status code is 400. Can be customized
-    }
+    
 
     @Bean
     public AccessDeniedHandler accessDeniedHandler(){
@@ -85,5 +71,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(accessDeniedHandler()).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.httpBasic();
+
+
     }
 }
