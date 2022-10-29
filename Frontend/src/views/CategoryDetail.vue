@@ -71,6 +71,7 @@ const save = async (categpryid) => {
         category.value.eventCategoryDescription ||
       categorys.eventCategoryDuration != category.value.eventCategoryDuration
     ) {
+      console.log(categpryid);
       const res = await EventCategoryDataService.updateEvent(
         categpryid,
         categorys

@@ -25,8 +25,13 @@ const routes = [
   {path: "/userdetail/:id", name: "UserDetail", component: UserDetail },
   {path: "/users", name: "Users", component: User},
   {path: "/signup", name: "SignUp", component: SignUp},
+<<<<<<< HEAD
   {path: "/signin", name: "SignIn", component: SignIn}
   
+=======
+  {path: "/signin", name: "SignIn", component: SignIn},
+
+>>>>>>> f400c66d970e1d2ec1e78dcd20d97e2f22aa0994
   
 ];
 const router = createRouter({ history, routes });

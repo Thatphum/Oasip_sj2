@@ -1,11 +1,28 @@
 <script setup>
+import { onBeforeMount, ref } from 'vue';
 import router from '../router';
+
 const btn = () => {
   const menu = document.querySelector('#menu');
   menu.classList.toggle('hidden');
 };
 const goHome = () => {
   router.push({ path: '/', name: 'Home' });
+};
+
+// const swtbtn = ref(false);
+const switchbtn = () => {
+  if (localStorage.getItem('my_tkn')) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const logoutbtn = () => {
+  localStorage.clear();
+  // router.push({ path: '/listusers', name: 'ListUsers' });
+  window.location.reload();
 };
 </script>
 
@@ -74,12 +91,27 @@ const goHome = () => {
             >SignUp</router-link
           >
         </li>
-        <li>
+        <li v-if="!switchbtn()">
+          <router-link
+            class="md:p-4 py-2 block hover:text-purple-400 text-white"
+            :to="{ path: '/signIn', name: 'SignIn' }"
+            >SignIn</router-link
+          >
+        </li>
+        <li v-if="!switchbtn()">
           <router-link
             class="md:p-4 py-2 block hover:text-purple-400 text-white"
             :to="{ path: '/about', name: 'About' }"
             >สมาชิกสภาแห่งเทพ</router-link
           >
+        </li>
+        <li v-else>
+          <button
+            class="md:p-4 py-2 block hover:text-purple-400 text-red-400"
+            @click="logoutbtn()"
+          >
+            LOGOUT
+          </button>
         </li>
         <!-- <li>
           <a class="md:p-4 py-2 block hover:text-purple-400 text-white" href="#"

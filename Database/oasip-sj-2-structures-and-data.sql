@@ -1,3 +1,5 @@
+
+
 -- MySQL dump 10.13  Distrib 8.0.29, for Win64 (x86_64)
 --
 -- Host: localhost    Database: oasip
@@ -106,7 +108,11 @@ CREATE TABLE `users` (
   `userId` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL,
+<<<<<<< HEAD
   -- `password` varchar(90) NOT NULL,
+=======
+  `password` varchar(100) NOT NULL,
+>>>>>>> f400c66d970e1d2ec1e78dcd20d97e2f22aa0994
   `role` ENUM('admin', 'lecturer', 'student') NOT NULL DEFAULT 'student',
   `createOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updateOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -122,7 +128,11 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+<<<<<<< HEAD
 INSERT INTO `users` VALUES (1,'OASIP ADMIN','oasip.admin@kmutt.ac.th','admin','2022-07-31 17:00:00','2022-07-31 17:00:00'),(2,'Somchai Jaidee','somchai.jai@kmutt.ac.th','lecturer','2022-08-08 08:00:00','2022-08-08 08:00:00'),(3,'Komkrid Rakdee','komkrid.rak@mail.kmutt.ac.th','student','2022-08-08 08:00:01','2022-08-08 08:00:01'),(4,'สมเกียรติ ขยันเรียน','somkiat.kay@kmutt.ac.th','student','2022-08-16 02:00:00','2022-08-16 02:00:00');
+=======
+-- INSERT INTO `users` VALUES (1,'OASIP ADMIN','oasip.admin@kmutt.ac.th','123456','admin','2022-07-31 17:00:00','2022-07-31 17:00:00'),(2,'Somchai Jaidee','somchai.jai@kmutt.ac.th','123456','lecturer','2022-08-08 08:00:00','2022-08-08 08:00:00'),(3,'Komkrid Rakdee','komkrid.rak@mail.kmutt.ac.th','123456','student','2022-08-08 08:00:01','2022-08-08 08:00:01'),(4,'สมเกียรติ ขยันเรียน','somkiat.kay@kmutt.ac.th','123456','student','2022-08-16 02:00:00','2022-08-16 02:00:00');
+>>>>>>> f400c66d970e1d2ec1e78dcd20d97e2f22aa0994
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 ALTER TABLE `oasip`.`users` 
 ADD COLUMN `password` VARCHAR(90) NOT NULL AFTER `email`;
@@ -137,5 +147,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f400c66d970e1d2ec1e78dcd20d97e2f22aa0994
 -- Dump completed on 2022-08-20  0:19:11

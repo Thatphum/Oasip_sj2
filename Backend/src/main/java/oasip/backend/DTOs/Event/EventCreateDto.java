@@ -1,7 +1,7 @@
 package oasip.backend.DTOs.Event;
 
 import lombok.Data;
-import oasip.backend.Validation.Event.EventNonOverlab;
+import oasip.backend.Exception.Event.EventNonOverlab;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;

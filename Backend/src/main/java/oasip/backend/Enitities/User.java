@@ -5,7 +5,6 @@ import oasip.backend.Enum.UserRole;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -13,7 +12,7 @@ import java.util.Set;
 @Table(name = "users")
 @Getter
 @Setter
-@ToString
+//@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -27,6 +26,8 @@ public class User {
 
     @Column(name = "email", nullable = false, length = 50)
     private String email;
+    @Column(name = "password", nullable = false, length = 90)
+    private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
@@ -38,8 +39,8 @@ public class User {
     @Column(name = "updateOn", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Timestamp updateOn;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Event> events = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "lecturer")
+    private Set<EventCategoriesOwner> eventCategoriesOwners = new LinkedHashSet<>();
 
 }

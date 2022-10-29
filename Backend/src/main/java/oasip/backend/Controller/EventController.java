@@ -8,6 +8,8 @@ import oasip.backend.Service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,14 +24,14 @@ public class EventController {
     private EventService service;
 
     @GetMapping("")
-    public List<EventListAllDto> getAllEvents() { return service.getAllEvent(); }
+    public ResponseEntity<?> getAllEvents() { return service.getAllEvent(); }
 
     @GetMapping("/{eventId}")
-    public EventDetailDto getEventDetail(@PathVariable Integer eventId) {
+    public ResponseEntity<?> getEventDetail(@PathVariable Integer eventId) {
         return service.getEvent(eventId);
     }
 
-    @GetMapping("/")
+    @GetMapping("/filter/")
     public List<EventListAllDto> filterEvents(@RequestParam(name = "categoryId") Integer id,
                                               @RequestParam(name = "option", defaultValue = "0" , required = false) Integer optionId ,
                                               @RequestParam(name = "time", defaultValue = "2022-10-02" , required = false)
@@ -39,7 +41,7 @@ public class EventController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public EventCreateDto createEvent(@Valid @RequestBody EventCreateDto newEvent) {
+    public ResponseEntity<?> createEvent(@Valid @RequestBody EventCreateDto newEvent) {
         return service.createEvent(newEvent);
     }
 
@@ -50,7 +52,7 @@ public class EventController {
 
     @PatchMapping("/{eventId}")
     @ResponseStatus(HttpStatus.OK)
-    public EventEditDto updateEvent(@PathVariable Integer eventId, @RequestBody EventEditDto updateEvent) {
+    public ResponseEntity<?> updateEvent(@PathVariable Integer eventId, @RequestBody EventEditDto updateEvent) {
         return service.updateEvent(updateEvent, eventId);
     }
 }

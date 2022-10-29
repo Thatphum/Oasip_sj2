@@ -13,6 +13,7 @@ onBeforeMount(async () => {
   // });
 })
 
+<<<<<<< HEAD
 const detail = ref({})
 
 const getDetailUser = async (id) => {
@@ -24,6 +25,19 @@ const getDetailUser = async (id) => {
   } else {
     alert('ขออภัยเกิดข้อผิดพลาดกรุณาลองอีกครั้ง')
     router.push({ name: 'Users' })
+=======
+const detail = ref({});
+const getDetailUser = async (id) => {
+  const res = await UserDataService.retrieveUser(id);
+  console.log(res.status);
+  if (res.status == 200) {
+    detail.value = await res.json();
+  } else if(res.status == 401){
+    
+  } else {
+    alert('ขออภัยเกิดข้อผิดพลาดกรุณาลองอีกครั้ง');
+    router.go(-1);
+>>>>>>> f400c66d970e1d2ec1e78dcd20d97e2f22aa0994
   }
 }
 
@@ -44,7 +58,30 @@ const updateUser = async () => {
     name: editUserName.value.trim(),
     email: editEmail.value.trim(),
     role: editRole.value,
+<<<<<<< HEAD
   }
+=======
+  };
+
+  if (
+    newData.name != detail.value.name ||
+    newData.email != detail.value.email ||
+    newData.role != detail.value.role
+  ) {
+    const res = await UserDataService.updateUser(detail.value.id, newData);
+    if (res.status == 400) {
+      alert('This name or email are already used.');
+    } else {
+      await getDetailUser(params.id);
+    }
+  }
+
+  // console.log(newData);
+  // console.log(detail.value);
+
+  editMode.value = false;
+};
+>>>>>>> f400c66d970e1d2ec1e78dcd20d97e2f22aa0994
 
   if (newData.value == detail.value) {
     detail.value = await res.json()

@@ -1,8 +1,10 @@
 <script setup>
 import { onBeforeMount, ref } from 'vue';
-import router from '../router';
+// import router from '../router';
 import UserDataService from '../services/UserDataService';
 import User from '../components/User.vue';
+import { checkCompatEnabled } from '@vue/compiler-core';
+import router from '../router';
 
 onBeforeMount(async () => {
   await listUsers();
@@ -15,8 +17,15 @@ const users = ref([]);
 
 const listUsers = async () => {
   const res = await UserDataService.retrieveAllUser();
+  console.log(res.status);
+  console.log(res);
   users.value = await res.json();
-  console.log(users.value);
+
+  if (res.status === 401) {
+    // alert('NO TOKEN');
+  } else {
+    console.log(users.value);
+  }
 };
 
 const deleteUser = async (id) => {
@@ -32,6 +41,10 @@ const confirmDelete = (id) => {
   if (confirm(text) == true) {
     deleteUser(id);
   }
+};
+
+const goLogin = () => {
+  router.push({ path: '/signIn', name: 'SignIn' });
 };
 </script>
 
@@ -72,6 +85,21 @@ const confirmDelete = (id) => {
                 v-if="users.length > 0"
               >
                 <User :mask="user" @deleteUser="confirmDelete($event)" />
+              </tr>
+              <tr class="rounded overflow-hidden shadow-lg bg-white" v-else>
+                <td colspan="4" class="text-center">
+                  <div class="flex justify-center">
+                    <div>
+                      <h1 class="text-2xl">Please Login Role Admin</h1>
+                      <button
+                        class="flex items-center m-auto rounded-xl bg-indigo-500 px-2 text-white"
+                        @click="goLogin()"
+                      >
+                        Login
+                      </button>
+                    </div>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
