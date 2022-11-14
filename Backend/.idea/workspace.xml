@@ -4,120 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa792049-7dc0-48b3-b900-7cd8c8306801" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/ApplicationConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/BackendApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Config/Jwts/JwtRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Config/Jwts/JwtResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Controller/EventCategoryController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Controller/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/Authentication/LoginDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/Authentication/TokenDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/Category/CategoryCreateDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/Category/CategoryDetailDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/Category/CategoryEditDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/Category/CategoryListAllDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/Category/CategoryListCreateDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/Category/CategoryListFilterDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/Event/EventCreateDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/Event/EventDetailDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/Event/EventEditDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/Event/EventListAllDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/EventDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/EventcategoryDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/User/UserCreateDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/User/UserDetailDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/User/UserListAllDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/DTOs/User/UserUpdateDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Enitities/Event.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Enitities/Eventcategory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Enitities/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Enum/Role.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Enum/UserRole.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/ListMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Service/EventCategoryService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Service/EventService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Service/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Validation/Category/CategoryUniqueName.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Validation/Category/CategoryUniqueNameValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Validation/Category/Event/EventNonOverlab.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Validation/Category/Event/EventNonOverlabValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Validation/User/UserCheckRole.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Validation/User/UserCheckRoleValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Validation/User/UserUniqueEmail.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Validation/User/UserUniqueEmailValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Validation/User/UserUniqueName.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Validation/User/UserUniqueNameValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Validation/User/UserUpdateNotUnique.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Validation/User/UserUpdateNotUniqueValidator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Validation/ValidationHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/Validation/Validations.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/repositories/CategoryRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/repositories/EventRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/oasip/backend/repositories/UserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/oasip/backend/BackendApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/ApplicationConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/BackendApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Controller/EventCategoryController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Controller/UserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/DTOs/Category/CategoryCreateDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/DTOs/Category/CategoryDetailDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/DTOs/Category/CategoryEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/DTOs/Category/CategoryListAllDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/DTOs/Category/CategoryListCreateDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/DTOs/Category/CategoryListFilterDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/DTOs/Event/EventCreateDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/DTOs/Event/EventDetailDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/DTOs/Event/EventEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/DTOs/Event/EventListAllDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/DTOs/EventDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/DTOs/EventcategoryDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/DTOs/User/UserCreateDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/DTOs/User/UserDetailDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/DTOs/User/UserListAllDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/DTOs/User/UserUpdateDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Enitities/Event.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Enitities/Eventcategory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Enitities/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Enum/UserRole.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/ListMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Service/EventCategoryService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Service/EventService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Service/UserService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Validation/Category/CategoryUniqueName.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Validation/Category/CategoryUniqueNameValidator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Validation/Event/EventNonOverlab.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Validation/Event/EventNonOverlabValidator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Validation/User/UserCheckRole.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Validation/User/UserCheckRoleValidator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Validation/User/UserUniqueEmail.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Validation/User/UserUniqueEmailValidator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Validation/User/UserUniqueName.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Validation/User/UserUniqueNameValidator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Validation/User/UserUpdateNotUnique.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Validation/User/UserUpdateNotUniqueValidator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Validation/ValidationHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/Validation/Validations.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/repositories/CategoryRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/repositories/EventRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/oasip/backend/repositories/UserRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/oasip/backend/BackendApplicationTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/NavMain.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/NavMain.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Frontend/src/components/SignOut.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/components/SignOut.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Frontend/src/data/EventDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/data/EventDetail.js" afterDir="false" />
-    </list>
+    <list default="true" id="fa792049-7dc0-48b3-b900-7cd8c8306801" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -187,6 +74,7 @@
       <updated>1665677745526</updated>
       <workItem from="1665677754777" duration="197000" />
       <workItem from="1665728158837" duration="1154000" />
+      <workItem from="1666068070873" duration="667000" />
     </task>
     <servers />
   </component>

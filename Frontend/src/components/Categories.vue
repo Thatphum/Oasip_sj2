@@ -1,37 +1,33 @@
-<script setup>
-import router from '../router';
-const prop = defineProps({
-  mask: Object,
-});
+<script>
+import router from '../router'
+
+export default {
+  name: 'Categories',
+  props: {
+    categories: {
+      type: Object,
+      required: true,
+    },
+  },
+  methods: {
+    setDetail() {
+      setTimeout(() => {
+        router.push({ name: 'CategoryDetail', params: { id: prop.mask.id } })
+      }, 500)
+    },
+    getBorder(id) {
+      return borderCategory[id - 1]
+    },
+  },
+}
+
 const borderCategory = [
   'border-red-500',
   'border-blue-500',
   'border-yellow-500',
   'border-green-500',
   'border-orange-500',
-];
-const bgCategory = [
-  'bg-red-400',
-  'bg-blue-400',
-  'bg-yellow-400',
-  'bg-green-400',
-  'bg-orange-400',
-];
-const getBorder = (id) => {
-  // console.log(id);
-  // console.log(id);
-  // console.log(borderCategory[id - 1]);
-  return borderCategory[id - 1];
-};
-const getBgColor = (id) => {
-  // console.log(id);
-  return bgCategory[id - 1];
-};
-const setDetail = () => {
-  setTimeout(() => {
-    router.push({ name: 'CategoryDetail', params: { id: prop.mask.id } });
-  }, 500);
-};
+]
 </script>
 
 <template>

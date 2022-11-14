@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router';
 import router from '../router';
 import UserDataService from '../services/UserDataService';
 
+
 let { params } = useRoute();
 
 onBeforeMount(async () => {
@@ -75,6 +76,7 @@ const editModeOn = (detail) => {
 const editModeOff = () => {
   editMode.value = false;
 };
+
 </script>
 
 <template>

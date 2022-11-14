@@ -1,29 +1,31 @@
-<script setup>
-import { onBeforeMount, ref } from 'vue';
-import router from '../router';
+<script>
+import { onBeforeMount, ref } from 'vue'
+import router from '../router'
 
-const btn = () => {
-  const menu = document.querySelector('#menu');
-  menu.classList.toggle('hidden');
-};
-const goHome = () => {
-  router.push({ path: '/', name: 'Home' });
-};
+export default {
+  name: 'NavMain',
+  methods: {
+    btn() {
+      const menu = document.querySelector('#menu')
+      menu.classList.toggle('hidden')
+    },
+    goHome() {
+      router.push('/')
+    },
+    switchbtn() {
+      if (localStorage.getItem('my_tkn')) {
+        return true
+      } else {
+        return false
+      }
+    },
+    logoutbtn() {
+      localStorage.removeItem('my_tkn')
+      router.push('/')
+    },
+  },
+}
 
-
-const switchbtn = () => {
-  if (localStorage.getItem('my_tkn')) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-const logoutbtn = () => {
-  localStorage.clear();
-  // router.push({ path: '/listusers', name: 'ListUsers' });
-  window.location.reload();
-};
 </script>
 
 <template>
@@ -113,21 +115,6 @@ const logoutbtn = () => {
             LOGOUT
           </button>
         </li>
-        <!-- <li>
-          <a class="md:p-4 py-2 block hover:text-purple-400 text-white" href="#"
-            >Customers</a
-          >
-        </li>
-        <li>
-          <a class="md:p-4 py-2 block hover:text-purple-400 text-white" href="#"
-            >Blog</a
-          >
-        </li>
-        <li>
-          <a class="md:p-4 py-2 block hover:text-purple-400 text-white" href="#"
-            >Sign Up</a
-          >
-        </li> -->
       </ul>
     </div>
   </nav>
