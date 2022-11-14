@@ -49,7 +49,7 @@ const borderCategory = [
     >
       <div
         class="font-extrabold text-xl text-gray-900"
-        v-if="prop.mask.eventCategoryDescription.length > 0"
+        v-if="prop.mask.eventCategoryDescription != null"
       >
         {{ prop.mask.eventCategoryDescription }}
       </div>

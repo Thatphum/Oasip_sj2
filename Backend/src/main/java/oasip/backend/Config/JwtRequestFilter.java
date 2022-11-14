@@ -12,6 +12,8 @@ import io.jsonwebtoken.SignatureException;
 import oasip.backend.Config.Jwts.AuthenticationUser;
 import oasip.backend.Config.Jwts.JwtUserDetailsService;
 import oasip.backend.Enum.Role;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -37,6 +39,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    private static final Logger logger = LoggerFactory.getLogger(JwtRequestFilter.class);
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -65,16 +68,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 System.out.println("Cannot set the Security Context");
             }
         } catch (ExpiredJwtException ex) {
-//            request.setAttribute("exception", ex);
             request.setAttribute("exception", "JWT Token has expired");
-            System.out.println( ex);
-
-//            request.setAttribute("exception", "A user with the specified email DOES NOT exist");
         } catch (BadCredentialsException ex) {
             request.setAttribute("exception", ex);
         } catch (Exception ex) {
             request.setAttribute("exception", ex);
-            System.out.println(ex);
+//            System.out.println(ex);
         }
         chain.doFilter(request, response);
     }

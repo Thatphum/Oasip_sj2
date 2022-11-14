@@ -19,10 +19,11 @@ const submitLogin = async () => {
   } else if (res.status == 401) {
     alert('Password NOT Matched');
   } else {
-    localStorage.setItem('my_tkn', jwt.accessToken);
+    localStorage.setItem('my_tkn', jwt.refreshToken);
+    console.log();
     alert('Password Matched');
-    router.push({ path: '/listusers', name: 'ListUsers' });
-    window.location.reload();
+    router.go(-1);
+    // window.location.reload();
   }
 };
 

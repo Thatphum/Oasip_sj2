@@ -17,11 +17,14 @@ onBeforeMount(async () => {
 const detail = ref({});
 const getDetailUser = async (id) => {
   const res = await UserDataService.retrieveUser(id);
+  console.log(res.status);
   if (res.status == 200) {
     detail.value = await res.json();
+  } else if(res.status == 401){
+    
   } else {
     alert('ขออภัยเกิดข้อผิดพลาดกรุณาลองอีกครั้ง');
-    router.push({ name: 'Users' });
+    router.go(-1);
   }
 };
 
@@ -47,7 +50,6 @@ const updateUser = async () => {
     newData.email != detail.value.email ||
     newData.role != detail.value.role
   ) {
-    console.log('dsalkda');
     const res = await UserDataService.updateUser(detail.value.id, newData);
     if (res.status == 400) {
       alert('This name or email are already used.');
