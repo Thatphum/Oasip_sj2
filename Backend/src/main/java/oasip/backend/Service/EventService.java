@@ -1,19 +1,35 @@
 package oasip.backend.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import oasip.backend.Config.Jwts.JwtUserDetailsService;
 import oasip.backend.DTOs.Event.EventCreateDto;
 import oasip.backend.DTOs.Event.EventDetailDto;
 import oasip.backend.DTOs.Event.EventEditDto;
 import oasip.backend.DTOs.Event.EventListAllDto;
 import oasip.backend.Enitities.Event;
+import oasip.backend.Enitities.Eventcategory;
+import oasip.backend.Enum.Role;
+import oasip.backend.Exception.ErrorResponse;
 import oasip.backend.ListMapper;
+import oasip.backend.Service.Email.EmailService;
+import oasip.backend.repositories.CategoryRepository;
+import oasip.backend.repositories.EventCategoriesOwnerRepository;
 import oasip.backend.repositories.EventRepository;
+import oasip.backend.repositories.UserRepository;
+import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,17 +42,49 @@ public class EventService {
     @Autowired
     private ListMapper listMapper;
     @Autowired
-    private EventCategoryService categoryService;
+    JwtUserDetailsService jwtUserDetailService;
+    @Autowired
+    private EventCategoriesOwnerRepository eventCategoriesOwnerRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private ObjectMapper objectMapper;
+    @Autowired
+    private static final Validator validator =
+            Validation.byDefaultProvider()
+                    .configure()
+                    .messageInterpolator(new ParameterMessageInterpolator())
+                    .buildValidatorFactory()
+                    .getValidator();
 
-    public List<EventListAllDto> getAllEvent() {
-        List<Event> events = eventRepository.findAll(Sort.by("eventStartTime").descending());
-        return listMapper.maplist(events, EventListAllDto.class, modelMapper);
+    public ResponseEntity<?> getAllEvent() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Role role = (Role) SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0];
+        List<Event> events;
+        if(role.getAuthority().contains("admin")) { // admin
+            events = eventRepository.findAll(Sort.by("eventStartTime").descending());
+        }else if(role.getAuthority().contains("student")){ // student
+            events = eventRepository.findByBookingEmail(authentication.getName(),Sort.by("eventStartTime").descending());
+        }else { // lecturer
+            List<Integer> eventCategoriesOwner = eventCategoriesOwnerRepository.findAllByLecturer_Email(authentication.getName());
+            events = eventRepository.findAllByEventCategory_IdList(eventCategoriesOwner,Sort.by("eventStartTime").descending());
+        }
+        return ResponseEntity.ok(listMapper.maplist(events, EventListAllDto.class, modelMapper));
     }
 
-    public EventDetailDto getEvent(Integer eventId) {
+    public ResponseEntity<?> getEvent(Integer eventId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Role role = (Role) SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0];
+        List<Integer> eventCategoriesOwner = null;
+        if(role.getAuthority().contains("lecturer")){ // lecturer
+            eventCategoriesOwner = eventCategoriesOwnerRepository.findAllByLecturer_Email(authentication.getName()); // email
+        }
         Event event = eventRepository.findById(eventId).orElseThrow(
                 () -> new ResponseStatusException( HttpStatus.NOT_FOUND , eventId + " Does not Exist !!!"));
-        return modelMapper.map(event, EventDetailDto.class);
+        if(role.getAuthority().contains("admin") || authentication.getName().contains(event.getBookingEmail()) || eventCategoriesOwner.contains(event.getEventCategory().getId())){
+            return ResponseEntity.ok(modelMapper.map(event, EventDetailDto.class));
+        }
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse(HttpStatus.FORBIDDEN,"Access denied"));
     }
 
     public List<EventListAllDto> filterEvents(Integer categoryId , Integer optionId , Date time) {
@@ -108,39 +156,69 @@ public class EventService {
         return listMapper.maplist(events, EventListAllDto.class, modelMapper);
     }
 
-    public EventCreateDto createEvent(EventCreateDto newEvent) {
-//        Validations validation = new Validations();
-//        if (newEvent.getEventDuration() == null) {
-//            if (newEvent.getEventCategoryId() != null) {
-//                CreateEventcategoryDto eventcategory = categoryService.getCategory(newEvent.getEventCategoryId());
-//                newEvent.setEventDuration(eventcategory.getEventCategoryDuration());
-//                validation.overlab(getEachEventCategories(newEvent.getEventCategoryId()), newEvent.getEventStartTime(), newEvent.getEventDuration());
-//            }
-//        } else {
-//            validation.overlab(getEachEventCategories(newEvent.getEventCategoryId()), newEvent.getEventStartTime(), newEvent.getEventDuration());
-//        }
-//        if (validation.getTextError().length() > 0) {
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, validation.getTextError());
-//        }
-        Event event = modelMapper.map(newEvent, Event.class);
-        eventRepository.saveAndFlush(event);
-        return newEvent;
+    public ResponseEntity<?> createEvent(String jsonEvent) throws JsonProcessingException {
+        // convert String Json to obj
+        EventCreateDto newEvent = objectMapper.readValue(jsonEvent, EventCreateDto.class);
+        Event event = modelMapper.map(newEvent,Event.class);
+        // check validation
+        Set<ConstraintViolation<Event>> violations = validator.validate(event);
+        if (!violations.isEmpty()) throw new ConstraintViolationException(violations);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Role role = null;
+        //if user is anonymous set role to "anonymousUser".
+        if(!authentication.getName().contains("anonymousUser")){
+            role = (Role) authentication.getAuthorities().toArray()[0];
+        }
+//        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName()); // anonymousUser
+        if(authentication.getName().contains("anonymousUser") || authentication.getName().contains(event.getBookingEmail()) || role.getAuthority().contains("admin")){
+            eventRepository.saveAndFlush(event);
+            Eventcategory eventcategory = categoryRepository.getById(event.getEventCategory().getId());
+            Date endDate = new Date(event.getEventStartTime().getTime() + (event.getEventDuration() * 60000));
+            // send Email
+            String subject = "[OASIP] " + eventcategory.getEventCategoryName() + " @ " + event.getEventStartTime() + " - " +  endDate;
+            String body = "Booking : " + event.getBookingEmail() + "\n" +
+                    "Event Category: " + eventcategory.getEventCategoryName() + "\n" +
+                    "When: " + event.getEventStartTime() + "\n" +
+                    "Event Notes: " + ((event.getEventNotes() != null) ? event.getEventNotes():" ");
+//            System.out.println(subject);
+//            System.out.println(body);
+//            String status = emailService.sendSimpleMail(event.getBookingEmail() , body , subject);
+        }else{
+            if (role.getAuthority().contains("lecturer"))
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse(HttpStatus.FORBIDDEN,"Access denied"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(HttpStatus.BAD_REQUEST,"The booking email must be the same as the student's email"));
+        }
+        return ResponseEntity.ok(modelMapper.map(event,EventCreateDto.class));
     }
 
     public void deleteEvent(Integer eventId) {
-        eventRepository.findById(eventId).orElseThrow(
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Role role = (Role) SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0];
+        Event event = eventRepository.findById(eventId).orElseThrow(
                 () -> new ResponseStatusException( HttpStatus.NOT_FOUND , eventId + " Does not Exist !!!"));
-        eventRepository.deleteById(eventId);
+        if(role.getAuthority().contains("admin") || authentication.getName().contains(event.getBookingEmail())){
+            eventRepository.deleteById(eventId);
+        }else{
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Access denied");
+        }
     }
 
-    public EventEditDto updateEvent(EventEditDto updateEvent, Integer eventId) {
-        Event newEvent = modelMapper.map(updateEvent, Event.class);
-        Event event = eventRepository.findById(eventId).map(o -> mapEvent(o, newEvent)).orElseGet(() -> {
-            newEvent.setId(eventId);
-            return newEvent;
-        });
-        eventRepository.saveAndFlush(event);
-        return modelMapper.map(event, EventEditDto.class);
+    public ResponseEntity<?> updateEvent(EventEditDto updateEvent, Integer eventId)  {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Role role = (Role) SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0];
+        Event event = eventRepository.findById(eventId).orElseThrow(
+                () -> new ResponseStatusException( HttpStatus.NOT_FOUND , eventId + " Does not Exist !!!"));
+        if(role.getAuthority().contains("admin") || authentication.getName().contains(event.getBookingEmail())){
+            Event newEdit = modelMapper.map(updateEvent,Event.class);
+            mapEvent(event , newEdit);
+            // check validation
+            Set<ConstraintViolation<Event>> violations = validator.validate(event);
+            if (!violations.isEmpty()) throw new ConstraintViolationException(violations);
+            eventRepository.saveAndFlush(event);
+            return ResponseEntity.ok(modelMapper.map(event, EventEditDto.class));
+        }
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse(HttpStatus.FORBIDDEN,"Access denied"));
     }
 
     private Event mapEvent(Event existingEvent, Event updateEvent) {

@@ -1,9 +1,8 @@
 package oasip.backend.DTOs.User;
 
 import lombok.Data;
-import oasip.backend.Validation.User.UserCheckRole;
-import oasip.backend.Validation.User.UserUniqueEmail;
-import oasip.backend.Validation.User.UserUpdateNotUnique;
+import oasip.backend.Exception.User.UserCheckRole;
+import oasip.backend.Exception.User.UserNameOrEmailNotUnique;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -12,7 +11,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Data
-@UserUpdateNotUnique(field = "id", fieldMatch = "email", message = "The Email or Name must be unique.")
+@UserNameOrEmailNotUnique(field = "id", fieldMatch = "email", message = "The Email or Name must be unique.")
 public class UserUpdateDto implements Serializable {
 
     private Integer id;
