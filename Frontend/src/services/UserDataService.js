@@ -1,6 +1,6 @@
 const API_URL = `${import.meta.env.VITE_BASE_URL}api`
 
-class UserDataService {
+export default class UserDataService {
   retrieveAllUser() {
     //Get Token
     var token = localStorage.getItem('my_tkn')
@@ -40,4 +40,3 @@ class UserDataService {
   }
 
 }
-export default new UserDataService()
