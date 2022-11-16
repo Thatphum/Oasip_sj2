@@ -1,6 +1,6 @@
 package oasip.backend.Config.Jwts;
 
-import oasip.backend.Enum.Role;
+import oasip.backend.Enum.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,9 +9,9 @@ import java.util.Collection;
 public class AuthenticationUser implements UserDetails {
     private final String username;
     private final String password;
-    private final Collection<Role> authorities;
+    private final UserRole authorities;
 
-    public AuthenticationUser(String username, String password, Collection<Role> authorities) {
+    public AuthenticationUser(String username, String password, UserRole authorities) {
         this.username = username;
         this.password = password;
         this.authorities = authorities;
@@ -20,9 +20,8 @@ public class AuthenticationUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//        for (Role c : this.authorities)
-//            System.out.println(c.getAuthority());
-        return this.authorities;
+//        return this.authorities;
+        return null;
     }
 
     @Override

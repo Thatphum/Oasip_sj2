@@ -1,7 +1,16 @@
-<script setup>
+<script>
 import { onBeforeMount, ref } from 'vue';
 import EventCategoryDataService from '../services/EventCategoryDataService';
-defineEmits(['category', 'filter']);
+
+export default {
+  name: 'Filter',
+  emits: ['category','filter'],
+  beforeMount() {
+    
+  }
+}
+
+// defineEmits(['category', 'filter']);
 onBeforeMount(async () => {
   await listCategory();
 });

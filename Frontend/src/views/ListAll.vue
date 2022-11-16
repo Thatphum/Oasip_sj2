@@ -3,7 +3,6 @@ import { onBeforeMount, ref } from 'vue';
 import EventDataService from '../services/EventDataService';
 import Event from '../components/Event.vue';
 import Filter from '../components/Filter.vue';
-import router from '../router';
 
 //Lifecycle Hooks
 onBeforeMount(async () => {
@@ -15,18 +14,10 @@ onBeforeMount(async () => {
 
 //Fetch API
 const events = ref([]);
-const status = ref(false);
+
 const listEvents = async () => {
   const res = await EventDataService.retrieveAllEvent();
-  console.log(res.status);
-  if (res.status == 401) {
-    status.value = true;
-  } else if (res.status == 401) {
-  } else {
-    status.value = false;
-    events.value = await res.json();
-    console.log(events.value);
-  }
+  events.value = await res.json();
 }; //listAllEvent
 
 const deleteEvent = async (id) => {
@@ -58,10 +49,6 @@ const filterOption = async (filter) => {
     events.value = await res.json();
   }
 };
-
-const goLogin = () => {
-  router.push({ path: '/signIn', name: 'SignIn' });
-};
 </script>
 <template>
   <div
@@ -83,18 +70,6 @@ const goLogin = () => {
         <div>
           <div v-for="event in events" v-if="events.length > 0" class>
             <Event :mask="event" @deleteEvent="confirmDelete($event)" />
-          </div>
-          <div
-            v-else-if="status == true"
-            class="grid place-content-center h-full text-white text-3xl"
-          >
-            Please Login
-            <button
-              class="flex items-center m-auto rounded-xl bg-indigo-500 px-2 text-white"
-              @click="goLogin()"
-            >
-              Login
-            </button>
           </div>
           <div
             v-else

@@ -4,7 +4,7 @@ import NavMain from './components/NavMain.vue';
 
 <template>
   <div class="h-full w-full relative page">
-    <NavMain :key="$route.fullPath" />
+    <NavMain />
     <div class="mt-16">
       <router-view></router-view>
     </div>

@@ -1,24 +1,18 @@
 package oasip.backend.Config;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
-import io.jsonwebtoken.Jws;
 import oasip.backend.Config.Jwts.AuthenticationUser;
-import oasip.backend.Enum.Role;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.web.server.ResponseStatusException;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Component
 public class JwtTokenUtil implements Serializable {
@@ -29,13 +23,6 @@ public class JwtTokenUtil implements Serializable {
 
     @Value("${jwt.secret}")
     private String secret;
-
-    private long refreshExpirationDateInMs;
-
-    @Value("#{${jwt.refreshExpirationDateInhour}*60*60*1000}")
-    public void setRefreshExpirationDateInMs(int refreshExpirationDateInMs) {
-        this.refreshExpirationDateInMs = refreshExpirationDateInMs;
-    }
 
     //retrieve username from jwt token
     public String getUsernameFromToken(String token) {
@@ -81,16 +68,4 @@ public class JwtTokenUtil implements Serializable {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
-
-    public String generateRefreshToken(AuthenticationUser authenticationUser) {
-        Map<String, Object> claims = new HashMap<>();
-        return doGenerateRefreshToken(claims, authenticationUser.getUsername());
-    }
-
-    public String doGenerateRefreshToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + refreshExpirationDateInMs))
-                .signWith(SignatureAlgorithm.HS512, secret).compact();
-    }
-
 }

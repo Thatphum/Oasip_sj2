@@ -6,71 +6,19 @@ onBeforeMount(async () => {
   // console.log(users.value);
 })
 
-<<<<<<< HEAD
-const users = ref()
-=======
->>>>>>> f400c66d970e1d2ec1e78dcd20d97e2f22aa0994
 // const getAllUser = async () => {
 //   const res = await UserDataService.retrieveAllUser();
 //   users.value = await res.json();
 // };
 
-<<<<<<< HEAD
 const userName = ref('')
 const userEmail = ref('')
 const userPassword = ref('')
 const userRole = ref('')
-=======
-const userName = ref('');
-const userEmail = ref('');
-const userPassword = ref('');
-const userRole = ref('');
->>>>>>> f400c66d970e1d2ec1e78dcd20d97e2f22aa0994
 
 const errorName = ref()
 const errorEmail = ref()
-const errorPassword = ref()
 
-<<<<<<< HEAD
-const submitUser = async () => {
-  var newUser = {
-    name: userName.value.trim(),
-    email: userEmail.value.trim(),
-    password: userPassword.value,
-    role: userRole.value,
-  }
-  console.log(newUser)
-  const res = await UserDataService.createUser(newUser)
-  if (res.status == 400) {
-    alert('This name or email are already used.')
-  } else {
-    reset()
-  }
-}
-
-const EmailTrim = () => {
-  userEmail.value = userEmail.value.trim()
-}
-
-const reset = () => {
-  userName.value = ''
-  userEmail.value = ''
-  userRole.value = ''
-}
-
-const password = ref()
-const confirm_pass = ref()
-
-const checkPassword = () => {
-  if (password.value != confirm_pass.value) {
-    alert('Password not match.')
-  }
-}
-</script>
-
-<template>
-  <div class="bg-grey-lighter mt-20 flex flex-col">
-=======
 // const checkEmail =
 
 const submitUser = async () => {
@@ -80,84 +28,73 @@ const submitUser = async () => {
       email: userEmail.value.trim(),
       password: password.value,
       role: userRole.value,
-    };
-    console.log(newUser);
-    const res = await UserDataService.createUser(newUser);
+    }
+    console.log(newUser)
+    const res = await UserDataService.createUser(newUser)
     if (res.status == 400) {
-      alert('This name or email are already used.');
-    } else if (res.status == 403) {
-      alert('Access denied');
+      alert('This name or email are already used.')
     } else {
-      reset();
+      reset()
     }
   }
-};
+}
 
 const reset = () => {
-  userName.value = '';
-  userEmail.value = '';
-  userRole.value = '';
-  userPassword.value = '';
-  password.value = '';
-  confirm_pass.value = '';
-  error_message.value = false;
-};
+  userName.value = ''
+  userEmail.value = ''
+  userRole.value = ''
+  userPassword.value = ''
+  password.value = ''
+  confirm_pass.value = ''
+  error_message.value = false
+}
 
-const password = ref('');
-const confirm_pass = ref('');
-const error_message = ref(false);
+const password = ref('')
+const confirm_pass = ref('')
+const error_message = ref(false)
 
 const EmailTrim = () => {
-  userEmail.value = userEmail.value.trim();
-};
+  userEmail.value = userEmail.value.trim()
+}
 
 const checkPassword = () => {
   if (password.value != '' && confirm_pass.value != '') {
     if (password.value != confirm_pass.value) {
-      error_message.value = true;
+      error_message.value = true
     } else {
-      error_message.value = false;
+      error_message.value = false
     }
   }
-};
+}
 </script>
 
 <template>
   <div class="bg-grey-lighter mt-24 flex flex-col">
->>>>>>> f400c66d970e1d2ec1e78dcd20d97e2f22aa0994
     <form
       class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2"
       @submit="submitUser()"
       onsubmit="return false;"
     >
-      <div class="bg-white px-5 py-6 rounded shadow-md text-black w-full">
+      <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
         <h1 class="mb-8 text-3xl text-center">Sign up</h1>
-<<<<<<< HEAD
-        <label for="nameform">Name :</label>
-=======
         <label for="nameform">Name</label>
->>>>>>> f400c66d970e1d2ec1e78dcd20d97e2f22aa0994
         <input
           required
           id="nameform"
           type="text"
-          class="block border border-grey-light w-full p-3 rounded mb-2"
+          class="block border border-grey-light w-full p-3 rounded mb-4"
           name="name"
           maxlength="100"
           v-model="userName"
           placeholder="E.g. John Washington"
         />
         <span class="text-red-500 mt-2">{{ errorName }}</span>
-<<<<<<< HEAD
-        <label for="emailform">Email :</label>
-=======
         <label for="emailform">Email</label>
->>>>>>> f400c66d970e1d2ec1e78dcd20d97e2f22aa0994
         <input
           required
           id="emailform"
           type="text"
-          class="block border border-grey-light w-full p-3 rounded mb-2"
+          class="block border border-grey-light w-full p-3 rounded mb-4"
           name="email"
           @change="EmailTrim()"
           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
@@ -166,42 +103,24 @@ const checkPassword = () => {
           placeholder="john@example.com"
         />
         <span class="text-red-500 mt-2">{{ errorEmail }}</span>
-<<<<<<< HEAD
-        <label for="pwdform">Password : </label>
-=======
         <label for="pwdform">Password</label>
->>>>>>> f400c66d970e1d2ec1e78dcd20d97e2f22aa0994
         <input
           id="pwdform"
           type="password"
-          class="block border border-grey-light w-full p-3 rounded mb-2"
+          class="block border border-grey-light w-full p-3 rounded mb-4"
           name="password"
-<<<<<<< HEAD
-          pattern=".{8,14}"
-          placeholder="password"
-          v-model="password"
-        />
-        <label for="checkpwd">Confirm Password :</label>
-=======
           pattern=".{8,15}"
           placeholder="password"
           v-model="password"
           @change="checkPassword()"
         />
         <label for="checkpwd">Confirm Password</label>
->>>>>>> f400c66d970e1d2ec1e78dcd20d97e2f22aa0994
         <input
           id="checkpwd"
           type="password"
-          class="block border border-grey-light w-full p-3 rounded mb-2"
+          class="block border border-grey-light w-full p-3 rounded mb-4"
           name="confirm_password"
           placeholder="Confirm Password"
-<<<<<<< HEAD
-          pattern=".{8,14}"
-          v-model="confirm_pass"
-          @change="checkPassword()"          
-        />
-=======
           pattern=".{8,15}"
           v-model="confirm_pass"
           @change="checkPassword()"
@@ -218,7 +137,6 @@ const checkPassword = () => {
           >between 8 - 14 charaters</span
         >
 
->>>>>>> f400c66d970e1d2ec1e78dcd20d97e2f22aa0994
         <div class="mb-6">
           <label
             for="category"
@@ -252,18 +170,6 @@ const checkPassword = () => {
           </button>
         </router-link>
       </div>
-<<<<<<< HEAD
-
-      <div class="text-grey-dark mt-6">
-        Already have an account?        
-        <router-link
-            class="no-underline border-b border-blue text-black hover:text-white hover:border-black transition ease-in delay-15" 
-            :to="{ path: '/signIn', name: 'SignIn' }"
-            > Log in </router-link
-          >.
-      </div>
-=======
->>>>>>> f400c66d970e1d2ec1e78dcd20d97e2f22aa0994
     </form>
   </div>
 </template>
