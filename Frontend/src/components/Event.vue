@@ -1,72 +1,72 @@
-<script>
+<script setup>
 import { onBeforeMount, ref } from 'vue'
 import router from '../router'
 
-export default {
-  name: 'Event',
-  props: {
-    event: {
-      type: Object,
-      required: true,
-    },
-  },
-  emits: ['deleteEvent'],
-  methods: {
-    formatTime(datetime) {
-      var date = new Date(datetime).toLocaleString('th-TH')
-      return date.slice(-8, -3)
-    },
-    formatDate(datetime) {
-      var date = new Date(datetime)
-      return date
-    },
-    setDetail() {
-      setTimeout(() => {
-        router.push({ name: 'EventDetail', params: { id: prop.mask.id } })
-      }, 500)
-    },
-    getBorder(id) {
-      return borderCategory[id - 1]
-    },
-    getBgColor(id) {
-      return bgColor[id - 1]
-    },
-    setDetail() {
-      setTimeout(() => {
-        router.push({ name: 'Detail', params: { id: prop.mask.id } })
-      }, 500)
-    },
-  },
-}
+// export default {
+//   name: 'Event',
+//   props: {
+//     event: {
+//       type: Object,
+//       required: true,
+//     },
+//   },
+//   emits: ['deleteEvent'],
+//   methods: {
+//     formatTime(datetime) {
+//       var date = new Date(datetime).toLocaleString('th-TH')
+//       return date.slice(-8, -3)
+//     },
+//     formatDate(datetime) {
+//       var date = new Date(datetime)
+//       return date
+//     },
+//     setDetail() {
+//       setTimeout(() => {
+//         router.push({ name: 'EventDetail', params: { id: prop.mask.id } })
+//       }, 500)
+//     },
+//     getBorder(id) {
+//       return borderCategory[id - 1]
+//     },
+//     getBgColor(id) {
+//       return bgColor[id - 1]
+//     },
+//     setDetail() {
+//       setTimeout(() => {
+//         router.push({ name: 'Detail', params: { id: prop.mask.id } })
+//       }, 500)
+//     },
+//   },
+// }
 
-// const slide = ref(false)
-// onBeforeMount(() => {
-//   setTimeout(() => {
-//     slide.value = true
-//   }, 200)
-// })
+const slide = ref(false)
+onBeforeMount(() => {
+  setTimeout(() => {
+    slide.value = true
+  }, 200)
+})
 
-// defineEmits(['deleteEvent'])
+defineEmits(['deleteEvent'])
 
-// const prop = defineProps({
-//   mask: Object,
-// })
+const prop = defineProps({
+  mask: Object,
+})
 
-// const borderCategory = [
-//   'border-red-500',
-//   'border-blue-500',
-//   'border-yellow-500',
-//   'border-green-500',
-//   'border-orange-500',
-// ]
+const borderCategory = [
+  'border-red-500',
+  'border-blue-500',
+  'border-yellow-500',
+  'border-green-500',
+  'border-orange-500',
+]
 
-// const bgCategory = [
-//   'bg-red-500',
-//   'bg-blue-500',
-//   'bg-yellow-500',
-//   'bg-green-500',
-//   'bg-orange-500',
-// ]
+const bgCategory = [
+  'bg-red-500',
+  'bg-blue-500',
+  'bg-yellow-500',
+  'bg-green-500',
+  'bg-orange-500',
+]
 </script>
 
 <template>

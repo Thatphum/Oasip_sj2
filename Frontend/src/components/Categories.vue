@@ -1,24 +1,38 @@
-<script>
+<script setup>
 import router from '../router'
 
-export default {
-  name: 'Categories',
-  props: {
-    categories: {
-      type: Object,
-      required: true,
-    },
-  },
-  methods: {
-    setDetail() {
-      setTimeout(() => {
-        router.push({ name: 'CategoryDetail', params: { id: prop.mask.id } })
-      }, 500)
-    },
-    getBorder(id) {
-      return borderCategory[id - 1]
-    },
-  },
+// export default {
+//   name: 'Categories',
+//   props: {
+//     categories: {
+//       type: Object,
+//       required: true,
+//     },
+//   },
+//   methods: {
+//     setDetail() {
+//       setTimeout(() => {
+//         router.push({ name: 'CategoryDetail', params: { id: prop.mask.id } })
+//       }, 500)
+//     },
+//     getBorder(id) {
+//       return borderCategory[id - 1]
+//     },
+//   },
+// }
+
+const prop = defineProps({
+  mask: Object,
+})
+
+const setDetail = () => {
+  setTimeout(() => {
+    router.push({ name: 'Category', params: { id: prop.mask.id } })
+  }, 500)
+}
+
+const getBorder = (id) => {
+  return borderCategory[id - 1]
 }
 
 const borderCategory = [
@@ -28,6 +42,7 @@ const borderCategory = [
   'border-green-500',
   'border-orange-500',
 ]
+
 </script>
 
 <template>
