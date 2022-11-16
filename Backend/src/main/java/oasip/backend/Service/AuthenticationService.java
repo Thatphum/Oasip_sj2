@@ -5,7 +5,7 @@ import oasip.backend.Config.JwtTokenUtil;
 import oasip.backend.Config.Jwts.AuthenticationUser;
 import oasip.backend.Config.Jwts.JwtUserDetailsService;
 import oasip.backend.DTOs.Authentication.LoginDTO;
-import oasip.backend.DTOs.Jwt.JwtResponse;
+import oasip.backend.DTOs.Authentication.Jwt.JwtResponse;
 import oasip.backend.Enitities.User;
 import oasip.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

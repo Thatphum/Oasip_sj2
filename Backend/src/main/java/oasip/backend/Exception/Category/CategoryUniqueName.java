@@ -7,9 +7,9 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(
-        validatedBy = CategoryUniqueNameEditValidator.class
+        validatedBy = CategoryUniqueNameValidator.class
 )
-public @interface CategoryUniqueNameEdit {
+public @interface CategoryUniqueName {
     String message() default "The eventCategoryName is NOT unique.";
 
     Class<?>[] groups() default {};

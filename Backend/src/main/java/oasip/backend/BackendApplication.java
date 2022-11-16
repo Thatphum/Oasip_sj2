@@ -1,17 +1,15 @@
 package oasip.backend;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import oasip.backend.Service.FileStorage.FileStorageProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.web.firewall.HttpFirewall;
-import org.springframework.security.web.firewall.StrictHttpFirewall;
-
-import java.util.Date;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 //@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 @SpringBootApplication
+@EnableConfigurationProperties({
+        FileStorageProperties.class
+})
 public class BackendApplication {
 
     public static void main(String[] args) {
