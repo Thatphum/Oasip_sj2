@@ -1,20 +1,26 @@
 package oasip.backend.Controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import oasip.backend.DTOs.Event.EventCreateDto;
 import oasip.backend.DTOs.Event.EventDetailDto;
 import oasip.backend.DTOs.Event.EventEditDto;
 import oasip.backend.DTOs.Event.EventListAllDto;
 import oasip.backend.Service.EventService;
+import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
+import javax.validation.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 //@CrossOrigin
 @RestController
@@ -41,8 +47,8 @@ public class EventController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> createEvent(@Valid @RequestBody EventCreateDto newEvent) {
-        return service.createEvent(newEvent);
+    public ResponseEntity<?> createEvent(@RequestParam(name = "event") String jsonEvent , @RequestParam(name = "file" , required = false) MultipartFile file) throws JsonProcessingException{
+        return service.createEvent(jsonEvent);
     }
 
     @DeleteMapping("/{eventId}")

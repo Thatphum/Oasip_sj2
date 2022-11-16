@@ -22,10 +22,10 @@ public class UserController {
     UserService userService;
 
     @GetMapping("")
-    public List<UserListAllDto> getAllUsers() { return userService.getAllUser(); }
+    public ResponseEntity<?> getAllUsers() { return userService.getAllUser(); }
 
     @GetMapping("/{userId}")
-    public UserDetailDto getUserDetail(@PathVariable Integer userId) { return userService.getUser(userId); }
+    public ResponseEntity<?> getUserDetail(@PathVariable Integer userId) { return userService.getUser(userId); }
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
@@ -40,7 +40,7 @@ public class UserController {
 
     @PatchMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public UserUpdateDto updateEvent(@PathVariable Integer userId, @Valid @RequestBody UserUpdateDto updateUser) {
+    public ResponseEntity<?> updateEvent(@PathVariable Integer userId, @Valid @RequestBody UserUpdateDto updateUser) {
         return userService.updateUser(updateUser, userId);
     }
 }
