@@ -1,18 +1,10 @@
 <script setup>
 import { onBeforeMount } from 'vue';
-import router from '../router'
-
-onBeforeMount(async () => {
-  await getDetailCategory();
-});
-
-const getDetailCategory = async () => {
-  const res = await 
-};
+import router from '../router';
 
 const goBack = () => {
-  router.push({ name: 'ListCategory' })
-}
+  router.push({ name: 'ListCategory' });
+};
 </script>
 
 <template>
