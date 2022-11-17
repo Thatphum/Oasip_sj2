@@ -70,7 +70,7 @@ const EmailTrim = () => {
                 <router-link :to="{ path: '/', name: 'Home' }"
                   ><button
                     type="cancel"
-                    class="w-20 text-center py-3 rounded bg-white text-black hover:bg-green-dark focus:outline-none my-1 ml-5"
+                    class="w-20 text-center py-3 rounded bg-white text-black hover:bg-slate-300 focus:outline-none my-1 ml-5"
                     @click="cancel()"
                   >
                     Cancel
