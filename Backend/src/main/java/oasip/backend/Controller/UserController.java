@@ -9,7 +9,6 @@ import oasip.backend.DTOs.User.UserUpdateDto;
 import oasip.backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,14 +21,14 @@ public class UserController {
     UserService userService;
 
     @GetMapping("")
-    public ResponseEntity<?> getAllUsers() { return userService.getAllUser(); }
+    public List<UserListAllDto> getAllUsers() { return userService.getAllUser(); }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<?> getUserDetail(@PathVariable Integer userId) { return userService.getUser(userId); }
+    public UserDetailDto getUserDetail(@PathVariable Integer userId) { return userService.getUser(userId); }
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> createUser(@Valid @RequestBody UserCreateDto newUser) {
+    public UserCreateDto createUser(@Valid @RequestBody UserCreateDto newUser) {
         return userService.createUser(newUser);
     }
 
@@ -40,7 +39,7 @@ public class UserController {
 
     @PatchMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> updateEvent(@PathVariable Integer userId, @Valid @RequestBody UserUpdateDto updateUser) {
+    public UserUpdateDto updateEvent(@PathVariable Integer userId, @Valid @RequestBody UserUpdateDto updateUser) {
         return userService.updateUser(updateUser, userId);
     }
 }

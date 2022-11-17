@@ -10,7 +10,6 @@ import oasip.backend.Enitities.Eventcategory;
 import oasip.backend.Service.EventCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,25 +24,25 @@ public class EventCategoryController {
 
     @GetMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> getAllCategory(){
+    public List<CategoryListAllDto> getAllCategory(){
         return service.getAllCategory();
     }
 
     @GetMapping("/schedule")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> getAllCategoryForCreate(){
+    public List<CategoryListCreateDto> getAllCategoryForCreate(){
         return service.getAllCategoryForCreate();
     }
 
     @GetMapping("/period")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> getAllCategoryForFilter(){
+    public List<CategoryListFilterDto> getAllCategoryForFilter(){
         return service.getAllCategoryForFilter();
     }
 
     @GetMapping("/{categoryId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> getCategoryDetails(@PathVariable Integer categoryId){
+    public CategoryCreateDto getCategoryDetails(@PathVariable Integer categoryId){
         return service.getCategory(categoryId);
     }
 
@@ -55,7 +54,7 @@ public class EventCategoryController {
 
     @PatchMapping("/{categoryId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> update(@PathVariable Integer categoryId ,@Valid @RequestBody CategoryEditDto updateCategory){
+    public Eventcategory update(@PathVariable Integer categoryId ,@Valid @RequestBody CategoryEditDto updateCategory){
         return service.updateCategory(updateCategory , categoryId);
     }
 
