@@ -1,5 +1,5 @@
 const API_URL = `${import.meta.env.VITE_BASE_URL}api`
-class EventDataService {
+export default class EventDataService {
     retrieveAllEvent() {
         return fetch(`${API_URL}/events`)
     }
@@ -40,4 +40,3 @@ class EventDataService {
         }
     }
 }
-export default new EventDataService()

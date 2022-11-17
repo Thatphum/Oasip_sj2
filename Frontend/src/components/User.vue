@@ -1,24 +1,17 @@
-<script>
-import router from '../router'
+<script setup>
+import router from '../router';
 
-export default {
-  name: 'User',
-  emits: ['deleteUser'],
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-  },
-  methods: {
-    setDetail() {
-      setTimeout(() => {
-        router.push({ name: 'UserDetail', params: { id: prop.mask.id } })
-      }, 500)
-    },
-  },
-}
+defineEmits(['deleteUser']);
 
+const prop = defineProps({
+  mask: Object,
+});
+
+const setDetail = () => {
+  setTimeout(() => {
+    router.push({ name: 'UserDetail', params: { id: prop.mask.id } });
+  }, 500);
+};
 </script>
 
 <template>

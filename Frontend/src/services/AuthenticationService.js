@@ -1,13 +1,15 @@
-const API_URL = `${import.meta.env.VITE_BASE_URL}api`
-class AuthenticationService {
+import DataService from './DataService.js';
+export default class AuthenticationService extends DataService {
+  print() {
+    console.log(this.API_URL);
+  }
   logInUser(user) {
     return fetch(`${API_URL}/auth/match`, {
       method: 'POST',
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
       },
-      body: JSON.stringify(user)
-    })
+      body: JSON.stringify(user),
+    });
   }
 }
-export default new AuthenticationService()

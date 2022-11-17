@@ -1,15 +1,18 @@
-<script>
+<script setup>
+import { onBeforeMount } from 'vue';
 import router from '../router'
 
-export default {
-  name: 'About',
-  methods: {
-    goBack() {
-      router.push({ name: 'ListCategory' })
-    }
-  }
-}
+onBeforeMount(async () => {
+  await getDetailCategory();
+});
 
+const getDetailCategory = async () => {
+  const res = await 
+};
+
+const goBack = () => {
+  router.push({ name: 'ListCategory' })
+}
 </script>
 
 <template>

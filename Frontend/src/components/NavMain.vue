@@ -1,31 +1,12 @@
-<script>
-import { onBeforeMount, ref } from 'vue'
-import router from '../router'
-
-export default {
-  name: 'NavMain',
-  methods: {
-    btn() {
-      const menu = document.querySelector('#menu')
-      menu.classList.toggle('hidden')
-    },
-    goHome() {
-      router.push('/')
-    },
-    switchbtn() {
-      if (localStorage.getItem('my_tkn')) {
-        return true
-      } else {
-        return false
-      }
-    },
-    logoutbtn() {
-      localStorage.removeItem('my_tkn')
-      router.push('/')
-    },
-  },
-}
-
+<script setup>
+import router from '../router';
+const btn = () => {
+  const menu = document.querySelector('#menu');
+  menu.classList.toggle('hidden');
+};
+const goHome = () => {
+  router.push({ path: '/', name: 'Home' });
+};
 </script>
 
 <template>
@@ -93,28 +74,35 @@ export default {
             >SignUp</router-link
           >
         </li>
-        <li v-if="!switchbtn()">
+        <li>
           <router-link
             class="md:p-4 py-2 block hover:text-purple-400 text-white"
-            :to="{ path: '/login', name: 'LogIn' }"
-            >LogIn</router-link
+            :to="{ path: '/signIn', name: 'SignIn' }"
+            >SignIn</router-link
           >
         </li>
-        <li v-if="!switchbtn()">
+        <li>
           <router-link
             class="md:p-4 py-2 block hover:text-purple-400 text-white"
             :to="{ path: '/about', name: 'About' }"
             >สมาชิกสภาแห่งเทพ</router-link
           >
         </li>
-        <li v-else>
-          <button
-            class="md:p-4 py-2 block hover:text-purple-400 text-red-400"
-            @click="logoutbtn()"
+        <!-- <li>
+          <a class="md:p-4 py-2 block hover:text-purple-400 text-white" href="#"
+            >Customers</a
           >
-            LOGOUT
-          </button>
         </li>
+        <li>
+          <a class="md:p-4 py-2 block hover:text-purple-400 text-white" href="#"
+            >Blog</a
+          >
+        </li>
+        <li>
+          <a class="md:p-4 py-2 block hover:text-purple-400 text-white" href="#"
+            >Sign Up</a
+          >
+        </li> -->
       </ul>
     </div>
   </nav>

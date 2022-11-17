@@ -1,131 +1,129 @@
-<script>
-import { onBeforeMount, ref } from 'vue'
-import { useRoute } from 'vue-router'
-import router from '../router'
-import EventCategoryDataService from '../services/EventCategoryDataService'
+<script setup>
+import { onBeforeMount, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import router from '../router';
+import EventCategoryDataService from '../services/EventCategoryDataService';
 
-export default {
-  name: 'CategoryDetail',
-  setup() {
-    let { params } = useRoute()
-    onBeforeMount(async () => {
-      await getDetailCategory(params.id)
-      await listCategory()
-      // console.log(categories.value);
+let { params } = useRoute();
 
-      setTimeout(() => {
-        fadein.value = true
-      })
-    })
-  },
-  created() {
-    fadein = ref()
-    editMode = ref(false)
-    editCategoryName = ref()
-    editCategoryDescription = ref()
-    editDuration = ref()
-    category = ref({})
-    errorduration = ref()
-    errorName = ref()
-    categories = ref()
-    checkName = ref(true)
-  },
-  methods: {
-    editModeOn() {
-      editMode.value = true
-      editCategoryName.value = category.value.eventCategoryName
-      editCategoryDescription.value = category.value.eventCategoryDescription
-      editDuration.value = category.value.eventCategoryDuration
-    },
-    editModeOff() {
-      errorName.value = ''
-      errorduration.value = ''
-      checkName.value = true
-      editMode.value = false
-    },
-    async getDetailCategory(id) {
-      const res = await EventCategoryDataService.retrieveCategory(id)
-      if (res.status == 200) category.value = await res.json()
-      else {
-        alert('ขออภัยเกิดข้อผิดพลาดกรุณาลองอีกครั้ง')
-        router.push({ name: 'ListCategory' })
-      }
-    },
-    checkduration() {
-      if (editDuration.value > 0 && editDuration.value <= 480)
-        errorduration.value = ''
-      else errorduration.value = 'duration must between 1 and 480.'
-    },
-    async save(categpryid) {
-      if (
-        editDuration.value > 0 &&
-        editDuration.value <= 480 &&
-        editCategoryName.value != '' &&
-        checkName.value
-      ) {
-        const categorys = {
-          id: categpryid,
-          eventCategoryName: editCategoryName.value,
-          eventCategoryDescription: editCategoryDescription.value,
-          eventCategoryDuration: editDuration.value,
-        }
-        if (
-          categorys.eventCategoryName != category.value.eventCategoryName ||
-          categorys.eventCategoryDescription !=
-            category.value.eventCategoryDescription ||
-          categorys.eventCategoryDuration !=
-            category.value.eventCategoryDuration
-        ) {
-          console.log(categpryid)
-          const res = await EventCategoryDataService.updateEvent(
-            categpryid,
-            categorys
-          )
-          if (res.status != 400) {
-            editModeOff()
-            await getDetailCategory(params.id)
-          } else {
-            // console.log('error update');
-            alert('error update' + res.statusText)
-          }
-        } else {
-          editModeOff()
-        }
-      }
-    },
-    async listCategory() {
-      const res = await EventCategoryDataService.retrieveAllCategoryForFilter()
-      categories.value = await res.json()
-      categories.value = categories.value.filter((value) => {
-        return !(value.eventCategoryName == category.value.eventCategoryName)
-      })
-    },
-    async checkCategoryName() {
-      if (editCategoryName.value != '') {
-        editCategoryName.value = editCategoryName.value.replace(
-          /^\s+|\s+$/gm,
-          ''
-        )
-        var result = categories.value.filter((value) => {
-          return (
-            value.eventCategoryName.toLowerCase() ==
-            editCategoryName.value.toLowerCase()
-          )
-        })
-        if (result.length > 0) {
-          errorName.value = 'The eventCategoryName is NOT unique.'
-          checkName.value = false
-        } else {
-          errorName.value = ''
-          checkName.value = true
-        }
+onBeforeMount(async () => {
+  await getDetailCategory(params.id);
+  await listCategory();
+  // console.log(categories.value);
+
+  setTimeout(() => {
+    fadein.value = true;
+  });
+});
+
+const fadein = ref();
+
+const editMode = ref(false);
+const editCategoryName = ref();
+const editCategoryDescription = ref();
+const editDuration = ref();
+const editModeOn = () => {
+  //   console.log(category.value);
+  editMode.value = true;
+  editCategoryName.value = category.value.eventCategoryName;
+  editCategoryDescription.value = category.value.eventCategoryDescription;
+  editDuration.value = category.value.eventCategoryDuration;
+  //   console.log(editCategoryName.value);
+};
+const editModeOff = () => {
+  errorName.value = '';
+  errorduration.value = '';
+  checkName.value = true;
+  editMode.value = false;
+};
+
+const category = ref({});
+const getDetailCategory = async (id) => {
+  const res = await EventCategoryDataService.retrieveCategory(id);
+  if (res.status == 200) category.value = await res.json();
+  else {
+    alert('ขออภัยเกิดข้อผิดพลาดกรุณาลองอีกครั้ง');
+    router.push({ name: 'ListCategory' });
+  }
+};
+const errorduration = ref();
+const checkduration = () => {
+  if (editDuration.value > 0 && editDuration.value <= 480)
+    errorduration.value = '';
+  else errorduration.value = 'duration must between 1 and 480.';
+};
+const save = async (categpryid) => {
+  if (
+    editDuration.value > 0 &&
+    editDuration.value <= 480 &&
+    editCategoryName.value != '' &&
+    checkName.value
+  ) {
+    const categorys = {
+      id: categpryid,
+      eventCategoryName: editCategoryName.value,
+      eventCategoryDescription: editCategoryDescription.value,
+      eventCategoryDuration: editDuration.value,
+    };
+    if (
+      categorys.eventCategoryName != category.value.eventCategoryName ||
+      categorys.eventCategoryDescription !=
+        category.value.eventCategoryDescription ||
+      categorys.eventCategoryDuration != category.value.eventCategoryDuration
+    ) {
+      console.log(categpryid);
+      const res = await EventCategoryDataService.updateEvent(
+        categpryid,
+        categorys
+      );
+      if (res.status != 400) {
+        editModeOff();
+        await getDetailCategory(params.id);
       } else {
-        errorName.value = 'The eventCategoryName is not null'
-        checkName.value = false
+        // console.log('error update');
+        alert('error update' + res.statusText);
       }
-    },
-  },
-}
+    } else {
+      editModeOff();
+    }
+  }
+};
+
+const errorName = ref();
+const categories = ref();
+const checkName = ref(true);
+const listCategory = async () => {
+  const res = await EventCategoryDataService.retrieveAllCategoryForFilter();
+  categories.value = await res.json();
+  categories.value = categories.value.filter((value) => {
+    return !(value.eventCategoryName == category.value.eventCategoryName);
+  });
+  // console.log(categories.value);
+}; //listAllEvent
+const checkCategoryName = async () => {
+  if (editCategoryName.value != '') {
+    editCategoryName.value = editCategoryName.value.replace(/^\s+|\s+$/gm, '');
+    // console.log(editCategoryName.value);
+    // console.log(categories.value);
+    var result = categories.value.filter((value) => {
+      // console.log(value.eventCategoryName.toLowerCase());
+      return (
+        value.eventCategoryName.toLowerCase() ==
+        editCategoryName.value.toLowerCase()
+      );
+    });
+    if (result.length > 0) {
+      errorName.value = 'The eventCategoryName is NOT unique.';
+      checkName.value = false;
+    } else {
+      errorName.value = '';
+      checkName.value = true;
+    }
+  } else {
+    errorName.value = 'The eventCategoryName is not null';
+    checkName.value = false;
+  }
+};
 </script>
 
 <template>

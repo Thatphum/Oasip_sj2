@@ -1,75 +1,48 @@
-<script>
-import { onBeforeMount, ref } from 'vue'
-import EventCategoryDataService from '../services/EventCategoryDataService'
-import EventDataService from '../services/EventDataService'
+<script setup>
+import { onBeforeMount, ref } from 'vue';
+import EventCategoryDataService from '../services/EventCategoryDataService';
+import EventDataService from '../services/EventDataService';
+onBeforeMount(async () => {
+  await getAllCategory();
+  setTimeout(() => {
+    fade.value = true;
+  }, 400);
+});
 
-export default {
-  name: 'CreateEvent',
-  beforeMount() {
-    onBeforeMount(async () => {
-      await getAllCategory()
-      setTimeout(() => {
-        fade.value = true
-      }, 400)
-    })
-  },
-  created() {
-    categories = ref()
-    bookingName = ref()
-    bookingEmail = ref()
-    eventCategoryName = ref()
-    eventCategory = ref()
-    duration = ref()
-    bookingNote = ref()
-    eventDate = ref()
-    eventTime = ref()
-    overlaps = ref()
-  },
-  methods() {
-
-  }
-}
-// onBeforeMount(async () => {
-//   await getAllCategory()
-//   setTimeout(() => {
-//     fade.value = true
-//   }, 400)
-// })
-
-const categories = ref()
+const categories = ref();
 const getAllCategory = async () => {
-  const res = await EventCategoryDataService.retrieveAllCategoryForCreate()
-  categories.value = await res.json()
-}
+  const res = await EventCategoryDataService.retrieveAllCategoryForCreate();
+  categories.value = await res.json();
+};
 
-const bookingName = ref()
-const bookingEmail = ref()
-const eventCategoryName = ref()
-const eventCategory = ref()
-const duration = ref()
-const bookingNote = ref()
-const eventDate = ref()
-const eventTime = ref()
-const overlaps = ref()
+const bookingName = ref();
+const bookingEmail = ref();
+const eventCategoryName = ref();
+const eventCategory = ref();
+const duration = ref();
+const bookingNote = ref();
+const eventDate = ref();
+const eventTime = ref();
+const overlaps = ref();
 // ดึง Event Category ทั้งหมด
 const listOverlap = async (id) => {
-  const res = await EventDataService.retreiveCategory(id)
-  const data = await res.json()
-  overlaps.value = data
-}
+  const res = await EventDataService.retreiveCategory(id);
+  const data = await res.json();
+  overlaps.value = data;
+};
 
 const submitEvent = async () => {
-  let text = 'Please check your event data. Press OK for booking.'
-  var dateTime = new Date(`${eventDate.value}T${eventTime.value}`)
+  let text = 'Please check your event data. Press OK for booking.';
+  var dateTime = new Date(`${eventDate.value}T${eventTime.value}`);
   if (eventCategory.value != null) {
-    await listOverlap(eventCategory.value.id)
+    await listOverlap(eventCategory.value.id);
   }
   var result = overlaps.value.filter((item) => {
-    let oldDateStart = new Date(item.eventStartTime)
-    let oldDateEnd = new Date(item.eventStartTime)
-    oldDateEnd.setMinutes(oldDateStart.getMinutes() + item.eventDuration)
-    let userDateTimeEnd = new Date(`${eventDate.value}T${eventTime.value}`)
-    userDateTimeEnd.setMinutes(userDateTimeEnd.getMinutes() + duration.value)
+    let oldDateStart = new Date(item.eventStartTime);
+    let oldDateEnd = new Date(item.eventStartTime);
+    oldDateEnd.setMinutes(oldDateStart.getMinutes() + item.eventDuration);
+    let userDateTimeEnd = new Date(`${eventDate.value}T${eventTime.value}`);
+    userDateTimeEnd.setMinutes(userDateTimeEnd.getMinutes() + duration.value);
     //เช็คว่าเป็นวันที่เดียวกันไหม
     //และจะต้องเอา newtimend มาเช็คด้วย
     if (
@@ -84,14 +57,14 @@ const submitEvent = async () => {
         (dateTime < oldDateStart && oldDateEnd < userDateTimeEnd) ||
         (oldDateStart < dateTime && userDateTimeEnd < oldDateEnd)
       ) {
-        return true
+        return true;
       }
-    return false
-  })
+    return false;
+  });
   if (result.length != 0) {
-    alert('This event is overlap.')
-    eventTime.value = ''
-    return false
+    alert('This event is overlap.');
+    eventTime.value = '';
+    return false;
   }
   if (confirm(text) == true) {
     var newEvent = {
@@ -102,64 +75,64 @@ const submitEvent = async () => {
       eventNotes: bookingNote.value,
       eventCategoryId: eventCategory.value.id,
       eventCategoryEventCategoryName: eventCategory.value.eventCategoryName,
-    }
+    };
     // console.log(newEvent);
-    const res = await EventDataService.createEvent(newEvent).then()
+    const res = await EventDataService.createEvent(newEvent).then();
     if (res.status != 200) {
-      alert('Fail to create Event')
+      alert('Fail to create Event');
     }
-    reset()
-    return false
+    reset();
+    return false;
   }
-}
+};
 
 const getDateM = (date) => {
-  var dd = String(date.getDate()).padStart(2, '0')
-  var mm = String(date.getMonth() + 1).padStart(2, '0') //January is 0!
-  var yyyy = date.getFullYear()
-  var myDate = yyyy + '-' + mm + '-' + dd
-  return myDate
-}
+  var dd = String(date.getDate()).padStart(2, '0');
+  var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = date.getFullYear();
+  var myDate = yyyy + '-' + mm + '-' + dd;
+  return myDate;
+};
 
 const reset = () => {
-  bookingName.value = null
-  bookingEmail.value = null
-  eventCategoryName.value = null
-  duration.value = null
-  bookingNote.value = null
-  eventDate.value = null
-  eventTime.value = null
-}
+  bookingName.value = null;
+  bookingEmail.value = null;
+  eventCategoryName.value = null;
+  duration.value = null;
+  bookingNote.value = null;
+  eventDate.value = null;
+  eventTime.value = null;
+};
 const durationCategory = () => {
   // console.log(eventCategoryName.value);
   if (eventCategoryName.value != '') {
     var x = categories.value.find(
       (value) => value.eventCategoryName == eventCategoryName.value
-    )
+    );
     // console.log(x);
-    eventCategory.value = x
-    duration.value = x.eventCategoryDuration
+    eventCategory.value = x;
+    duration.value = x.eventCategoryDuration;
   } else {
-    duration.value = ''
+    duration.value = '';
   }
-}
+};
 const checkDate = () => {
   if (eventDate.value != undefined && eventTime.value != undefined) {
-    var selectedDate = new Date(`${eventDate.value}T${eventTime.value}`)
-    var now = new Date()
+    var selectedDate = new Date(`${eventDate.value}T${eventTime.value}`);
+    var now = new Date();
     //compare now and เวลาที่เลือก
     if (selectedDate < now) {
-      alert('Date must be in the future')
-      eventDate.value = ''
-      eventTime.value = ''
+      alert('Date must be in the future');
+      eventDate.value = '';
+      eventTime.value = '';
     }
   }
-}
+};
 const minDate = () => {
-  var today = new Date()
-  return getDateM(today)
-}
-const fade = ref(false)
+  var today = new Date();
+  return getDateM(today);
+};
+const fade = ref(false);
 </script>
 
 <template>

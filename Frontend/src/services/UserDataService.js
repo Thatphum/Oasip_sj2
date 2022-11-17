@@ -1,23 +1,16 @@
 const API_URL = `${import.meta.env.VITE_BASE_URL}api`
 
-class UserDataService {
+export default class UserDataService {
   retrieveAllUser() {
     //Get Token
     var token = localStorage.getItem('my_tkn')
-    console.log(token);
-    if (localStorage.getItem('my_tkn')!= null) {
-      return fetch(`${API_URL}/users` , {
+    
+    return fetch(`${API_URL}/users` , {
       method : 'GET',
       headers: {
         'Authorization' : `Bearer ${token}`
       }
     })
-    }else{
-      return fetch(`${API_URL}/users` , {
-        method : 'GET'
-      })
-    }
-    
   }
   retrieveUser(id) {
     return fetch(`${API_URL}/users/${id}`)
@@ -47,4 +40,3 @@ class UserDataService {
   }
 
 }
-export default new UserDataService()
