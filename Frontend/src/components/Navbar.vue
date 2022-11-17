@@ -55,9 +55,11 @@ export default {
               >
             </li>
             <li>
-              <a class="md:p-4 py-2 block hover:text-blue-600" href="#"
-                >Events</a
-              >
+              <router-link :to="{ name: 'About' }">
+                <button class="md:p-4 py-2 block hover:text-blue-600" href="#"
+                >Events</button
+                >
+              </router-link>
             </li>
             <li>
               <a class="md:p-4 py-2 block hover:text-blue-600" href="#"

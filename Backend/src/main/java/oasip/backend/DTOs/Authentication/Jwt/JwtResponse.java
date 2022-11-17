@@ -1,4 +1,4 @@
-package oasip.backend.DTOs.Jwt;
+package oasip.backend.DTOs.Authentication.Jwt;
 
 import lombok.*;
 

@@ -46,13 +46,59 @@
       >  -->
         <div
           class="lg:flex-grow md:w-1/2 lg:pl-48 md:pl-20 pr-20 flex flex-col md:items-center md:text-left mb-16 md:mb-0 items-center text-center"
-        >           
-        <img src="../assets/coverimg.jpg" alt="cover_image" height="100%" width="1005" />
+        >        
+        <div class="image-fader">
+        <img class="bottom" src="../assets/coverimg.jpg" alt="cover_image" />
+        <img class="top" src="../assets/coverimg2.jpg" alt="cover_image2" />
+      </div>
         </div>
       <!-- </div> -->
     <!-- </div> -->
   </section>
   <section class="bg-blue-500 py-4 px-10">dsadasdas</section>
+
 </template>
 
-<style scoped></style>
+<style scoped>
+.image-fader{
+  margin-top: 150px;
+  width: 500px;
+  height: 300px;
+  position: relative;
+}
+.image-fader img .top{
+  animation-name: imagefade;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-duration: 10s;
+  animation-direction: alternate;
+}
+
+@keyframes imagefade {
+  0% {
+  opacity:1;
+}
+45% {
+opacity:1;
+}
+55% {
+opacity:0;
+}
+100% {
+opacity:0;
+}
+}
+
+.image-fader img:nth-of-type(1) {
+  animation-delay: 6s;
+}
+.image-fader img:nth-of-type(2) {
+  animation-delay: 4s;
+}
+.image-fader img:nth-of-type(3) {
+  animation-delay: 2s;
+}
+.image-fader img:nth-of-type(4) {
+  animation-delay: 0;
+}
+</style>

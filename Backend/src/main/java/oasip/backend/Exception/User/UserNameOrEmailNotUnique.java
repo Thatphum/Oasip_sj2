@@ -11,10 +11,10 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE , ElementType.TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(
-        validatedBy = UserUpdateNotUniqueValidator.class
+        validatedBy = UserNameOrEmailNotUniqueValidator.class
 )
-public @interface UserUpdateNotUnique {
-    String message() default "fdkfjkskjfljlkdjskfl";
+public @interface UserNameOrEmailNotUnique {
+    String message() default "The Email or Name must be unique.";
 
     String field();
 

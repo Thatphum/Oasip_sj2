@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -21,8 +22,6 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
 
     List<Event> findByBookingEmail(String email, Sort sort);
 
-//    List<Event> findByEventCategoryEventCategoriesOwners (List<EventCategoriesOwner> eventCategoriesOwner);
-//    List<Event> findByEventCategory()
-//    @Transactional
-//    void deleteAllByUser(User user);
+    @Query(value = "select e from Event e where ((e.eventStartTime <= :startTime and :startTime < e.eventEndTime) or (e.eventStartTime < :endTime and :endTime <= e.eventEndTime)) and e.id NOT IN :eventId ")
+    List<Event> findAllByOverlab(@Param("startTime") Date startTime , @Param("endTime") Date endTime , @Param("eventId") Integer eventId);
 }
