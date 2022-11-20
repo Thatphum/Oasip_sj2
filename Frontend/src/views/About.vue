@@ -1,15 +1,9 @@
-<script>
+<script setup>
 import router from '../router'
 
-export default {
-  name: 'About',
-  methods: {
-    goBack() {
-      router.push({ name: 'ListCategory' })
-    }
-  }
+const goBack = () => {
+  router.push({ name: 'ListCategory' })
 }
-
 </script>
 
 <template>

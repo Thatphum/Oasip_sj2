@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface EventCategoriesOwnerRepository extends JpaRepository<EventCategoriesOwner, Integer> {
-//    List<EventCategoriesOwner> findAllByLecturer_Email(String email);
 
     @Query("select a.eventCategory.id from EventCategoriesOwner a where  a.lecturer.email = :email")
     List<Integer> findAllByLecturer_Email(@Param("email") String email);

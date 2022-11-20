@@ -1,78 +1,67 @@
-<script>
-import { onBeforeMount, ref } from 'vue'
-import router from '../router'
+<script setup>
+import { onBeforeMount, ref } from 'vue';
+import router from '../router';
+const slide = ref(false);
+onBeforeMount(() => {
+  setTimeout(() => {
+    slide.value = true;
+  }, 200);
+});
+defineEmits(['deleteEvent']);
+const prop = defineProps({
+  mask: Object,
+});
 
-export default {
-  name: 'Event',
-  props: {
-    event: {
-      type: Object,
-      required: true,
-    },
-  },
-  emits: ['deleteEvent'],
-  methods: {
-    formatTime(datetime) {
-      var date = new Date(datetime).toLocaleString('th-TH')
-      return date.slice(-8, -3)
-    },
-    formatDate(datetime) {
-      var date = new Date(datetime)
-      return date
-    },
-    setDetail() {
-      setTimeout(() => {
-        router.push({ name: 'EventDetail', params: { id: prop.mask.id } })
-      }, 500)
-    },
-    getBorder(id) {
-      return borderCategory[id - 1]
-    },
-    getBgColor(id) {
-      return bgColor[id - 1]
-    },
-    setDetail() {
-      setTimeout(() => {
-        router.push({ name: 'Detail', params: { id: prop.mask.id } })
-      }, 500)
-    },
-  },
-}
+const borderCategory = [
+  'border-red-500',
+  'border-blue-500',
+  'border-yellow-500',
+  'border-green-500',
+  'border-orange-500',
+];
 
-// const slide = ref(false)
-// onBeforeMount(() => {
-//   setTimeout(() => {
-//     slide.value = true
-//   }, 200)
-// })
+const bgCategory = [
+  'bg-red-500',
+  'bg-blue-500',
+  'bg-yellow-500',
+  'bg-green-500',
+  'bg-orange-500',
+];
+const getBorder = (id) => {
+  // console.log(id);
+  // console.log(borderCategory[id - 1]);
+  return borderCategory[id - 1];
+};
+const getBgColor = (id) => {
+  // console.log(id);
+  return bgCategory[id - 1];
+};
 
-// defineEmits(['deleteEvent'])
-
-// const prop = defineProps({
-//   mask: Object,
-// })
-
-// const borderCategory = [
-//   'border-red-500',
-//   'border-blue-500',
-//   'border-yellow-500',
-//   'border-green-500',
-//   'border-orange-500',
-// ]
-
-// const bgCategory = [
-//   'bg-red-500',
-//   'bg-blue-500',
-//   'bg-yellow-500',
-//   'bg-green-500',
-//   'bg-orange-500',
-// ]
+const formatTime = (datetime) => {
+  var date = new Date(datetime).toLocaleString('th-TH');
+  // console.log(date);
+  // console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
+  return date.slice(-8, -3);
+};
+const formatDate = (datetime) => {
+  var date = new Date(datetime);
+  return date;
+};
+const setDetail = () => {
+  setTimeout(() => {
+    router.push({ name: 'Detail', params: { id: prop.mask.id } });
+  }, 500);
+};
 </script>
 
 <template>
   <div
     class="max-w-6xl h-60 md:h-20 shadow-lg rounded overflow-hidden m-4 sm:flex bg-white rounded-xl border-l-8 border-r-8 shadow-lg shadow-black/50 cursor-pointer scale-100 hover:scale-105 transition duration-700"
     :class="getBorder(prop.mask.eventCategoryId)"
+    v-bind:class="{
+      'translate-x-0': slide,
+      'translate-x-full': !slide,
+    }"
     @click="setDetail()"
   >
     <div

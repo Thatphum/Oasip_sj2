@@ -1,31 +1,31 @@
 <script setup>
-import { onBeforeMount, ref } from 'vue'
-import { useRoute } from 'vue-router'
-import router from '../router'
-import UserDataService from '../services/UserDataService'
+import { onBeforeMount, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import router from '../router';
+import UserDataService from '../services/UserDataService';
 
-let { params } = useRoute()
+let { params } = useRoute();
 
 onBeforeMount(async () => {
-  await getDetailUser(params.id)
+  await getDetailUser(params.id);
   // setTimeout(() => {
   //   fadein.value = true;
   // });
-})
+});
 
-const detail = ref({})
-
+const detail = ref({});
 const getDetailUser = async (id) => {
-  const res = await UserDataService.retrieveUser(id)
+  const res = await UserDataService.retrieveUser(id);
+  console.log(res.status);
   if (res.status == 200) {
-    detail.value = await res.json()
-    // getDateM(detail.value.createOn);
-    // console.log(detail.value.createOn);
+    detail.value = await res.json();
+  } else if(res.status == 401){
+    
   } else {
-    alert('ขออภัยเกิดข้อผิดพลาดกรุณาลองอีกครั้ง')
-    router.push({ name: 'Users' })
+    alert('ขออภัยเกิดข้อผิดพลาดกรุณาลองอีกครั้ง');
+    router.go(-1);
   }
-}
+};
 
 // const getDateM = (date) => {
 //   // console.log(date);
@@ -37,46 +37,46 @@ const getDetailUser = async (id) => {
 // };
 
 const updateUser = async () => {
-  console.log(detail.value)
-  
   var newData = {
     id: params.id,
     name: editUserName.value.trim(),
     email: editEmail.value.trim(),
     role: editRole.value,
+  };
+
+  if (
+    newData.name != detail.value.name ||
+    newData.email != detail.value.email ||
+    newData.role != detail.value.role
+  ) {
+    const res = await UserDataService.updateUser(detail.value.id, newData);
+    if (res.status == 400) {
+      alert('This name or email are already used.');
+    } else {
+      await getDetailUser(params.id);
+    }
   }
 
-  if (newData.value == detail.value) {
-    detail.value = await res.json()
-  } else {
-    newData.value = await res.jason()
-  }
+  // console.log(newData);
+  // console.log(detail.value);
 
-  console.log(newData)
-  console.log(detail.value.id)
-  // const res = await UserDataService.updateUser(detail.value.id, newData)
-  // if (res.status == 400) {
-  //   alert('This name or email are already used.')
-  // } else {
-  //   editMode.value = false
-  //   await getDetailUser(params.id)
-  // }
-}
+  editMode.value = false;
+};
 
-const editMode = ref(false)
-const editUserName = ref()
-const editEmail = ref()
-const editRole = ref()
+const editMode = ref(false);
+const editUserName = ref();
+const editEmail = ref();
+const editRole = ref();
 
 const editModeOn = (detail) => {
-  editMode.value = true
-  editUserName.value = detail.name
-  editEmail.value = detail.email
-  editRole.value = detail.role
-}
+  editMode.value = true;
+  editUserName.value = detail.name;
+  editEmail.value = detail.email;
+  editRole.value = detail.role;
+};
 const editModeOff = () => {
-  editMode.value = false
-}
+  editMode.value = false;
+};
 </script>
 
 <template>

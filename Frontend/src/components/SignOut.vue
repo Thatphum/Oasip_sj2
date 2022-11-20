@@ -1,18 +1,16 @@
-<script>
-export default {
-  name: 'SignOut',
-  methods: {
-    signOut() {
-      localStorage.removeItem('my_tkn')
-      this.$router.push('/')
-    },
-  }
+<script setup>
+import { ref } from 'vue';
+
+const signOut = () => {
+    localStorage.clear()
 }
 
 </script>
-
+ 
 <template>
-  <button @click="signOut()">Sign Out</button>
+<button @click="signOut()">Sign Out</button>
 </template>
+ 
+<style>
 
-<style></style>
+</style>
