@@ -22,22 +22,18 @@ const errorEmail = ref();
 // const checkEmail =
 
 const submitUser = async () => {
-  if (password.value == confirm_pass.value) {
-    var newUser = {
-      name: userName.value.trim(),
-      email: userEmail.value.trim(),
-      password: password.value,
-      role: userRole.value,
-    };
-    console.log(newUser);
-    const res = await UserDataService.createUser(newUser);
-    if (res.status == 400) {
-      alert('This name or email are already used.');
-    } else if (res.status == 403) {
-      alert('Access denied');
-    } else {
-      reset();
-    }
+  var newUser = {
+    name: userName.value.trim(),
+    email: userEmail.value.trim(),
+    password: password.value,
+    role: userRole.value,
+  };
+  console.log(newUser);
+  const res = await UserDataService.createUser(newUser);
+  if (res.status == 400) {
+    alert('This name or email are already used.');
+  } else {
+    reset();
   }
 };
 
@@ -172,6 +168,15 @@ const checkPassword = () => {
           </button>
         </router-link>
       </div>
+
+      <!-- <div class="text-grey-dark mt-6">
+        Already have an account?        
+        <router-link
+            class="no-underline border-b border-blue text-blue"
+            :to="{ path: '/signIn', name: 'SignIn' }"
+            > Log in </router-link
+          >.
+      </div> -->
     </form>
   </div>
 </template>

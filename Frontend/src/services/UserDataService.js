@@ -4,38 +4,21 @@ class UserDataService {
   retrieveAllUser() {
     //Get Token
     var token = localStorage.getItem('my_tkn');
-    if (localStorage.getItem('my_tkn') != null) {
-      return fetch(`${API_URL}/users`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    } else {
-      return fetch(`${API_URL}/users`, {
-        method: 'GET',
-      });
-    }
-  }
-  retrieveUser(id) {
-    var token = localStorage.getItem('my_tkn');
-    return fetch(`${API_URL}/users/${id}`, {
+
+    return fetch(`${API_URL}/users`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
     });
+  }
+  retrieveUser(id) {
+    return fetch(`${API_URL}/users/${id}`);
   }
   deleteUser(id) {
     var token = localStorage.getItem('my_tkn');
     return fetch(`${API_URL}/users/${id}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
     });
   }
   createUser(newUser) {
@@ -44,7 +27,6 @@ class UserDataService {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(newUser),
     });
@@ -55,7 +37,6 @@ class UserDataService {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(update),
     });

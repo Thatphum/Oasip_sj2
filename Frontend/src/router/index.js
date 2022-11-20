@@ -26,7 +26,7 @@ const routes = [
   {path: "/users", name: "Users", component: User},
   {path: "/signup", name: "SignUp", component: SignUp},
   {path: "/signin", name: "SignIn", component: SignIn},
-
+  
   
 ];
 const router = createRouter({ history, routes });
