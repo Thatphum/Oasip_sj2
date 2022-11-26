@@ -10,7 +10,7 @@ const submitLogin = async () => {
     password: password.value,
   }
   console.log(requiredUser)
-  const res = await LoginService.logInUser(requiredUser)
+  const res = await LoginService.login(requiredUser)
   if (res.status == 400) {
     alert('A user with the specified email DOES NOT exist')
   } else if (res.status == 401) {

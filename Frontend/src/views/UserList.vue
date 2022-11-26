@@ -31,7 +31,6 @@ const confirmDelete = (id) => {
   let text = 'Do you want to delete the user?';
   if (confirm(text) == true) {
     deleteUser(id);
-    alert('User deleted successfully');
   }
 };
 </script>

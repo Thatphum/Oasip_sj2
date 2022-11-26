@@ -1,6 +1,6 @@
 const API_URL = `${import.meta.env.VITE_BASE_URL}api`
 
-class EventCategoryDataService{
+export default class EventCategoryDataService{
     retrieveAllCategory(){
         return fetch(`${API_URL}/categories`)
     }
@@ -23,4 +23,3 @@ class EventCategoryDataService{
         return fetch(`${API_URL}/categories/${id}`)
     }
 }
-export default new EventCategoryDataService()

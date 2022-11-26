@@ -2,8 +2,6 @@
 import { onBeforeMount, ref } from 'vue';
 import EventCategoryDataService from '../services/EventCategoryDataService';
 import EventDataService from '../services/EventDataService';
-
-
 onBeforeMount(async () => {
   await getAllCategory();
   setTimeout(() => {
