@@ -3,10 +3,18 @@ import { RouterLink } from 'vue-router';
 
 export default {
   name: 'Navbar',
+  components: { RouterLink },
   data() {
     return {
       slideBar: false,
+      username: '',
     };
+  },
+  mounted() {
+    var user = JSON.parse(localStorage.getItem('user'));
+    if (user != null) {
+      this.username = user.username;
+    }
   },
   methods: {
     sideBar() {
@@ -15,8 +23,14 @@ export default {
     closeSidebar() {
       this.slideBar = false;
     },
+    chaeckuser() {
+      return localStorage.getItem('user') == null;
+    },
+    logoutUrl() {
+      localStorage.clear();
+      location.reload();
+    },
   },
-  components: { RouterLink },
 };
 </script>
 
@@ -24,6 +38,7 @@ export default {
   <nav class="w-full border-b-2 text-md">
     <div
       class="hidden md:flex items-center bg-black justify-end text-white py-2"
+      v-if="chaeckuser()"
     >
       <ul class="flex gap-6 mx-10 text-sm">
         <li>
@@ -36,7 +51,9 @@ export default {
           <a href="">Join with guest</a>
         </li>
         <li>
-          <a href="">Sign In</a>
+          <router-link :to="{ path: '/signin', name: 'SignIn' }">
+            Sign In
+          </router-link>
         </li>
       </ul>
     </div>
@@ -48,42 +65,67 @@ export default {
         <div class="hidden md:flex md:items-center md:w-auto" id="menu">
           <ul class="flex pt-4 md:pt-0">
             <li>
-              <RouterLink
+              <router-link
                 class="md:p-4 py-2 block hover:text-blue-600"
                 :to="{ path: '/', name: 'Home' }"
-                >Home</RouterLink
               >
+                Home
+              </router-link>
             </li>
             <li>
-              <a class="md:p-4 py-2 block hover:text-blue-600" href="#"
-                >Events</a
-              >
+              <router-link
+                class="md:p-4 py-2 block hover:text-blue-600"
+                :to="{ name: 'ListEvent' }"
+                >Events
+              </router-link>
             </li>
             <li>
-              <a class="md:p-4 py-2 block hover:text-blue-600" href="#"
-                >Categoires</a
+              <router-link
+                class="md:p-4 py-2 block hover:text-blue-600"
+                :to="{ name: 'ListCategory' }"
               >
+                Categoires
+              </router-link>
             </li>
             <li>
-              <a class="md:p-4 py-2 block hover:text-blue-600" href="#"
-                >Users</a
+              <router-link
+                class="md:p-4 py-2 block hover:text-blue-600"
+                :to="{ name: 'ListUsers' }"
               >
+                Users
+              </router-link>
             </li>
             <li>
-              <a class="md:p-4 py-2 block hover:text-blue-600" href="#"
-                >Contact Us</a
+              <router-link
+                class="md:p-4 py-2 block hover:text-blue-600"
+                :to="{ name: 'About' }"
               >
+                Contact Us
+              </router-link>
             </li>
           </ul>
         </div>
       </div>
       <div class="flex md:hidden text-lg">JATURALNW</div>
       <div class="flex items-center gap-4">
-        <button
-          class="bg-blue-600 text-white py-2 px-6 rounded-full hidden md:flex"
+        <p class="py-2 px-6 rounded-full hidden md:flex" v-if="!chaeckuser()">
+          {{ username }}
+        </p>
+        <router-link
+          v-if="chaeckuser()"
+          class="bg-blue-600 text-white py-2 px-6 rounded-full hidden md:flex hover:scale-105 duration-300"
+          :to="{ name: 'SignUp' }"
         >
           Sign Up
+        </router-link>
+        <button
+          v-else
+          class="bg-blue-600 text-white py-2 px-6 rounded-full hidden md:flex hover:scale-105 duration-300"
+          @click="logoutUrl()"
+        >
+          Sign Out
         </button>
+
         <button class="rounded-full flex lg:hidden">
           <svg
             xmlns="http://www.w3.org/2000/svg"

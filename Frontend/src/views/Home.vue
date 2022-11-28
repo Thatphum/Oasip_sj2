@@ -52,7 +52,6 @@
       </div>
     </div>
   </section>
-  <section class="bg-blue-500 py-4 px-10">dsadasdas</section>
 </template>
 
 <style scoped></style>
