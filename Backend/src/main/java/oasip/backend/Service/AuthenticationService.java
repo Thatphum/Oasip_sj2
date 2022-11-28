@@ -1,5 +1,6 @@
 package oasip.backend.Service;
 
+import oasip.backend.DTOs.Authentication.Jwt.userResponce;
 import oasip.backend.Exception.ErrorResponse;
 import oasip.backend.Config.JwtTokenUtil;
 import oasip.backend.Config.Jwts.AuthenticationUser;
@@ -39,8 +40,6 @@ public class AuthenticationService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private JwtUserDetailsService userDetailsService;
 
 
 //    private Argon2PasswordEncoder passwordEncoder = new Argon2PasswordEncoder(16, 26, 1, 65536, 10);
@@ -63,7 +62,7 @@ public class AuthenticationService {
                 List<String> roles = authenticationUser.getAuthorities().stream().map(item -> item.getAuthority())
                         .collect(Collectors.toList());
                 String jwtRefreshToken = jwtTokenUtil.generateRefreshToken(authenticationUser);
-                return ResponseEntity.ok(new JwtResponse(jwt, jwtRefreshToken, authenticationUser.getUsername(), roles));
+                return ResponseEntity.ok(new JwtResponse(jwt,jwtTokenUtil.getExpirationDateFromToken(jwt), jwtRefreshToken , new userResponce(authenticationUser.getEmail(),user.getName(), roles.get(0)) ));
             }else
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(HttpStatus.NOT_FOUND,"A user with the specified email DOES NOT exist"));
         }catch (DisabledException e) {
@@ -83,7 +82,7 @@ public class AuthenticationService {
             String jwt = jwtTokenUtil.generateToken(authenticationUser);
             List<String> roles = authenticationUser.getAuthorities().stream().map(item -> item.getAuthority())
                     .collect(Collectors.toList());
-            return ResponseEntity.ok(new JwtResponse(jwt, jwtRefreshToken, authenticationUser.getUsername(), roles));
+            return ResponseEntity.ok(new JwtResponse(jwt,jwtTokenUtil.getExpirationDateFromToken(jwt), jwtRefreshToken , new userResponce(authenticationUser.getEmail(),authenticationUser.getUsername(), roles.get(0))));
         }catch (Exception ex){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"JWT Refresh Token has expired",ex);
         }
