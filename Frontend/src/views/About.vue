@@ -1,9 +1,10 @@
 <script setup>
-import router from '../router'
+import { onBeforeMount } from 'vue';
+import router from '../router';
 
 const goBack = () => {
-  router.push({ name: 'ListCategory' })
-}
+  router.push({ name: 'ListCategory' });
+};
 </script>
 
 <template>

@@ -1,8 +1,4 @@
-import DataService from './DataService.js';
-export default class AuthenticationService extends DataService {
-  print() {
-    console.log(this.API_URL);
-  }
+class AuthenticationService {
   logInUser(user) {
     return fetch(`${API_URL}/auth/match`, {
       method: 'POST',
@@ -13,3 +9,5 @@ export default class AuthenticationService extends DataService {
     });
   }
 }
+
+export default new AuthenticationService();
