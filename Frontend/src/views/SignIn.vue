@@ -89,7 +89,7 @@ const EmailTrim = () => {
         </form>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <style></style>

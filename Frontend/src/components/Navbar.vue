@@ -21,7 +21,7 @@ export default {
 </script>
 
 <template>
-  <nav class="w-full border-b-2 text-md">
+  <nav class="w-full border-b-2 text-md z-50">
     <div
       class="hidden md:flex items-center bg-black justify-end text-white py-2"
     >
