@@ -1,5 +1,4 @@
 <script>
-
 var text = ["Appoitment", "Meeting", "Consult", "Advise"];
 
 textSequence(0);
@@ -22,11 +21,12 @@ function textSequence(i) {
 //   textElement.innerHTML = text[index];
 //   index = (index + 1) % text.length;
 // }
-
 </script>
 
 <template>
-  <section class="flex flex-col md:flex-row border-b-4 pt-16">
+  <section
+    class="md:flex md:w-full border-b-4 pt-16 md:w-full"
+  >
     <div class="w-full md:w-1/2 md:py-24">
       <div
         class="container mx-auto flex px-10 md:px-5 py-16 lg:py-24 items-center"
@@ -41,8 +41,8 @@ function textSequence(i) {
             <span
               class="text-blue-700 text-5xl md:text-4xl lg:text-6xl"
               id="words"
-            ><!-- This text slider -->
-          </span>
+              ><!-- This text slider -->
+            </span>
           </h1>
           <p
             class="mb-8 leading-relaxed text-md md:text-lg w-full md:w-3/4 break-keep"
@@ -69,45 +69,59 @@ function textSequence(i) {
     </div>
     <div class="w-full md:w-1/2 bg-slate-100/100">
       <div class="container mx-auto flex md:flex-row flex-col items-center">
-        <!-- Area of the images -->        
-        <img src="../assets/coverimg.jpg" alt="coverimg" width="100%" height="75%">
+        <!-- Area of the images -->
+        <img
+          src="../assets/coverimg.jpg"
+          alt="coverimg"
+          width="100%"
+          height="75%"
+        />
         <!-- End of area -->
       </div>
     </div>
   </section>
-
-  <div class="text-black h-60 mt-36 mb-36 flex drop-shadow-xl ml-60">
+  
+  <div
+    class="md:flex w-auto my-18 ml-30 md:flex-row text-black md:h-60 drop-shadow-xl md:ml-72 md:my-36 md:w-auto"
+  >
     <img
       src="../assets/Programming-1.png"
       alt="cover1"
-      class="h-full w-auto ml-96 drop-shadow-xl"
+      class="my-28 md:my-auto md:h-full md:w-auto md:ml-52 drop-shadow-xl"
     />
-    <div class="">
-      <p class="text-center text-4xl ml-52">Categories</p>
-      <p class="text-center text-xl ml-52">
-        You can make appointments with specialists in different <br />categories
-        to consult and answer questions about the <br />problems you are
-        facing.<br />
+    <div class="w-full md:w-1/2 md:-mx-20">
+      <p class="text-center md:text-4xl md:ml-52">Categories</p>
+      <p class="text-center md:text-xl md:ml-52">
+        You can make appointments with specialists in different
+        <br />categories to consult and answer questions about the
+        <br />problems you are facing.<br />
       </p>
-      <a href="" class="text-black ml-56 underline hover:text-blue-600"
-        >See more...</a
+      <router-link
+        :to="{ name: 'ListCategory' }"
+        class="ml-36 text-black md:ml-56 underline hover:text-blue-600"
+        >See more...</router-link
       >
     </div>
   </div>
-  <div class="text-black h-60 mt-36 mb-36 flex drop-shadow-xl ml-60">
-    <div class="">
-      <p class="text-center text-4xl ml-96">Events</p>
-      <p class="text-center text-xl ml-96">
+  
+  <div
+    class="md:flex my-18 ml-30 md:flex-row text-black md:h-60 drop-shadow-xl md:ml-72 md:my-36 md:w-auto"
+  >
+    <div class="mt-48 md:my-auto md:w-1/2 md:-mx-20">
+      <p class="text-center md:text-4xl md:ml-96">Events</p>
+      <p class="text-center md:text-xl md:ml-96">
         Make appointments and manage events easily <br />and conveniently.
       </p>
-      <a href="" class="ml-96 text-black underline hover:text-blue-600"
-        >See more...</a
+      <router-link
+        :to="{ name: 'ListEvent' }"
+        class="ml-36 md:ml-96 text-black underline hover:text-blue-600"
+        >See more...</router-link
       >
     </div>
     <img
       src="../assets/devices-pana.png"
       alt="cover1"
-      class="h-full w-auto ml-52 drop-shadow-xl"
+      class="mb-52 md:m-auto md:h-full md:w-auto md:ml-52 drop-shadow-xl"
     />
   </div>
 </template>
