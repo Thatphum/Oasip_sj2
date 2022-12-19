@@ -2,25 +2,26 @@ package oasip.backend.DTOs.Authentication.Jwt;
 
 import lombok.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 public class JwtResponse {
     private String accessToken;
+    private Date accessTokenExp;
     private String refreshToken;
-    private String type = "Bearer";
-    private String username;
-    private List<String> roles;
+//    private String type = "Bearer";
+    private userResponce user;
 
-    public JwtResponse(String accessToken, String refreshToken, String username,  List<String> roles) {
+    public JwtResponse(String accessToken, Date accessTokenExp,String refreshToken,userResponce user) {
         this.accessToken = accessToken;
+        this.accessTokenExp = accessTokenExp;
         this.refreshToken = refreshToken;
-        this.username = username;
-        this.roles = roles;
+        this.user = user;
     }
 
     // getters and setters

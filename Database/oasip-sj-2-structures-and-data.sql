@@ -109,11 +109,16 @@ CREATE TABLE `users` (
   `name` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL,
 <<<<<<< HEAD
+<<<<<<< HEAD
   -- `password` varchar(90) NOT NULL,
 =======
   `password` varchar(100) NOT NULL,
 >>>>>>> f400c66d970e1d2ec1e78dcd20d97e2f22aa0994
   `role` ENUM('admin', 'lecturer', 'student') NOT NULL DEFAULT 'student',
+=======
+  `password` varchar(100) NOT NULL,
+  `role` ENUM('admin', 'lecturer', 'student') NOT NULL,
+>>>>>>> e14becadc4f8caff367f6bc8a894040df6b5ed8c
   `createOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updateOn` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`userId`),
@@ -129,10 +134,14 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 <<<<<<< HEAD
+<<<<<<< HEAD
 INSERT INTO `users` VALUES (1,'OASIP ADMIN','oasip.admin@kmutt.ac.th','admin','2022-07-31 17:00:00','2022-07-31 17:00:00'),(2,'Somchai Jaidee','somchai.jai@kmutt.ac.th','lecturer','2022-08-08 08:00:00','2022-08-08 08:00:00'),(3,'Komkrid Rakdee','komkrid.rak@mail.kmutt.ac.th','student','2022-08-08 08:00:01','2022-08-08 08:00:01'),(4,'สมเกียรติ ขยันเรียน','somkiat.kay@kmutt.ac.th','student','2022-08-16 02:00:00','2022-08-16 02:00:00');
 =======
 -- INSERT INTO `users` VALUES (1,'OASIP ADMIN','oasip.admin@kmutt.ac.th','123456','admin','2022-07-31 17:00:00','2022-07-31 17:00:00'),(2,'Somchai Jaidee','somchai.jai@kmutt.ac.th','123456','lecturer','2022-08-08 08:00:00','2022-08-08 08:00:00'),(3,'Komkrid Rakdee','komkrid.rak@mail.kmutt.ac.th','123456','student','2022-08-08 08:00:01','2022-08-08 08:00:01'),(4,'สมเกียรติ ขยันเรียน','somkiat.kay@kmutt.ac.th','123456','student','2022-08-16 02:00:00','2022-08-16 02:00:00');
 >>>>>>> f400c66d970e1d2ec1e78dcd20d97e2f22aa0994
+=======
+-- INSERT INTO `users` (userId,name,email,role) VALUES (1,'OASIP ADMIN','oasip.admin@kmutt.ac.th','admin'),(2,'Somchai Jaidee','somchai.jai@kmutt.ac.th','lecturer'),(3,'Komkrid Rakdee','komkrid.rak@mail.kmutt.ac.th','student'),(4,'สมเกียรติ ขยันเรียน','somkiat.kay@kmutt.ac.th','student');
+>>>>>>> e14becadc4f8caff367f6bc8a894040df6b5ed8c
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 ALTER TABLE `oasip`.`users` 
 ADD COLUMN `password` VARCHAR(90) NOT NULL AFTER `email`;

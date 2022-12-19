@@ -33,7 +33,7 @@ public class JwtUserDetailsService implements UserDetailsService {
             Role role = new Role(user.getRole().toString());
             List<Role> roles = new ArrayList<>();
             roles.add(role);
-            return  new AuthenticationUser(user.getEmail() , argon2PasswordEncoder.encode(user.getPassword()), roles);
+            return  new AuthenticationUser(user.getEmail(),user.getName() , argon2PasswordEncoder.encode(user.getPassword()), roles);
         }
 
         throw new UsernameNotFoundException("User not found with Email: " + s);

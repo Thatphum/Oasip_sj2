@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gray-200 flex">
     <div class="flex-grow bg-white">
-      <div class="fixed w-full top-0">
+      <div class="fixed w-full top-0 z-50">
         <Navbar />
       </div>
       <!-- content -->
@@ -10,7 +10,7 @@
       </main>
     </div>
   </div>
-  <!-- <Footer /> -->
+  <Footer />
 </template>
 
 <script>
