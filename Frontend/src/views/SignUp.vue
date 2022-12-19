@@ -75,7 +75,6 @@ export default {
             'question'
           );
         } else {
-          // this.errorMessage = true;
           this.$swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -225,9 +224,9 @@ export default {
             </div>
             <div class="text-red-500 text-sm flex justify-center">
               &nbsp;
-              <p v-show="errorMessage">
+              <!-- <p v-show="errorMessage">
                 Password and confirm password does not match
-              </p>
+              </p> -->
             </div>
             <button
               class="bg-blue-700 text-md rounded-xl text-white py-2 hover:scale-105 duration-300 mt-2 formInput px-28"

@@ -1,9 +1,8 @@
 <script>
-import { RouterLink } from 'vue-router';
+import { store } from '../stores/User';
 
 export default {
   name: 'Navbar',
-  components: { RouterLink },
   data() {
     return {
       slideBar: false,
@@ -11,7 +10,7 @@ export default {
     };
   },
   mounted() {
-    var user = JSON.parse(localStorage.getItem('user'));
+    var user = store.user;
     if (user != null) {
       this.username = user.username;
     }
@@ -24,10 +23,10 @@ export default {
       this.slideBar = false;
     },
     chaeckuser() {
-      return localStorage.getItem('user') == null;
+      return store.isLogin();
     },
     logoutUrl() {
-      localStorage.clear();
+      store.logout();
       location.reload();
     },
   },
@@ -38,7 +37,7 @@ export default {
   <nav class="w-full border-b-2 text-md">
     <div
       class="hidden md:flex items-center bg-black justify-end text-white py-2"
-      v-if="chaeckuser()"
+      v-if="!chaeckuser()"
     >
       <ul class="flex gap-6 mx-10 text-sm">
         <li>
@@ -67,7 +66,7 @@ export default {
             <li>
               <router-link
                 class="md:p-4 py-2 block hover:text-blue-600"
-                :to="{ path: '/', name: 'Home' }"
+                :to="{ name: 'Home' }"
               >
                 Home
               </router-link>
@@ -107,17 +106,19 @@ export default {
         </div>
       </div>
       <div class="flex md:hidden text-lg">JATURALNW</div>
-      <div class="flex items-center gap-4">
-        <p class="py-2 px-6 rounded-full hidden md:flex" v-if="!chaeckuser()">
+      <div class="flex items-center gap-4 text-sm">
+        <p class="py-2 px-6 rounded-full hidden lg:flex" v-if="chaeckuser()">
           {{ username }}
         </p>
+
         <router-link
-          v-if="chaeckuser()"
           class="bg-blue-600 text-white py-2 px-6 rounded-full hidden md:flex hover:scale-105 duration-300"
           :to="{ name: 'SignUp' }"
+          v-if="!chaeckuser()"
         >
           Sign Up
         </router-link>
+
         <button
           v-else
           class="bg-blue-600 text-white py-2 px-6 rounded-full hidden md:flex hover:scale-105 duration-300"
@@ -153,19 +154,72 @@ export default {
       }"
     >
       <div class="pt-10 px-5 text-md">
-        <div class="flex flex-col divide-y-2">
-          <a href="#" class="py-3" @click="closeSidebar()"> Home </a>
-          <a href="#aboutme" class="py-3" @click="closeSidebar()"> About Me </a>
-          <a href="#myskill" class="py-3" @click="closeSidebar()"> Skill </a>
-          <a href="#experience" class="py-3" @click="closeSidebar()">
-            Experience
-          </a>
-          <a href="#certificate" class="py-3" @click="closeSidebar()">
-            Certificate
-          </a>
-          <a href="#contact" class="py-3" @click="closeSidebar()"> Contact </a>
+        <div class="w-full flex flex-col items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="70"
+            height="70"
+            fill="currentColor"
+            class="bi bi-person-circle"
+            viewBox="0 0 16 16"
+          >
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            <path
+              fill-rule="evenodd"
+              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+            />
+          </svg>
+          <p class="md:hidden flex pt-2">
+            {{ username }}
+          </p>
+          <div class="flex gap-2">
+            <button
+              class="bg-blue-600 text-white mt-2 py-1 px-3 rounded-full md:hidden flex text-md"
+              @click="logoutUrl()"
+              v-if="chaeckuser()"
+            >
+              Sign Out
+            </button>
+            <button @click="closeSidebar()" v-if="!chaeckuser()">
+              <router-link
+                v-if="!chaeckuser()"
+                class="bg-blue-600 text-white mt-2 py-1 px-4 rounded-full md:hidden flex text-md text-center"
+                :to="{ name: 'SignIn' }"
+              >
+                Sign In
+              </router-link>
+            </button>
+            <button @click="closeSidebar()" v-if="!chaeckuser()">
+              <router-link
+                class="bg-blue-600 text-white mt-2 py-1 px-3 rounded-full md:hidden flex text-md"
+                :to="{ name: 'SignUp' }"
+              >
+                Sign Up
+              </router-link>
+            </button>
+          </div>
         </div>
-        <div class="flex justify-center pt-14" @click="closeSidebar()">
+
+        <div class="flex flex-col divide-y-2">
+          <button class="py-3 text-left" @click="closeSidebar()">
+            <router-link :to="{ name: 'Home' }"> Home </router-link>
+          </button>
+          <button class="py-3 text-left" @click="closeSidebar()">
+            <router-link :to="{ name: 'ListEvent' }"> Event </router-link>
+          </button>
+          <button class="py-3 text-left" @click="closeSidebar()">
+            <router-link :to="{ name: 'ListCategory' }">
+              Categoires
+            </router-link>
+          </button>
+          <button class="py-3 text-left" @click="closeSidebar()">
+            <router-link :to="{ name: 'ListUsers' }"> Users </router-link>
+          </button>
+          <button class="py-3 text-left" @click="closeSidebar()">
+            <router-link :to="{ name: 'About' }"> Contact Us </router-link>
+          </button>
+        </div>
+        <div class="flex justify-center pt-6" @click="closeSidebar()">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="40"

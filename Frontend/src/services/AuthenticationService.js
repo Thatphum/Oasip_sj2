@@ -1,5 +1,5 @@
 const API_URL = `${import.meta.env.VITE_BASE_URL}api`;
-const refreshtoken = localStorage.getItem('refreshtoken');
+const refreshtoken = localStorage.getItem('refreshToken');
 class AuthenticationService {
   logInUser(user) {
     return fetch(`${API_URL}/auth/match`, {

@@ -15,4 +15,5 @@ public class EventDetailDto implements Serializable {
     private String eventNotes;
     private Integer eventCategoryId;
     private String eventCategoryEventCategoryName;
+    private String eventFile;
 }
