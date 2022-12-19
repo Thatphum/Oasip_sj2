@@ -11,6 +11,8 @@ import UserDetail from '../views/UserDetail.vue';
 import User from '../components/User.vue';
 import SignIn from '../views/SignIn.vue';
 import SignUp from '../views/SignUp.vue';
+import PageNotFound from '../views/PageNotFound.vue';
+import AccessForbidden from '../views/AccessForbidden.vue';
 import { store } from '../stores/User.js';
 
 const history = createWebHistory('/sj2/');
@@ -67,6 +69,8 @@ const routes = [
   },
   { path: '/signup', name: 'SignUp', component: SignUp },
   { path: '/signin', name: 'SignIn', component: SignIn },
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: PageNotFound },
+  { path: '/403', name: 'AccessForbidden', component: AccessForbidden },
 ];
 const student = [
   'ListEvent',
@@ -104,22 +108,21 @@ router.beforeEach(async (to, from, next) => {
   if (!store.isLogin()) {
     store.resetToken();
   }
-  // if (!routes.some((route) => route.name === to.name)) {
-  //   //page not found
-  //   return next();
-  // }
+  if (!routes.some((route) => route.name === to.name)) {
+    //page not found
+    return next({
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+    });
+  }
   console.log('to');
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     console.log('check login?');
-    if (store.isLogin()) {
+    if (store.accessTokenExp > new Date()) {
       console.log('check role component');
       if (!rolesComponent[store.user.roles].includes(to.name)) {
         //permission denied
-        // next({
-        //   path: '/signin',
-        //   name: 'SignIn',
-        // });
-        return next();
+        return next({ path: '/403', name: 'AccessForbidden' });
       }
     } else {
       next({

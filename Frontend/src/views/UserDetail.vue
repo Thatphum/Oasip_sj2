@@ -81,7 +81,7 @@ export default {
           if (res.status == 200) {
             this.$swal.fire('Saved!', '', 'success');
             await this.getDetailUser(this.$route.params.id);
-            this.editMode = false;
+            this.resetUpdate();
           } else {
             this.$swal.fire({
               icon: 'error',
@@ -90,7 +90,7 @@ export default {
             });
           }
         } else {
-          this.editMode = false;
+          this.resetUpdate();
         }
       } else {
         this.$swal.fire({
@@ -114,34 +114,6 @@ export default {
     },
   },
 };
-
-// const updateUser = async () => {
-//   var newData = {
-//     id: params.id,
-//     name: editUserName.value.trim(),
-//     email: editEmail.value.trim(),
-//     role: editRole.value,
-//   };
-
-//   if (
-//     newData.name != detail.value.name ||
-//     newData.email != detail.value.email ||
-//     newData.role != detail.value.role
-//   ) {
-//     console.log('dsalkda');
-//     const res = await UserDataService.updateUser(detail.value.id, newData);
-//     if (res.status == 400) {
-//       alert('This name or email are already used.');
-//     } else {
-//       await getDetailUser(params.id);
-//     }
-//   }
-
-//   // console.log(newData);
-//   // console.log(detail.value);
-
-//   editMode.value = false;
-// };
 </script>
 
 <template>
@@ -195,7 +167,7 @@ export default {
                   class="shadow appearance-none border rounded-full w-full my-1 py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="username"
                   type="text"
-                  maxlength="100" 
+                  maxlength="100"
                   v-model="updatUser.name"
                 />
               </div>

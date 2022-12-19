@@ -6,8 +6,8 @@ export const store = reactive({
   accessToken: localStorage.getItem('accessToken'),
   accessTokenExp: new Date(localStorage.getItem('accessTokenExp')),
   refreshToken: localStorage.getItem('refreshToken'),
-  isLogin() {
-    return this.accessToken && this.accessTokenExp > new Date();
+   isLogin() {
+    return ( this.accessToken) && (this.accessTokenExp) > new Date();
   },
   async resetToken() {
     if (this.refreshToken != null) {
@@ -39,5 +39,5 @@ export const store = reactive({
   },
   getUsername() {
     return this.user.username;
-  }
+  },
 });

@@ -21,11 +21,10 @@ public class CategoryUniqueNameValidator implements ConstraintValidator<Category
 
     @Override
     public boolean isValid(Eventcategory eventcategory, ConstraintValidatorContext constraintValidatorContext) {
-        System.out.println(eventcategory);
+
         if(eventcategory.getEventCategoryName() != null){
-            Integer id = eventcategory.getId() == null ? eventcategory.getId() : 0;
+            Integer id = eventcategory.getId();
             List<Eventcategory> result = categoryRepository.findAllByEventCategoryNameAndAndIdFalse(eventcategory.getEventCategoryName() , id);
-            System.out.println(result);
             if (!result.isEmpty()){
                 // disable exception because cannot set field name so create new exception and field name;
                 constraintValidatorContext.disableDefaultConstraintViolation();

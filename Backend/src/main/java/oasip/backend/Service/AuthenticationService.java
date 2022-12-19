@@ -79,11 +79,14 @@ public class AuthenticationService {
     public ResponseEntity<?> getRefreshToken(String jwtRefreshToken){
         System.out.println("dsadads");
         try{
-            String username = jwtTokenUtil.getUsernameFromToken(jwtRefreshToken);
-            AuthenticationUser authenticationUser = this.jwtUserDetailService.loadUserByUsername(username);
+            String email = jwtTokenUtil.getUsernameFromToken(jwtRefreshToken);
+            AuthenticationUser authenticationUser = this.jwtUserDetailService.loadUserByEmail(email);
+            System.out.println("dsada");
+
             String jwt = jwtTokenUtil.generateToken(authenticationUser);
             List<String> roles = authenticationUser.getAuthorities().stream().map(item -> item.getAuthority())
                     .collect(Collectors.toList());
+
             return ResponseEntity.ok(new JwtResponse(jwt,jwtTokenUtil.getExpirationDateFromToken(jwt), jwtRefreshToken , new userResponce(authenticationUser.getEmail(),authenticationUser.getUsername(), roles.get(0))));
         }catch (Exception ex){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"JWT Refresh Token has expired",ex);

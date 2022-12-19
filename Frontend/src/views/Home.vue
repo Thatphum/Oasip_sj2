@@ -1,56 +1,59 @@
 <script setup></script>
 
 <template>
-  <section class="flex flex-col md:flex-row border-b-4 pt-16">
-    <div class="w-full md:w-1/2 md:py-24">
-      <div
-        class="container mx-auto flex px-10 md:px-5 py-16 lg:py-24 items-center"
-      >
+  <section class="min-h-screen">
+    <div class="flex flex-col md:flex-row border-b-4 pt-16">
+      <div class="w-full md:w-1/2 md:py-24">
         <div
-          class="flex flex-col md:mr-10 lg:mr-20 items-center md:items-end text-left mb-16 md:mb-0"
+          class="container mx-auto flex px-10 md:px-5 py-16 lg:py-24 items-center"
         >
-          <h1
-            class="text-4xl md:text-3xl lg:text-6xl mb-6 text-gray-900 w-full md:w-3/4 text-center md:text-left"
+          <div
+            class="flex flex-col md:mr-10 lg:mr-20 items-center md:items-end text-left mb-16 md:mb-0"
           >
-            One platform to <br class="hidden md:inline-block" />
-            <span class="text-blue-700 text-5xl md:text-4xl lg:text-6xl"
-              >Appointment</span
+            <h1
+              class="text-4xl md:text-3xl lg:text-6xl mb-6 text-gray-900 w-full md:w-3/4 text-center md:text-left"
             >
-          </h1>
-          <p
-            class="mb-8 leading-relaxed text-md md:text-lg w-full md:w-3/4 break-keep"
-          >
-            Appointments with teams, solving your problem, exchaning ideas and
-            managing team work precisely - all on the OASIP platform.
-          </p>
-          <div class="w-full md:w-3/4">
-            <div
-              class="flex flex-col lg:flex-row justify-center lg:justify-start"
-            >
-              <button
-                class="text-white bg-blue-700 border-0 py-2 px-6 rounded-xl text-md md:text-lg"
+              One platform to <br class="hidden md:inline-block" />
+              <span class="text-blue-700 text-5xl md:text-4xl lg:text-6xl"
+                >Appointment</span
               >
-                Start your events
-              </button>
-              <button class="text-gray-700 py-2 px-6 md:text-lg text-md">
-                Sign Up
-              </button>
+            </h1>
+            <p
+              class="mb-8 leading-relaxed text-md md:text-lg w-full md:w-3/4 break-keep"
+            >
+              Appointments with teams, solving your problem, exchaning ideas and
+              managing team work precisely - all on the OASIP platform.
+            </p>
+            <div class="w-full md:w-3/4">
+              <div
+                class="flex flex-col lg:flex-row justify-center lg:justify-start"
+              >
+                <button
+                  class="text-white bg-blue-700 border-0 py-2 px-6 rounded-xl text-md md:text-lg"
+                >
+                  Start your events
+                </button>
+                <button class="text-gray-700 py-2 px-6 md:text-lg text-md">
+                  Sign Up
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="w-full md:w-1/2 py-24 bg-slate-100/50">
-      <div
-        class="container mx-auto flex px-16 py-24 md:flex-row flex-col items-center"
-      >
+      <div class="w-full md:w-1/2 py-24 bg-slate-100/50">
         <div
-          class="lg:flex-grow md:w-1/2 lg:pl-48 md:pl-20 flex flex-col md:items-center md:text-left mb-16 md:mb-0 items-center text-center"
+          class="container mx-auto flex px-16 py-24 md:flex-row flex-col items-center"
         >
-          dsadads
+          <div
+            class="lg:flex-grow md:w-1/2 lg:pl-48 md:pl-20 flex flex-col md:items-center md:text-left mb-16 md:mb-0 items-center text-center"
+          >
+            dsadads
+          </div>
         </div>
       </div>
     </div>
+    <div>dsajkdjadkjaldlakjdakjdk</div>
   </section>
 </template>
 

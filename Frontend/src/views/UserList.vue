@@ -59,7 +59,7 @@ export default {
         <div class="flex flex-col gap-8 order-last lg:order-first">
           <!-- <IncomingEvent /> -->
           <div
-            class="container md:min-w-[1000px] min-h-screen md:mt-0 mt-12"
+            class="container lg:min-w-[1000px] min-h-screen md:mt-0 mt-12"
             id="tableEvent"
           >
             <!-- Responsive Table Section -->

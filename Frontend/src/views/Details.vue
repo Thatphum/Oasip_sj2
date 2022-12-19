@@ -168,7 +168,7 @@ export default {
                 @change="checkDate()"
                 :min="minDate()"
                 v-model="updateEvent.date"
-                class="text-base p-2"
+                class="text-base p-2 border rounded-lg shadow"
               />
             </div>
           </div>
@@ -184,22 +184,31 @@ export default {
                 id="eventTime"
                 @change="checkDate()"
                 v-model="updateEvent.time"
-                class="text-base p-2"
+                class="text-base p-2 border rounded-lg shadow"
               />
             </div>
           </div>
           <div class="border-b border-gray-400 pt-4">
             <h1>Note</h1>
-            <p class="text-gray-400 break-words text-xs p-4" v-if="!editMode">
+            <p
+              class="text-gray-400 break-words text-xs p-4 pb-6"
+              v-if="!editMode"
+            >
               {{ event.eventNotes != '' ? event.eventNotes : 'No message' }}
             </p>
-            <div v-else>
+            <div v-else class="text-xs">
               <textarea
                 v-model="updateEvent.eventNotes"
                 maxlength="500"
-                rows="1"
-                class="p-2"
+                rows="2"
+                class="shadow appearance-none border rounded-lg w-full my-1 py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               ></textarea>
+              <!-- <textarea
+                  rows="2"
+                  class="shadow appearance-none border rounded-lg w-full my-1 py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  maxlength="500"
+                  v-model="updatCategory.eventCategoryDescription"
+                ></textarea> -->
             </div>
           </div>
           <div class="pt-4">
@@ -208,12 +217,11 @@ export default {
               {{ event.eventFile != '' ? event.eventFile : '-' }}
             </p>
             <input
-              class="form-control block text-base font-normal text-gray-700 bg-white"
+              class="form-control block text-base font-normal text-gray-700 bg-white p-4"
               type="file"
               id="formFile"
               v-else
             />
-            <!-- <input type="file" class="" /> -->
           </div>
           <div class="flex justify-evenly pt-6 text-lg">
             <button
