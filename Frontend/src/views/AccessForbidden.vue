@@ -1,36 +1,37 @@
 <script setup></script>
 
 <template>
-  <section class="forbidden">
-  <section class="hover">
-    <section class="background">
-      <section class="door">403</section>
-      <section class="rug"></section>
-    </section>
-    <section class="foreground">
-      <section class="bouncer">
-        <section class="head">
-          <section class="neck"></section>
-          <section class="eye left"></section>
-          <section class="eye right"></section>
-          <section class="ear"></section>
+  <h1 class="mt-74 md:mt-56 text-center md:text-4xl">Access Forbidden</h1>
+    <section class="forbidden">
+      <section class="hover">
+        <section class="background">
+          <section class="door">403</section>
+          <section class="rug"></section>
         </section>
-        <section class="body"></section>
-        <section class="arm"></section>
-      </section>
-      <section class="poles">
-        <section class="pole left"></section>
-        <section class="pole right"></section>
-        <section class="rope"></section>
+        <section class="foreground">
+          <section class="bouncer">
+            <section class="head">
+              <section class="neck"></section>
+              <section class="eye left"></section>
+              <section class="eye right"></section>
+              <section class="ear"></section>
+            </section>
+            <section class="body"></section>
+            <section class="arm"></section>
+          </section>
+          <section class="poles">
+            <section class="pole left"></section>
+            <section class="pole right"></section>
+            <section class="rope"></section>
+          </section>
+        </section>
       </section>
     </section>
-  </section>
-</section>
 </template>
 
 <style scoped>
-.forbidden{
-  height: 937px;
+.forbidden {
+  height: 673px;
 }
 html,
 body {
