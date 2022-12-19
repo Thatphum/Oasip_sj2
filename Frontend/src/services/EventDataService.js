@@ -1,14 +1,29 @@
+import { store } from '../stores/User';
+
 const API_URL = `${import.meta.env.VITE_BASE_URL}api`;
 class EventDataService {
   retrieveAllEvent() {
-    return fetch(`${API_URL}/events`);
+    return fetch(`${API_URL}/events`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${store.accessToken}`,
+      },
+    });
   }
   retrieveEvent(id) {
-    return fetch(`${API_URL}/events/${id}`);
+    return fetch(`${API_URL}/events/${id}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${store.accessToken}`,
+      },
+    });
   }
   deleteEvent(id) {
     return fetch(`${API_URL}/events/${id}`, {
       method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${store.accessToken}`,
+      },
     });
   }
   createEvent(newEvent) {
@@ -16,6 +31,7 @@ class EventDataService {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
+        Authorization: `Bearer ${store.accessToken}`,
       },
       body: JSON.stringify(newEvent),
     });
@@ -25,6 +41,7 @@ class EventDataService {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
+        Authorization: `Bearer ${store.accessToken}`,
       },
       body: JSON.stringify(update),
     });

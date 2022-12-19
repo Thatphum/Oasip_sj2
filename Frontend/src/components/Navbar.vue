@@ -1,9 +1,8 @@
 <script>
-import { RouterLink } from 'vue-router';
+import { store } from '../stores/User';
 
 export default {
   name: 'Navbar',
-  components: { RouterLink },
   data() {
     return {
       slideBar: false,
@@ -24,10 +23,10 @@ export default {
       this.slideBar = false;
     },
     chaeckuser() {
-      return localStorage.getItem('user') == null;
+      return store.isLogin();
     },
     logoutUrl() {
-      localStorage.clear();
+      store.logout();
       location.reload();
     },
   },
@@ -38,7 +37,7 @@ export default {
   <nav class="w-full border-b-2 text-md">
     <div
       class="hidden md:flex items-center bg-black justify-end text-white py-2"
-      v-if="chaeckuser()"
+      v-if="!chaeckuser()"
     >
       <ul class="flex gap-6 mx-10 text-sm">
         <li>
@@ -67,7 +66,7 @@ export default {
             <li>
               <router-link
                 class="md:p-4 py-2 block hover:text-blue-600"
-                :to="{ path: '/', name: 'Home' }"
+                :to="{ name: 'Home' }"
               >
                 Home
               </router-link>
@@ -107,12 +106,12 @@ export default {
         </div>
       </div>
       <div class="flex md:hidden text-lg">JATURALNW</div>
-      <div class="flex items-center gap-4">
-        <p class="py-2 px-6 rounded-full hidden md:flex" v-if="!chaeckuser()">
+      <div class="flex items-center gap-4 text-sm">
+        <p class="py-2 px-6 rounded-full hidden lg:flex" v-if="chaeckuser()">
           {{ username }}
         </p>
         <router-link
-          v-if="chaeckuser()"
+          v-if="!chaeckuser()"
           class="bg-blue-600 text-white py-2 px-6 rounded-full hidden md:flex hover:scale-105 duration-300"
           :to="{ name: 'SignUp' }"
         >

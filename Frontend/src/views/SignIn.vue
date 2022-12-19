@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     goToSignup() {
-      this.$router.push({ path: '/signup', name: 'SignUp' });
+      this.$router.push({  name: 'SignUp' });
     },
     inputAnimation(field) {
       this.requiredUser[field] == ''
@@ -41,7 +41,7 @@ export default {
         var data = await res.json();
         console.log(data);
         localStorage.setItem('accessToken', data.accessToken);
-        localStorage.setItem('accessTokenExp', data.accessTokenExp);
+        localStorage.setItem('accessTokenExp', new Date(data.accessTokenExp));
         localStorage.setItem('refreshToken', data.refreshToken);
         localStorage.setItem('user', JSON.stringify(data.user));
         // store.setDataUser(data.user);
@@ -108,7 +108,7 @@ export default {
                 Email
               </p>
               <input
-                type="text"
+                type="email"
                 class="input p-2 border-2 rounded-xl w-full"
                 maxlength="50"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"

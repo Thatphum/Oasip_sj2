@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Data
-@UserNameOrEmailNotUnique(field = "id", fieldMatch = "email", message = "The Email or Name must be unique.")
+//@UserNameOrEmailNotUnique(field = "id", fieldMatch = "email", message = "The Email or Name must be unique.")
 public class UserUpdateDto implements Serializable {
 
     private Integer id;
@@ -34,7 +34,7 @@ public class UserUpdateDto implements Serializable {
     private String email;
 
     @NotNull(message = "The Role must be admin, lecturer, or student.")
-    @UserCheckRole(message = "The Role must be admin, lecturer, or student")
+//    @UserCheckRole(message = "The Role must be admin, lecturer, or student")
     private String role;
 
 }

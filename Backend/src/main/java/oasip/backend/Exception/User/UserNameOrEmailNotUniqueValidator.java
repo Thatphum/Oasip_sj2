@@ -27,6 +27,7 @@ public class UserNameOrEmailNotUniqueValidator implements ConstraintValidator<Us
     public boolean isValid(User user, ConstraintValidatorContext constraintValidatorContext) {
         Boolean result = true;
         User userName = userRepository.findByName(user.getName());
+        System.out.println(userName);
         constraintValidatorContext.disableDefaultConstraintViolation();
         if(userName != null && user.getId() != userName.getId()){
             constraintValidatorContext.buildConstraintViolationWithTemplate("The Name must be unique.").addNode("name").addConstraintViolation();

@@ -55,9 +55,10 @@ public class AuthenticationService {
                 if(!(passwordEncoder.matches(oldUser.getPassword(),user.getPassword()))){
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(HttpStatus.UNAUTHORIZED,"Password NOT Matched"));
                 }
-                Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+                Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword()));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                final AuthenticationUser authenticationUser = jwtUserDetailService.loadUserByUsername(user.getEmail());
+                final AuthenticationUser authenticationUser = jwtUserDetailService.loadUserByEmail(user.getEmail());
+                System.out.println(authenticationUser);
                 String jwt = jwtTokenUtil.generateToken(authenticationUser);
                 List<String> roles = authenticationUser.getAuthorities().stream().map(item -> item.getAuthority())
                         .collect(Collectors.toList());
@@ -76,6 +77,7 @@ public class AuthenticationService {
     }
 
     public ResponseEntity<?> getRefreshToken(String jwtRefreshToken){
+        System.out.println("dsadads");
         try{
             String username = jwtTokenUtil.getUsernameFromToken(jwtRefreshToken);
             AuthenticationUser authenticationUser = this.jwtUserDetailService.loadUserByUsername(username);

@@ -63,6 +63,10 @@ public class Event {
     @NotNull(message = "EventCategoryId must be not null")
     private Eventcategory eventCategory;
 
+    @Lob
+    @Column(name = "eventFile")
+    private String eventFile;
+
     public void setBookingName(String bookingName) {
         if(bookingName != null)
             this.bookingName = bookingName.trim();
