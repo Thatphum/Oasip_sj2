@@ -1,8 +1,8 @@
 <script setup></script>
 
 <template>
-  <h1 class="mt-74 md:mt-56 text-center md:text-4xl">Access Forbidden</h1>
-    <section class="forbidden">
+  <h1 class="mt-74 md:mt-36 md:mb-20 text-center md:text-4xl">Access Forbidden</h1>
+    <section id="forbidden" class="w-1/3 md:flex-none md:w-full md:ml-auto">
       <section class="hover">
         <section class="background">
           <section class="door">403</section>
@@ -30,8 +30,9 @@
 </template>
 
 <style scoped>
-.forbidden {
-  height: 673px;
+#forbidden {
+  position: relative;
+  margin-top: 800px;
 }
 html,
 body {
