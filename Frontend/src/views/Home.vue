@@ -1,4 +1,21 @@
-<script setup></script>
+<script setup>
+        var text = ['Appoitment','Meeting','Consult', 'Advise'];
+
+        textSequence(0);
+        function textSequence(i) {
+
+            if (text.length > i) {
+                setTimeout(function() {
+                    document.getElementById("words").innerHTML = text[i];
+                    textSequence(++i);
+                }, 5000); // 1 second (in milliseconds)
+
+            } else if (text.length == i) {
+                textSequence(0);
+            }
+
+        }
+</script>
 
 <template>
   <section class="flex flex-col md:flex-row border-b-4 pt-16">
@@ -13,8 +30,10 @@
             class="text-4xl md:text-3xl lg:text-6xl mb-6 text-gray-900 w-full md:w-3/4 text-center md:text-left"
           >
             One platform to <br class="hidden md:inline-block" />
-            <span class="text-blue-700 text-5xl md:text-4xl lg:text-6xl"
-              >Appointment</span
+            <span
+              class="text-blue-700 text-5xl md:text-4xl lg:text-6xl"
+              id="words"
+              ></span
             >
           </h1>
           <p
@@ -41,9 +60,7 @@
       </div>
     </div>
     <div class="w-full md:w-1/2 bg-slate-100/100">
-      <div
-        class="container mx-auto flex md:flex-row flex-col items-center"
-      >
+      <div class="container mx-auto flex md:flex-row flex-col items-center">
         <!-- Area of the images -->
 
         <img src="../assets/coverimg.jpg" alt="" />
@@ -53,26 +70,41 @@
   </section>
 
   <div class="text-black h-60 mt-36 mb-36 flex drop-shadow-xl ml-60">
-    <img src="../assets/Programming-1.png" alt="cover1" class="h-full w-auto ml-96 drop-shadow-xl" />
+    <img
+      src="../assets/Programming-1.png"
+      alt="cover1"
+      class="h-full w-auto ml-96 drop-shadow-xl"
+    />
     <div class="">
       <p class="text-center text-4xl ml-52">Categories</p>
       <p class="text-center text-xl ml-52">
         You can make appointments with specialists in different <br />categories
-        to consult and answer questions about the <br />problems you are facing.<br>        
-      </p>      
-      <a href="" class="text-black ml-56 underline hover:text-blue-600">See more...</a>
+        to consult and answer questions about the <br />problems you are
+        facing.<br />
+      </p>
+      <a href="" class="text-black ml-56 underline hover:text-blue-600"
+        >See more...</a
+      >
     </div>
   </div>
   <div class="text-black h-60 mt-36 mb-36 flex drop-shadow-xl ml-60">
-        <div class="">
+    <div class="">
       <p class="text-center text-4xl ml-96">Events</p>
-      <p class="text-center  text-xl ml-96">
-        Make appointments and manage events easily <br>and conveniently.
+      <p class="text-center text-xl ml-96">
+        Make appointments and manage events easily <br />and conveniently.
       </p>
-      <a href="" class="ml-96 text-black underline hover:text-blue-600">See more...</a>      
+      <a href="" class="ml-96 text-black underline hover:text-blue-600"
+        >See more...</a
+      >
     </div>
-    <img src="../assets/devices-pana.png" alt="cover1" class="h-full w-auto ml-52 drop-shadow-xl" />
+    <img
+      src="../assets/devices-pana.png"
+      alt="cover1"
+      class="h-full w-auto ml-52 drop-shadow-xl"
+    />
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>
