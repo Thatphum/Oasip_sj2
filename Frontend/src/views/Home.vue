@@ -1,56 +1,48 @@
 <script>
-export default {
-  name: 'slider',
-  data() {
-    return {
-      images: [
-        { src: 'https://images.unsplash.com/photo-1563492065599-3520f775eeed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80', caption: 'Image 1' },
-        { src: 'https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80', caption: 'Image 2' },
-        // { src: 'image3.jpg', caption: 'Image 3' }
-      ]
-    }
-  }
-}
 
 var text = ["Appoitment", "Meeting", "Consult", "Advise"];
 
-// textSequence(0);
-// function textSequence(i) {
-//   if (text.length > i) {
-//     setTimeout(function () {
-//       document.getElementById("words").innerHTML = text[i];
-//       textSequence(++i);
-//     }, 5000); // 5 second (in milliseconds)
-//   } else if (text.length == i) {
-//     textSequence(0);
-//   }
-// }
-
-let index = 0;
-setInterval(changeText, 5000);
-
-function changeText() {
-  const textElement = document.getElementById('words');
-  textElement.innerHTML = text[index];
-  index = (index + 1) % text.length;
+textSequence(0);
+function textSequence(i) {
+  if (text.length > i) {
+    setTimeout(function () {
+      document.getElementById("words").innerHTML = text[i];
+      textSequence(++i);
+    }, 5000); // 5 second (in milliseconds)
+  } else if (text.length == i) {
+    textSequence(0);
+  }
 }
+
+// let index = 0;
+// setInterval(changeText, 5000);
+
+// function changeText() {
+//   const textElement = document.getElementById('words');
+//   textElement.innerHTML = text[index];
+//   index = (index + 1) % text.length;
+// }
 
 </script>
 
 <template>
-  <section class="min-h-screen">
-    <div class="flex flex-col md:flex-row border-b-4 pt-16">
-      <div class="w-full md:w-1/2 md:py-24">
+  <section class="flex flex-col md:flex-row border-b-4 pt-16">
+    <div class="w-full md:w-1/2 md:py-24">
+      <div
+        class="container mx-auto flex px-10 md:px-5 py-16 lg:py-24 items-center"
+      >
         <div
-          class="container mx-auto flex px-10 md:px-5 py-16 lg:py-24 items-center"
+          class="flex flex-col md:mr-10 lg:mr-20 items-center md:items-end text-left mb-16 md:mb-0"
         >
           <h1
             class="text-4xl md:text-3xl lg:text-6xl mb-6 text-gray-900 w-full md:w-3/4 text-center md:text-left"
           >
             One platform to <br class="hidden md:inline-block" />
-            <span class="text-blue-700 text-5xl md:text-4xl lg:text-6xl"
-              >Appointment</span
-            >
+            <span
+              class="text-blue-700 text-5xl md:text-4xl lg:text-6xl"
+              id="words"
+            ><!-- This text slider -->
+          </span>
           </h1>
           <p
             class="mb-8 leading-relaxed text-md md:text-lg w-full md:w-3/4 break-keep"
@@ -75,15 +67,11 @@ function changeText() {
         </div>
       </div>
     </div>
-    <div class="w-full md:w-1/2 py-24 bg-slate-100/50">
-      <div
-        class="container mx-auto flex px-16 py-24 md:flex-row flex-col items-center"
-      >
-        <div
-          class="lg:flex-grow md:w-1/2 lg:pl-48 md:pl-20 flex flex-col md:items-center md:text-left mb-16 md:mb-0 items-center text-center"
-        >
-          dsadads
-        </div>
+    <div class="w-full md:w-1/2 bg-slate-100/100">
+      <div class="container mx-auto flex md:flex-row flex-col items-center">
+        <!-- Area of the images -->        
+        <img src="../assets/coverimg.jpg" alt="coverimg" width="100%" height="75%">
+        <!-- End of area -->
       </div>
     </div>
   </section>
