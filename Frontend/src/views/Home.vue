@@ -1,5 +1,5 @@
 <script>
-var text = ["Appoitment", "Meeting", "Consult", "Advise"];
+var text = ["Appointment", "Meeting", "Consult", "Advise"];
 
 textSequence(0);
 function textSequence(i) {
