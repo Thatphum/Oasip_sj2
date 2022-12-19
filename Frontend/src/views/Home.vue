@@ -1,20 +1,40 @@
-<script setup>
-        var text = ['Appoitment','Meeting','Consult', 'Advise'];
+<script>
+export default {
+  name: 'slider',
+  data() {
+    return {
+      images: [
+        { src: 'https://images.unsplash.com/photo-1563492065599-3520f775eeed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80', caption: 'Image 1' },
+        { src: 'https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80', caption: 'Image 2' },
+        // { src: 'image3.jpg', caption: 'Image 3' }
+      ]
+    }
+  }
+}
 
-        textSequence(0);
-        function textSequence(i) {
+var text = ["Appoitment", "Meeting", "Consult", "Advise"];
 
-            if (text.length > i) {
-                setTimeout(function() {
-                    document.getElementById("words").innerHTML = text[i];
-                    textSequence(++i);
-                }, 5000); // 1 second (in milliseconds)
+// textSequence(0);
+// function textSequence(i) {
+//   if (text.length > i) {
+//     setTimeout(function () {
+//       document.getElementById("words").innerHTML = text[i];
+//       textSequence(++i);
+//     }, 5000); // 5 second (in milliseconds)
+//   } else if (text.length == i) {
+//     textSequence(0);
+//   }
+// }
 
-            } else if (text.length == i) {
-                textSequence(0);
-            }
+let index = 0;
+setInterval(changeText, 5000);
 
-        }
+function changeText() {
+  const textElement = document.getElementById('words');
+  textElement.innerHTML = text[index];
+  index = (index + 1) % text.length;
+}
+
 </script>
 
 <template>
@@ -33,8 +53,8 @@
             <span
               class="text-blue-700 text-5xl md:text-4xl lg:text-6xl"
               id="words"
-              ></span
-            >
+            ><!-- This text slider -->
+          </span>
           </h1>
           <p
             class="mb-8 leading-relaxed text-md md:text-lg w-full md:w-3/4 break-keep"
@@ -61,9 +81,8 @@
     </div>
     <div class="w-full md:w-1/2 bg-slate-100/100">
       <div class="container mx-auto flex md:flex-row flex-col items-center">
-        <!-- Area of the images -->
-
-        <img src="../assets/coverimg.jpg" alt="" />
+        <!-- Area of the images -->        
+        <img src="../assets/coverimg.jpg" alt="coverimg" width="100%" height="75%">
         <!-- End of area -->
       </div>
     </div>
@@ -106,5 +125,22 @@
 </template>
 
 <style scoped>
+#words {
+  animation: fadeInOut 5s infinite;
+}
 
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  45% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 </style>
