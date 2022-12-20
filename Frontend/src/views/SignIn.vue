@@ -152,14 +152,14 @@ export default {
                 @click="toggleShowPassword()"
               />
             </label>
-            <div class="flex gap-4 ml-3">
+            <!-- <div class="flex gap-4 ml-3">
               <input type="checkbox" value="lsRememberMe" id="rememberMe" />
               <label
                 for="rememberMe"
                 class="text-md min-w-full font-sans font-medium"
                 >Remember me</label
               >
-            </div>
+            </div> -->
             <div class="text-red-500 text-sm flex justify-center">
               &nbsp;
               <p v-show="errorMessage">Incorrect email or password.</p>
