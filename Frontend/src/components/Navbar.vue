@@ -35,6 +35,7 @@ export default {
 
 <template>
   <nav class="w-full border-b-2 text-md">
+    <!-- guest -->
     <!-- <div
       class="hidden md:flex items-center bg-black justify-end text-white py-2"
       v-if="!chaeckuser()"
