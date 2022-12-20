@@ -172,7 +172,7 @@ export default {
             </button>
           </form>
 
-          <div class="mt-6 grid grid-cols-3 items-center text-gray-400">
+          <!-- <div class="mt-6 grid grid-cols-3 items-center text-gray-400">
             <hr class="border-gray-400" />
             <p class="text-center text-sm">OR</p>
             <hr class="border-gray-400" />
@@ -188,7 +188,8 @@ export default {
               class="mr-2"
             />
             Login with Microsoft Team
-          </button>
+          </button> -->
+          
           <div
             class="mt-4 text-sm flex justify-between items-center text-blue-700"
           >
