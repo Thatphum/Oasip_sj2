@@ -8,10 +8,12 @@ import java.util.Collection;
 
 public class AuthenticationUser implements UserDetails {
     private final String username;
+    private final String email;
     private final String password;
     private final Collection<Role> authorities;
 
-    public AuthenticationUser(String username, String password, Collection<Role> authorities) {
+    public AuthenticationUser( String email, String username, String password, Collection<Role> authorities) {
+        this.email = email;
         this.username = username;
         this.password = password;
         this.authorities = authorities;
@@ -34,6 +36,8 @@ public class AuthenticationUser implements UserDetails {
     public String getUsername() {
         return this.username;
     }
+
+    public String getEmail() { return this.email; }
 
     @Override
     public boolean isAccountNonExpired() {

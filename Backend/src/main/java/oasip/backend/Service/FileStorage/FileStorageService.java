@@ -73,7 +73,6 @@ public class FileStorageService {
 
     public void deleteDirectory(String folderId) throws IOException {
         Path filePath = this.fileStorageLocation.resolve(folderId ).normalize();
-        System.out.println(filePath);
         FileUtils.deleteDirectory(new File(filePath.toUri()));
     }
 

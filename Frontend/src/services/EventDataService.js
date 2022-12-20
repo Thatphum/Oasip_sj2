@@ -1,91 +1,85 @@
-const API_URL = `${import.meta.env.VITE_BASE_URL}api`;
+import { store } from '../stores/User';
 
+const API_URL = `${import.meta.env.VITE_BASE_URL}api`;
 class EventDataService {
   retrieveAllEvent() {
-    var token = localStorage.getItem('my_tkn');
     return fetch(`${API_URL}/events`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${store.accessToken}`,
       },
     });
   }
   retrieveEvent(id) {
-    var token = localStorage.getItem('my_tkn');
     return fetch(`${API_URL}/events/${id}`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${store.accessToken}`,
       },
     });
   }
   deleteEvent(id) {
-    var token = localStorage.getItem('my_tkn');
     return fetch(`${API_URL}/events/${id}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${store.accessToken}`,
       },
     });
   }
-  createEvent(newEvent) {
-    var token = localStorage.getItem('my_tkn');
+  createEvent(newEvent, file) {
+    const formData = new FormData();
+    formData.append('event', JSON.stringify(newEvent));
+    formData.append('file', file);
     return fetch(`${API_URL}/events`, {
       method: 'POST',
       headers: {
-        'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Accept: '*/*',
+        Authorization: `Bearer ${store.accessToken}`,
       },
-      body: JSON.stringify(newEvent),
+      body: formData,
     });
   }
-  updateEvent(id, update) {
-    var token = localStorage.getItem('my_tkn');
-    return fetch(`${API_URL}/events/${id}`, {
+  updateEvent(id, update, file) {
+    const formData = new FormData();
+    formData.append('eventId', id);
+    formData.append('event', JSON.stringify(update));
+    formData.append('file', file);
+    return fetch(`${API_URL}/events`, {
       method: 'PATCH',
       headers: {
-        'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Accept: '*/*',
+        Authorization: `Bearer ${store.accessToken}`,
       },
-      body: JSON.stringify(update),
+      body: formData,
     });
   }
   retreiveCategory(id) {
-    return fetch(`${API_URL}/events/filter/?categoryId=${id}`, {
-      method: 'GET',
-      headers: {
-        'content-type': 'application/json',
-      },
-    });
+    return fetch(`${API_URL}/events/?categoryId=${id}`);
   }
   retreiveAllEventFilter(categoryId, option, time) {
-    var token = localStorage.getItem('my_tkn');
     if (time == '') {
+      console.log('ddsadad');
       return fetch(
         `${API_URL}/events/filter/?categoryId=${categoryId}&option=${option}`,
         {
           method: 'GET',
           headers: {
-            'content-type': 'application/json',
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${store.accessToken}`,
           },
         }
       );
     } else {
       return fetch(
-        `${API_URL}/events/filter/?categoryId=${categoryId}&option=${option}&time=${time}`,
+        `${API_URL}/events/filter/?categoryId=${categoryId}&option=${option}&time=${time.toString()}`,
         {
           method: 'GET',
           headers: {
-            'content-type': 'application/json',
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${store.accessToken}`,
           },
         }
       );
     }
   }
 }
+
 export default new EventDataService();

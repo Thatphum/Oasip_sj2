@@ -1,133 +1,90 @@
-<script setup>
-import { onBeforeMount, ref } from 'vue';
-import router from '../router';
-const slide = ref(false);
-onBeforeMount(() => {
-  setTimeout(() => {
-    slide.value = true;
-  }, 200);
-});
-defineEmits(['deleteEvent']);
-const prop = defineProps({
-  mask: Object,
-});
-
-const borderCategory = [
-  'border-red-500',
-  'border-blue-500',
-  'border-yellow-500',
-  'border-green-500',
-  'border-orange-500',
-];
-
-const bgCategory = [
-  'bg-red-500',
-  'bg-blue-500',
-  'bg-yellow-500',
-  'bg-green-500',
-  'bg-orange-500',
-];
-const getBorder = (id) => {
-  // console.log(id);
-  // console.log(borderCategory[id - 1]);
-  return borderCategory[id - 1];
-};
-const getBgColor = (id) => {
-  // console.log(id);
-  return bgCategory[id - 1];
-};
-
-const formatTime = (datetime) => {
-  var date = new Date(datetime).toLocaleString('th-TH');
-  // console.log(date);
-  // console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
-  return date.slice(-8, -3);
-};
-const formatDate = (datetime) => {
-  var date = new Date(datetime);
-  return date;
-};
-const setDetail = () => {
-  setTimeout(() => {
-    router.push({ name: 'Detail', params: { id: prop.mask.id } });
-  }, 500);
+<script>
+export default {
+  data() {
+    return {
+      classColorValue: [
+        'bg-red-500',
+        'bg-blue-500',
+        'bg-yellow-500',
+        'bg-green-500',
+        'bg-orange-500',
+      ],
+    };
+  },
+  props: {
+    event: {
+      type: Object,
+      requird: true,
+    },
+  },
+  methods: {
+    formatTime(dateTime) {
+      var date = new Date(dateTime).toLocaleString('th-TH');
+      return date.slice(-8, -3);
+    },
+    formatDate(date) {
+      var date = new Date(date);
+      return date;
+    },
+    eventDetatil() {
+      this.$router.push({ name: 'Detail', params: { id: this.event.id } });
+    },
+  },
 };
 </script>
 
 <template>
-  <div
-    class="max-w-6xl h-60 md:h-20 shadow-lg rounded overflow-hidden m-4 sm:flex bg-white rounded-xl border-l-8 border-r-8 shadow-lg shadow-black/50 cursor-pointer scale-100 hover:scale-105 transition duration-700"
-    :class="getBorder(prop.mask.eventCategoryId)"
-    v-bind:class="{
-      'translate-x-0': slide,
-      'translate-x-full': !slide,
-    }"
-    @click="setDetail()"
+  <!-- {{ event }} -->
+  <tr
+    class="grid grid-cols-4 lg:grid-cols-9 border-b-2 text-center items-center auto-cols-auto text-lg hover:cursor-pointer hover:bg-gray-100"
+    @click="eventDetatil()"
   >
-    <div
-      class="flex flex-col w-32 justify-center items-center border-r-2 border-gray-200 px-4"
+    <td
+      class="py-2 lg:py-4 col-span-3 md:col-span-2 flex md:flex-col justify-center items-center -order-2 md:order-none"
     >
-      <p class="font-extrabold text-xl text-gray-900">
-        {{ formatTime(prop.mask.eventStartTime) }}
-      </p>
-      <p class="text-sm text-gray-600">{{ prop.mask.eventDuration }} Minute</p>
-    </div>
-    <!-- image -->
-    <div
-      class="flex flex-col justify-center items-center border-r-2 border-gray-200 px-4"
-    >
-      <div>{{ formatDate(prop.mask.eventStartTime).getDate() }}</div>
-      <div>
+      <p class="font-extrabold text-md text-gray-900">
+        {{ formatDate(event.eventStartTime).getDate() }} /
         {{
-          formatDate(prop.mask.eventStartTime).toLocaleString('en-US', {
+          formatDate(event.eventStartTime).toLocaleString('en-US', {
             month: 'short',
           })
         }}
-      </div>
-      <div>{{ formatDate(prop.mask.eventStartTime).getFullYear() }}</div>
-    </div>
-    <!-- category -->
-    <div
-      class="flex flex-col basis-1/3 w-80 justify-center items-center border-r-2 border-gray-200 px-4"
-    >
-      <p class="font-extrabold text-xl text-gray-900">
-        {{ prop.mask.bookingName }}
+        /
+        {{ formatDate(event.eventStartTime).getFullYear() }}
       </p>
-      <!-- <p class="text-sm text-gray-600">klatsch.duration</p> -->
-    </div>
-    <!-- name -->
-    <div
-      class="flex flex-col basis-1/3 justify-center items-center border-r-2 border-gray-200 px-4"
+      <p class="text-md md:text-sm text-gray-600 ml-2 md:ml-0">
+        {{ formatTime(event.eventStartTime) }}
+      </p>
+    </td>
+    <td
+      class="py-1 lg:py-4 flex w-full break-all col-span-4 md:col-span-2 lg:col-span-3 justify-center"
     >
+      {{ event.bookingName }}
+      <!-- {{
+        event.bookingName.length < 40
+          ? event.bookingName
+          : event.bookingName.substring(0, 40 - event.bookingName.length - 1) +
+            ' ...'
+      }} -->
+    </td>
+    <td class="lg:py-4 -order-1 md:order-none">{{ event.eventDuration }} m</td>
+    <td class="lg:py-4 col-span-4 md:col-span-2 py-2">
       <p
-        class="font-extrabold text-xl text-gray-900 tag text-center"
-        :class="getBgColor(prop.mask.eventCategoryId)"
+        class="font-extrabold text-gray-900 tag text-center"
+        :class="classColorValue[event.eventCategoryId - 1]"
       >
-        {{ prop.mask.eventCategoryEventCategoryName }}
+        {{ event.eventCategoryEventCategoryName }}
       </p>
-      <!-- <p class="text-sm text-gray-600">klatsch.duration</p> -->
-    </div>
-    <!-- button -->
-    <div class="flex flex-col justify-center items-center px-4">
-      <div class="flex">
-        <button
-          type="button"
-          class="flex items-center justify-center px-2 py-2 rounded-full inline-block text-black hover:text-red-700"
-          @click.stop.prevent="setDetail()"
-        >
-          Detail
-        </button>
-        <button
-          type="button"
-          class="flex items-center justify-center px-3 py-3 rounded-full bg-slate-200 inline-block text-red-500 hover:text-red-700"
-          @click.stop.prevent="$emit('deleteEvent', prop.mask.id)"
-        >
+    </td>
+    <td class="lg:py-4 col-span-1 md:block hidden">
+      <div class="flex justify-center gap-4">
+        <button @click.stop.prevent="this.$emit('deleteEvent', event.id)">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
             fill="currentColor"
-            class="bi bi-trash-fill"
+            class="bi bi-trash-fill fill-red-500"
             viewBox="0 0 16 16"
           >
             <path
@@ -135,23 +92,23 @@ const setDetail = () => {
             />
           </svg>
         </button>
+        <button @click.stop.prevent="eventDetatil()">
+          <img
+            src="../assets/svg/three-dots.svg"
+            alt="More detail"
+            width="23"
+          />
+        </button>
       </div>
-    </div>
-  </div>
+    </td>
+  </tr>
 </template>
 
 <style scoped>
-.tags {
-  /* display: flex;
-  flex-direction: row;
-  flex-wrap: wrap; */
-  /* justify-content: flex-start; */
-  align-items: center;
-  margin-bottom: 1rem;
-}
 .tag {
   color: #fff;
-  padding: 0.5rem 1rem;
+  margin: 0 1rem;
+  padding: 0.4rem 0.75rem;
   border-radius: 1rem;
 }
 </style>

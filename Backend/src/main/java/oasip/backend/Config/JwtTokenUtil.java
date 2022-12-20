@@ -66,7 +66,7 @@ public class JwtTokenUtil implements Serializable {
     //generate token for user
     public String generateToken(AuthenticationUser authenticationUser) {
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, authenticationUser.getUsername());
+        return doGenerateToken(claims, authenticationUser.getEmail());
     }
 
     private String doGenerateToken(Map<String, Object> claims, String username) {
@@ -79,12 +79,12 @@ public class JwtTokenUtil implements Serializable {
     //validate token
     public Boolean validateToken(String token, AuthenticationUser userDetails) {
         final String username = getUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        return (username.equals(userDetails.getEmail()) && !isTokenExpired(token));
     }
 
     public String generateRefreshToken(AuthenticationUser authenticationUser) {
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateRefreshToken(claims, authenticationUser.getUsername());
+        return doGenerateRefreshToken(claims, authenticationUser.getEmail());
     }
 
     public String doGenerateRefreshToken(Map<String, Object> claims, String subject) {

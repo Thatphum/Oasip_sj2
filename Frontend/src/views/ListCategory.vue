@@ -1,53 +1,45 @@
-<script setup>
-import { onBeforeMount, ref } from 'vue';
+<script>
 import EventCategoryDataService from '../services/EventCategoryDataService';
 import Categoires from '../components/Categories.vue';
-onBeforeMount(async () => {
-  await listCategory();
-  // console.log(categories.value);
-});
-//Fetch
-const categories = ref([]);
-// List All Category
-const listCategory = async () => {
-  const res = await EventCategoryDataService.retrieveAllCategory();
-  categories.value = await res.json();
+
+export default {
+  name: 'Category-List',
+  components: {
+    Categoires,
+  },
+  data() {
+    return {
+      categories: null,
+    };
+  },
+  async beforeMount() {
+    await this.listCategory();
+    // console.log(this.categories);
+  },
+  methods: {
+    async listCategory() {
+      const res = await EventCategoryDataService.retrieveAllCategory();
+      this.categories = await res.json();
+    },
+  },
 };
-const fade = ref(false);
 </script>
 
 <template>
-  <div class="w-full flex justify-center transition ease-in-out duration-700">
-    <div class="mt-2">
-      <!-- card container -->
-      <div class="mt-16">
-        <div v-for="category in categories" v-if="categories.length > 0" class>
-          <Categoires :mask="category" />
+  <section class="min-h-screen bg-gray-100">
+    <div class="w-full flex justify-center transition ease-in-out duration-700">
+      <div class="p-20 md:p-24 max-w-[1200px]">
+        <!-- card container -->
+        <h1 class="text-center py-4 text-2xl">Categoires</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div v-for="category in categories" v-if="categories">
+            <Categoires :category="category" />
+          </div>
+          <div v-else>No Scheduled Events</div>
         </div>
-        <div v-else>No Scheduled Events</div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
-<style scoped>
-.container {
-  column-count: 3;
-  column-gap: 20px;
-  column-fill: balance;
-  margin: 20px auto 0;
-  padding: 2rem;
-}
-.container .item {
-  display: inline-block;
-  margin: 0 0 20px;
-  -webkit-column-break-inside: avoid;
-  page-break-inside: avoid;
-  break-inside: avoid;
-  width: 100%;
-}
-.container .item {
-  width: 100%;
-  height: auto;
-}
-</style>
+<style scoped></style>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,17 +49,22 @@ public class EventController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> createEvent(@RequestParam(name = "event") String jsonEvent , @RequestParam(name = "file" , required = false) MultipartFile file) throws JsonProcessingException{
-        return service.createEvent(jsonEvent);
+        return service.createEvent(jsonEvent ,file);
     }
 
     @DeleteMapping("/{eventId}")
-    public void deleteEvent(@PathVariable Integer eventId) {
+    public void deleteEvent(@PathVariable Integer eventId) throws IOException {
         service.deleteEvent(eventId);
     }
 
-    @PatchMapping("/{eventId}")
+    @PatchMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> updateEvent(@PathVariable Integer eventId, @RequestBody EventEditDto updateEvent) {
-        return service.updateEvent(updateEvent, eventId);
+    public ResponseEntity<?> updateEvent(@RequestParam(name = "event") String jsonEvent,@RequestParam(name = "eventId") Integer eventId , @RequestParam(name = "file" , required = false) MultipartFile file) throws IOException {
+        return service.updateEvent(jsonEvent, eventId ,file);
     }
+//    @PatchMapping("/{eventId}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public ResponseEntity<?> updateEvent(@PathVariable Integer eventId, @RequestBody EventEditDto updateEvent) {
+//        return service.updateEvent(updateEvent, eventId);
+//    }
 }
