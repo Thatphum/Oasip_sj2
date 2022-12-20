@@ -209,23 +209,41 @@ export default {
         </div>
 
         <div class="flex flex-col divide-y-2">
-          <button class="py-3 text-left" @click="closeSidebar()">
-            <router-link :to="{ name: 'Home' }"> Home </router-link>
-          </button>
-          <button class="py-3 text-left" @click="closeSidebar()">
-            <router-link :to="{ name: 'ListEvent' }"> Event </router-link>
-          </button>
-          <button class="py-3 text-left" @click="closeSidebar()">
-            <router-link :to="{ name: 'ListCategory' }">
-              Categoires
-            </router-link>
-          </button>
-          <button class="py-3 text-left" @click="closeSidebar()">
-            <router-link :to="{ name: 'ListUsers' }"> Users </router-link>
-          </button>
-          <button class="py-3 text-left" @click="closeSidebar()">
-            <router-link :to="{ name: 'About' }"> Contact Us </router-link>
-          </button>
+          <router-link
+            :to="{ name: 'Home' }"
+            class="py-3 text-left"
+            @click="closeSidebar()"
+          >
+            Home
+          </router-link>
+          <router-link
+            :to="{ name: 'ListEvent' }"
+            class="py-3 text-left"
+            @click="closeSidebar()"
+          >
+            Event
+          </router-link>
+          <router-link
+            :to="{ name: 'ListCategory' }"
+            class="py-3 text-left"
+            @click="closeSidebar()"
+          >
+            Categoires
+          </router-link>
+          <router-link
+            :to="{ name: 'ListUsers' }"
+            class="py-3 text-left"
+            @click="closeSidebar()"
+          >
+            Users
+          </router-link>
+          <router-link
+            :to="{ name: 'About' }"
+            class="py-3 text-left"
+            @click="closeSidebar()"
+          >
+            Contact Us
+          </router-link>
         </div>
         <div class="flex justify-center pt-6" @click="closeSidebar()">
           <svg
