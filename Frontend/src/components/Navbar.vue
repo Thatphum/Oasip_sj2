@@ -35,7 +35,7 @@ export default {
 
 <template>
   <nav class="w-full border-b-2 text-md">
-    <div
+    <!-- <div
       class="hidden md:flex items-center bg-black justify-end text-white py-2"
       v-if="!chaeckuser()"
     >
@@ -55,7 +55,7 @@ export default {
           </router-link>
         </li>
       </ul>
-    </div>
+    </div> -->
     <div class="flex justify-between items-center py-2 px-6 md:px-10 bg-white">
       <div class="flex gap-4">
         <a href="#">
@@ -117,6 +117,13 @@ export default {
           v-if="!chaeckuser()"
         >
           Sign Up
+        </router-link>
+        <router-link
+          class="bg-blue-600 text-white py-2 px-6 rounded-full hidden md:flex hover:scale-105 duration-300"
+          :to="{ name: 'SignIn' }"
+          v-if="!chaeckuser()"
+        >
+          Sign In
         </router-link>
 
         <button

@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     goToSignup() {
-      this.$router.push({  name: 'SignUp' });
+      this.$router.push({ name: 'SignUp' });
     },
     inputAnimation(field) {
       this.requiredUser[field] == ''
@@ -56,7 +56,7 @@ export default {
             location.reload();
           });
 
-        // this.$router.push({ path: '/', name: 'Home' });
+        this.$router.push({ path: '/', name: 'Home' });
       } else if (res.status == 500) {
         this.$swal.fire(
           'The Internet?',
