@@ -3,7 +3,7 @@ import { onBeforeMount } from 'vue';
 import router from '../router';
 
 const goBack = () => {
-  router.push({ name: 'ListCategory' });
+  router.push({ name: 'Home' });
 };
 </script>
 
