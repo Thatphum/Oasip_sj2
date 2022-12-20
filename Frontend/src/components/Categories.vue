@@ -1,4 +1,9 @@
 <script>
+import a from '../assets/categories/1.png';
+import b from '../assets/categories/2.png';
+import c from '../assets/categories/3.png';
+import d from '../assets/categories/4.png';
+import e from '../assets/categories/5.png';
 export default {
   data() {
     return {
@@ -9,6 +14,12 @@ export default {
         'bg-green-500',
         'bg-orange-500',
       ],
+      imgBg: [this.imageA, this.imageB, this.imageC, this.imageD, this.imageE],
+      imageA: a,
+      imageB: b,
+      imageC: c,
+      imageD: d,
+      imageE: e,
     };
   },
   props: {
@@ -30,6 +41,19 @@ export default {
         params: { id: this.category.id },
       });
     },
+    getImage() {
+      if (this.category.id == 1) {
+        return this.imageA;
+      } else if (this.category.id == 2) {
+        return this.imageB;
+      } else if (this.category.id == 3) {
+        return this.imageC;
+      } else if (this.category.id == 4) {
+        return this.imageD;
+      } else if (this.category.id == 5) {
+        return this.imageE;
+      }
+    },
   },
 };
 </script>
@@ -39,7 +63,9 @@ export default {
     class="bg-white rounded-lg shadow-lg overflow-hidden flex-1 flex flex-col h-full w-full hover:cursor-pointer"
     @click="categoryDetatil()"
   >
-    <div class="bg-cover h-48"></div>
+    <div class="bg-cover h-48 flex place-content-center">
+      <img v-bind:src="getImage()" class="w-[150px] h-auto" />
+    </div>
     <div
       class="p-4 flex-1 flex flex-col text-white"
       :class="getBgColor(category.id)"

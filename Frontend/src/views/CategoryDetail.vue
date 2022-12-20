@@ -173,7 +173,7 @@ export default {
         <div class="text-2xl md:text-3xl text-center relative">
           <button class="flex items-center">
             <router-link
-              :to="{ name: 'ListUsers' }"
+              :to="{ name: 'ListCategory' }"
               class="flex items-center absolute left-0 top-0"
             >
               <div class="p-2 bg-blue-500 rounded-full mr-2">

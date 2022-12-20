@@ -61,12 +61,12 @@ const routes = [
     component: UserDetail,
     meta: { requiresAuth: true },
   },
-  {
-    path: '/users',
-    name: 'Users',
-    component: User,
-    meta: { requiresAuth: true },
-  },
+  // {
+  //   path: '/users',
+  //   name: 'Users',
+  //   component: User,
+  //   meta: { requiresAuth: true },
+  // },
   { path: '/signup', name: 'SignUp', component: SignUp },
   { path: '/signin', name: 'SignIn', component: SignIn },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: PageNotFound },
@@ -80,7 +80,7 @@ const student = [
   'CategoryDetail',
 ];
 const lecturer = [
-  'Listvent',
+  'ListEvent',
   'Detail',
   'CreateEvent',
   'ListCategory',
@@ -92,7 +92,7 @@ const admin = [
   'CreateEvent',
   'ListCategory',
   'CategoryDetail',
-  'Users',
+  'ListUsers',
   'UserDetail',
 ];
 
@@ -115,11 +115,11 @@ router.beforeEach(async (to, from, next) => {
       name: 'NotFound',
     });
   }
-  console.log('to');
+  // console.log('to');
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    console.log('check login?');
+    // console.log('check login?');
     if (store.accessTokenExp > new Date()) {
-      console.log('check role component');
+      // console.log('check role component');
       if (!rolesComponent[store.user.roles].includes(to.name)) {
         //permission denied
         return next({ path: '/403', name: 'AccessForbidden' });

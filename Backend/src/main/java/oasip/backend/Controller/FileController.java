@@ -24,7 +24,7 @@ public class FileController {
 
     @GetMapping("/{folderId}/{filename:.+}")
     @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable("folderId") String id,@PathVariable("filename") String filename){
+    public ResponseEntity<Resource> getFile(@PathVariable("folderId") String id,@PathVariable("filename") String filename){
         Resource file = fileService.loadFileAsResource(id,filename);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(file);
     }
@@ -34,7 +34,7 @@ public class FileController {
         return "You successfully uploaded " + file.getOriginalFilename() + "!";
     }
     @DeleteMapping("/{folderId}")
-    public String fileUpload(@PathVariable("folderId") String folderId) throws IOException {
+    public String deleteFile(@PathVariable("folderId") String folderId) throws IOException {
         fileService.deleteDirectory(folderId);
         return "You successfully uploaded !";
     }

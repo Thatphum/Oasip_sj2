@@ -26,24 +26,31 @@ class EventDataService {
       },
     });
   }
-  createEvent(newEvent) {
+  createEvent(newEvent, file) {
+    const formData = new FormData();
+    formData.append('event', JSON.stringify(newEvent));
+    formData.append('file', file);
     return fetch(`${API_URL}/events`, {
       method: 'POST',
       headers: {
-        'content-type': 'application/json',
+        Accept: '*/*',
         Authorization: `Bearer ${store.accessToken}`,
       },
-      body: JSON.stringify(newEvent),
+      body: formData,
     });
   }
-  updateEvent(id, update) {
-    return fetch(`${API_URL}/events/${id}`, {
+  updateEvent(id, update, file) {
+    const formData = new FormData();
+    formData.append('eventId', id);
+    formData.append('event', JSON.stringify(update));
+    formData.append('file', file);
+    return fetch(`${API_URL}/events`, {
       method: 'PATCH',
       headers: {
-        'content-type': 'application/json',
+        Accept: '*/*',
         Authorization: `Bearer ${store.accessToken}`,
       },
-      body: JSON.stringify(update),
+      body: formData,
     });
   }
   retreiveCategory(id) {
@@ -51,12 +58,25 @@ class EventDataService {
   }
   retreiveAllEventFilter(categoryId, option, time) {
     if (time == '') {
+      console.log('ddsadad');
       return fetch(
-        `${API_URL}/events/?categoryId=${categoryId}&option=${option}`
+        `${API_URL}/events/filter/?categoryId=${categoryId}&option=${option}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${store.accessToken}`,
+          },
+        }
       );
     } else {
       return fetch(
-        `${API_URL}/events/?categoryId=${categoryId}&option=${option}&time=${time}`
+        `${API_URL}/events/filter/?categoryId=${categoryId}&option=${option}&time=${time.toString()}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${store.accessToken}`,
+          },
+        }
       );
     }
   }

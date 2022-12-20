@@ -84,7 +84,7 @@ public class JwtTokenUtil implements Serializable {
 
     public String generateRefreshToken(AuthenticationUser authenticationUser) {
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateRefreshToken(claims, authenticationUser.getUsername());
+        return doGenerateRefreshToken(claims, authenticationUser.getEmail());
     }
 
     public String doGenerateRefreshToken(Map<String, Object> claims, String subject) {

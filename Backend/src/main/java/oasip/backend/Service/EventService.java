@@ -13,6 +13,8 @@ import oasip.backend.Enum.Role;
 import oasip.backend.Exception.ErrorResponse;
 import oasip.backend.ListMapper;
 import oasip.backend.Service.Email.EmailService;
+import oasip.backend.Service.Email.EmailServiceImpl;
+import oasip.backend.Service.FileStorage.FileStorageService;
 import oasip.backend.repositories.CategoryRepository;
 import oasip.backend.repositories.EventCategoriesOwnerRepository;
 import oasip.backend.repositories.EventRepository;
@@ -27,9 +29,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.*;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -56,6 +60,11 @@ public class EventService {
                     .messageInterpolator(new ParameterMessageInterpolator())
                     .buildValidatorFactory()
                     .getValidator();
+    @Autowired
+    private EmailServiceImpl emailService;
+
+    @Autowired
+    private  FileStorageService fileService;
 
     public ResponseEntity<?> getAllEvent() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -88,15 +97,32 @@ public class EventService {
     }
 
     public List<EventListAllDto> filterEvents(Integer categoryId , Integer optionId , Date time) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Role role = (Role) SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0];
         if (categoryId == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST , "categoryId is not null");
         }
         List<Event> events = null;
         if (categoryId != 0) {
-            events = eventRepository.findByEventCategory_Id(categoryId, Sort.by("eventStartTime").descending());
+            if(role.getAuthority().contains("admin")){
+                events = eventRepository.findByEventCategory_Id(categoryId, Sort.by("eventStartTime").descending());
+            }else if(role.getAuthority().contains("student")){ // student
+                events = eventRepository.findByBookingEmail_AndEventCategory_Id(authentication.getName(), categoryId,Sort.by("eventStartTime").descending());
+            }else { // lecturer
+                List<Integer> eventCategoriesOwner = eventCategoriesOwnerRepository.findAllByLecturer_Email(authentication.getName());
+                events = eventRepository.findAllByEventCategory_IdList(eventCategoriesOwner,Sort.by("eventStartTime").descending());
+            }
         } else {
-            events = eventRepository.findAll(Sort.by("eventStartTime").descending());
+            if(role.getAuthority().contains("admin")){
+                events = eventRepository.findAll(Sort.by("eventStartTime").descending());
+            } else if(role.getAuthority().contains("student")){ // student
+                events = eventRepository.findByBookingEmail(authentication.getName(),Sort.by("eventStartTime").descending());
+            }else { // lecturer
+                List<Integer> eventCategoriesOwner = eventCategoriesOwnerRepository.findAllByLecturer_Email(authentication.getName());
+                events = eventRepository.findAllByEventCategory_IdList(eventCategoriesOwner,Sort.by("eventStartTime").descending());
+            }
         }
+        System.out.println(events);
         List<EventListAllDto> newEvent = listMapper.maplist(events, EventListAllDto.class, modelMapper);
         List<EventListAllDto> filteroption = null;
         switch (optionId) {
@@ -156,8 +182,9 @@ public class EventService {
         return listMapper.maplist(events, EventListAllDto.class, modelMapper);
     }
 
-    public ResponseEntity<?> createEvent(String jsonEvent) throws JsonProcessingException {
+    public ResponseEntity<?> createEvent(String jsonEvent  , MultipartFile file) throws JsonProcessingException {
         // convert String Json to obj
+
         EventCreateDto newEvent = objectMapper.readValue(jsonEvent, EventCreateDto.class);
         Event event = modelMapper.map(newEvent,Event.class);
         // check validation
@@ -183,7 +210,11 @@ public class EventService {
                     "Event Notes: " + ((event.getEventNotes() != null) ? event.getEventNotes():" ");
 //            System.out.println(subject);
 //            System.out.println(body);
-//            String status = emailService.sendSimpleMail(event.getBookingEmail() , body , subject);
+            String status = emailService.sendSimpleMail(event.getBookingEmail() , body , subject);
+            System.out.println(event.getId());
+            if(file != null){
+                fileService.storeFile(event.getId().toString() , file);
+            }
         }else{
             if (role.getAuthority().contains("lecturer"))
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse(HttpStatus.FORBIDDEN,"Access denied"));
@@ -192,26 +223,30 @@ public class EventService {
         return ResponseEntity.ok(modelMapper.map(event,EventCreateDto.class));
     }
 
-    public void deleteEvent(Integer eventId) {
+    public void deleteEvent(Integer eventId) throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Role role = (Role) SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0];
         Event event = eventRepository.findById(eventId).orElseThrow(
                 () -> new ResponseStatusException( HttpStatus.NOT_FOUND , eventId + " Does not Exist !!!"));
         if(role.getAuthority().contains("admin") || authentication.getName().contains(event.getBookingEmail())){
             eventRepository.deleteById(eventId);
+            if(event.getEventFile() != null){
+                fileService.deleteDirectory(eventId.toString());
+            }
         }else{
             throw new ResponseStatusException(HttpStatus.FORBIDDEN,"Access denied");
         }
     }
 
-    public ResponseEntity<?> updateEvent(EventEditDto updateEvent, Integer eventId)  {
+    public ResponseEntity<?> updateEvent(String jsonEvent , Integer eventId   , MultipartFile file) throws IOException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Role role = (Role) SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0];
         Event event = eventRepository.findById(eventId).orElseThrow(
                 () -> new ResponseStatusException( HttpStatus.NOT_FOUND , eventId + " Does not Exist !!!"));
         if(role.getAuthority().contains("admin") || authentication.getName().contains(event.getBookingEmail())){
-            Event newEdit = modelMapper.map(updateEvent,Event.class);
-            mapEvent(event , newEdit);
+            EventEditDto newEvent = objectMapper.readValue(jsonEvent, EventEditDto.class);
+            Event newEdit = modelMapper.map(newEvent,Event.class);
+            mapEvent(event , newEdit ,file );
             // check validation
             Set<ConstraintViolation<Event>> violations = validator.validate(event);
             if (!violations.isEmpty()) throw new ConstraintViolationException(violations);
@@ -221,12 +256,25 @@ public class EventService {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse(HttpStatus.FORBIDDEN,"Access denied"));
     }
 
-    private Event mapEvent(Event existingEvent, Event updateEvent) {
+    private Event mapEvent(Event existingEvent, Event updateEvent , MultipartFile file) throws IOException {
         if (updateEvent.getEventStartTime() != null) {
             existingEvent.setEventStartTime(updateEvent.getEventStartTime());
         }
         if (updateEvent.getEventNotes() != null) {
             existingEvent.setEventNotes(updateEvent.getEventNotes());
+        }
+        if (existingEvent.getEventFile() != updateEvent.getEventFile()){
+            if(updateEvent.getEventFile().isEmpty()){
+                existingEvent.setEventFile("");
+                if(!existingEvent.getEventFile().isEmpty())
+                    fileService.deleteDirectory(existingEvent.getId().toString());
+            }else{
+                if(!existingEvent.getEventFile().isEmpty()){
+                    fileService.deleteDirectory(existingEvent.getId().toString());
+                }
+                existingEvent.setEventFile(updateEvent.getEventFile());
+                fileService.storeFile(existingEvent.getId().toString() , file);
+            }
         }
         return existingEvent;
     }

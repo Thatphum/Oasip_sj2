@@ -1,5 +1,6 @@
 <script>
 import EventDataService from '../services/EventDataService.js';
+import FileDataService from '../services/FileDataService';
 export default {
   name: 'Event-Detail',
   data() {
@@ -13,21 +14,39 @@ export default {
         date: null,
         time: null,
         eventNotes: null,
+        eventFile: null,
       },
+      dataFile: null,
+      nameFile: null,
       editMode: false,
     };
   },
   async beforeMount() {
     await this.getDetailEvent(this.$route.params.id);
+
+    console.log(this.event);
   },
   methods: {
-    print() {
-      console.log(this.date);
+    async getFile() {
+      const res = await FileDataService.retrieveFile(
+        this.event.id,
+        this.event.eventFile
+      );
+
+      if (res.status == 200) {
+        this.dataFile = new Blob([await res.blob()]);
+        // console.log(this.dataFile);
+        // console.log('ddasdasd');
+      }
     },
     async getDetailEvent(id) {
       const res = await EventDataService.retrieveEvent(id);
       if (res.status == 200) {
         this.event = await res.json();
+        if (this.event.eventFile != '') {
+          this.nameFile = this.event.eventFile;
+          await this.getFile();
+        }
       } else {
         this.$swal.fire({
           icon: 'error',
@@ -87,6 +106,71 @@ export default {
       this.updateEvent.date = inputDate;
       this.updateEvent.time = inputTime;
       this.updateEvent.eventNotes = this.event.eventNotes;
+    },
+    downloadFile() {
+      // FileDataService.downloadFile(this.event.id, this.event.eventFile);
+      var url = window.URL.createObjectURL(this.dataFile);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = this.event.eventFile;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    },
+    async submitForm() {
+      this.$swal.fire({
+        title: 'Auto close alert!',
+        html: 'I will close in <b></b> milliseconds.',
+        timer: 4000,
+        timerProgressBar: true,
+      });
+
+      const res = await EventDataService.updateEvent(
+        this.event.id,
+        this.updateEvent,
+        this.dataFile
+      );
+      if (res.status === 200) {
+        this.$swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Event created!',
+        });
+        this.editMode = false;
+        this.getDetailEvent(this.event.id);
+      } else {
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Error to create event! is Overlap',
+        });
+      }
+    },
+    confirmEvent() {
+      this.$swal
+        .fire({
+          title: 'Please check your event data. Press OK for edit.',
+          showCancelButton: true,
+          confirmButtonText: 'Yes',
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.submitForm();
+          }
+        });
+    },
+    onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      // console.log(files[0]);
+      this.dataFile = files[0];
+      // this.createImage(files[0]);
+      this.updateEvent.eventFile = files[0].name;
+    },
+    deleteFile() {
+      this.event.eventFile = '';
+      this.dataFile = null;
+      this.updateEvent.eventFile = '';
     },
   },
 };
@@ -148,6 +232,7 @@ export default {
               {{ event.eventDuration }}
             </p>
           </div>
+
           <div class="border-b border-gray-400 pt-4 pb-1">
             <h1>Date</h1>
             <p class="text-gray-400 break-words text-base p-2" v-if="!editMode">
@@ -203,25 +288,79 @@ export default {
                 rows="2"
                 class="shadow appearance-none border rounded-lg w-full my-1 py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               ></textarea>
-              <!-- <textarea
-                  rows="2"
-                  class="shadow appearance-none border rounded-lg w-full my-1 py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  maxlength="500"
-                  v-model="updatCategory.eventCategoryDescription"
-                ></textarea> -->
             </div>
           </div>
           <div class="pt-4">
             <h1>Attachment</h1>
-            <p class="text-gray-400 break-words text-base p-4" v-if="!editMode">
-              {{ event.eventFile != '' ? event.eventFile : '-' }}
-            </p>
-            <input
-              class="form-control block text-base font-normal text-gray-700 bg-white p-4"
-              type="file"
-              id="formFile"
-              v-else
-            />
+            <div v-if="!editMode">
+              <p
+                class="text-gray-400 break-words text-base p-4"
+                v-if="event.eventFile == ''"
+              >
+                {{ '-' }}
+              </p>
+              <p
+                v-else
+                class="break-words text-base p-4 underline underline-offset-2 text-blue-500 cursor-pointer"
+                @click="downloadFile()"
+              >
+                {{ event.eventFile }}
+              </p>
+            </div>
+            <div v-else>
+              <div class="flex items-center" v-if="event.eventFile != ''">
+                <p
+                  class="break-words text-base p-4 underline underline-offset-2 text-blue-500 cursor-pointer"
+                  @click="downloadFile()"
+                >
+                  {{ event.eventFile }}
+                </p>
+                <!-- <button
+                  class="flex items-center transition ease-in-out hover:scale-110 duration-300 p-1 bg-blue-500 rounded-lg mr-3"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    class="bi bi-download fill-white"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"
+                    />
+                    <path
+                      d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"
+                    />
+                  </svg>
+                </button> -->
+                <button
+                  class="flex items-center transition ease-in-out hover:scale-110 duration-300 p-1 bg-red-500 rounded-lg"
+                  @click="deleteFile()"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    class="bi bi-x fill-white"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <input
+                class="form-control block text-base font-normal text-gray-700 bg-white p-4"
+                type="file"
+                id="formFile"
+                @change="onFileChange"
+                v-else
+              />
+            </div>
           </div>
           <div class="flex justify-evenly pt-6 text-lg">
             <button
@@ -254,6 +393,7 @@ export default {
             <button
               class="flex items-center text-base transition ease-in-out hover:scale-110 duration-300 bg-green-500 text-white p-1.5 rounded-xl"
               v-if="editMode"
+              @click="confirmEvent()"
             >
               <div class="rounded-full mr-1">
                 <svg
@@ -278,7 +418,10 @@ export default {
             <button
               class="flex items-center text-base transition ease-in-out hover:scale-110 duration-300 bg-red-500 text-white p-1.5 rounded-xl"
               v-if="editMode"
-              @click="editMode = false"
+              @click="
+                editMode = false;
+                event.eventFile = nameFile;
+              "
             >
               <div class="rounded-full mr-1">
                 <svg

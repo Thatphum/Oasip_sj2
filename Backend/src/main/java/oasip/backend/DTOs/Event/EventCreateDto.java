@@ -16,4 +16,6 @@ public class EventCreateDto implements Serializable {
     private Integer eventDuration;
     private String eventNotes;
     private Integer eventCategoryId;
+    private String eventFile;
+
 }

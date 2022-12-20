@@ -1,5 +1,6 @@
+import { store } from '../stores/User';
+
 const API_URL = `${import.meta.env.VITE_BASE_URL}api`;
-const refreshtoken = localStorage.getItem('refreshToken');
 class AuthenticationService {
   logInUser(user) {
     return fetch(`${API_URL}/auth/match`, {
@@ -15,7 +16,7 @@ class AuthenticationService {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
-        Authorization: `Bearer ${refreshtoken}`,
+        Authorization: `Bearer ${store.refreshToken}`,
       },
     });
   }
